@@ -1,0 +1,14 @@
+﻿@page
+@model ProyectoFinal.Entidades.Usuario
+@{
+    // ViewData["Title"] = "Crear Usuario";
+}
+
+<h2>Crear Usuario</h2>
+
+<form method="post">
+    @await Html.PartialAsync("_UsuarioForm", Model)
+    <button type="submit">Guardar</button>
+</form>
+
+<a asp-page="./Index">Volver a la lista</a>

@@ -1,0 +1,42 @@
+﻿using Microsoft.AspNetCore.Builder; 
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore; 
+using ProyectoFinal.Repositorio;
+using Microsoft.Extensions.Configuration; 
+
+namespace ProyectoFinal.Servidor
+{
+    public static class ServiceExtensions
+    {
+        public static void AddCustomServices(this IServiceCollection services, IConfiguration configuration)
+        {
+            // Registrar el DbContext
+            services.AddDbContext<Contexto>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+
+            // Registrar el servicio que usa el repositorio
+            services.AddScoped<UsuarioServicios>();
+        }
+
+        public static async Task InitializeDatabaseAsync(this IApplicationBuilder app)
+        {
+            using var scope = app.ApplicationServices.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<Contexto>();
+            await context.Database.MigrateAsync();
+
+            if (!await context.TiposIdentificacion.AnyAsync())
+            {
+                var sqlDatosPath = Path.Combine(AppContext.BaseDirectory, "AppData\\Datos.sql");
+                var sqlDatos = await File.ReadAllTextAsync(sqlDatosPath);
+
+                await context.Database.ExecuteSqlRawAsync(sqlDatos);
+            }
+
+            if (!await context.ProcedimientoAlmacenadoExisteAsync(Scripts.uspUsuarioValidoNombre))
+                await context.Database.ExecuteSqlRawAsync(Scripts.uspUsuarioValido);
+
+            if (!await context.ProcedimientoAlmacenadoExisteAsync(Scripts.uspUsuarioInsertarNombre))
+                await context.Database.ExecuteSqlRawAsync(Scripts.uspUsuarioInsertar);
+        }
+    }
+}
