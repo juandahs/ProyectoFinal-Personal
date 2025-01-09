@@ -41,6 +41,10 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Usuarios\" />
+  </ItemGroup>
+
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="if $(ConfigurationName) == Debug (call &quot;$(ProjectDir)PostBuildDebug.bat&quot; &quot;$(SolutionDir)&quot;) else (call &quot;$(ProjectDir)PostBuildRelease.bat&quot; &quot;$(SolutionDir)&quot;)" />
   </Target>

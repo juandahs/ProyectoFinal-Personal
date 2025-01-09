@@ -1,22 +1,84 @@
+/* ----- Configuración general ----- */
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+    html {
+        font-size: 16px;
+    }
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
+
+/* ----- Estilo del Sidebar ----- */
+.sidebar {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: -250px;
+    background-color: #333;
+    color: white;
+    overflow-x: hidden;
+    transition: 0.3s ease-in-out;
+    padding-top: 60px;
+}
+
+    .sidebar a {
+        padding: 10px 15px;
+        text-decoration: none;
+        font-size: 18px;
+        color: white;
+        display: block;
+        transition: 0.3s;
+    }
+
+        .sidebar a:hover {
+            background-color: #575757;
+        }
+
+    .sidebar.open-sidebar {
+        left: 0;
+    }
+
+/* ----- Estilo del Menú Hamburguesa ----- */
+.menu-button {
+    font-size: 24px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #333;
+    transition: transform 0.3s ease;
+}
+
+/* ----- Estilo del Título ----- */
+.navbar-brand {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* ----- Estilo del Contenedor de Navegación ----- */
+#nav-container {
+    transition: margin-left 0.3s ease-in-out;
+}
+
+/* ----- Estilo del Botón de Cerrar Sesión ----- */
+.logout-button {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+    .logout-button:hover {
+        color: #007bff;
+    }
