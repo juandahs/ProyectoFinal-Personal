@@ -18,7 +18,7 @@ builder.Services.AddSession(options =>
 
 var app = builder.Build();
 
-// Llamar al método de inicialización de la base de datos
+// Llama al método de inicialización de la base de datos
 await app.InitializeDatabaseAsync();
 
 if (!app.Environment.IsDevelopment())

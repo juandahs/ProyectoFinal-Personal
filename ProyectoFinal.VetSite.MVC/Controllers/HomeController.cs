@@ -1,9 +1,12 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
 using ProyectoFinal.VetSite.MVC.Models;
 using System.Diagnostics;
 
 namespace ProyectoFinal.VetSite.MVC.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

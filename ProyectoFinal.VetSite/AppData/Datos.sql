@@ -46,7 +46,7 @@ VALUES (@RolID, 'Administrador', GETDATE(), GETDATE(), @NewUsuarioID, @NewUsuari
 -- Insertar un usuario por defecto
 DECLARE @Salt VARBINARY(32);
 DECLARE @HashClave VARBINARY(32);
-DECLARE @Clave VARCHAR(32) = 'admin123'; -- La clave que deseas establecer
+DECLARE @Clave VARCHAR(32) = 'admin123'; -- La clave
 
 -- Generar un nuevo salt
 SET @Salt = CAST(CRYPT_GEN_RANDOM(32) AS VARBINARY(32));

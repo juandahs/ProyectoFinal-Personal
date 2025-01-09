@@ -6,31 +6,97 @@
     <title>@ViewData["Title"] - VetSite</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-@*     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/VetSite2.styles.css" asp-append-version="true" /> *@
+    <!-- Font Awesome para los iconos -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Estilos del sidebar */
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: -250px;
+            background-color: #333;
+            color: white;
+            overflow-x: hidden;
+            transition: 0.3s;
+            padding-top: 60px;
+        }
+
+            .sidebar a {
+                padding: 10px 15px;
+                text-decoration: none;
+                font-size: 18px;
+                color: white;
+                display: block;
+                transition: 0.3s;
+            }
+
+                .sidebar a:hover {
+                    background-color: #575757;
+                }
+
+        .open-sidebar {
+            left: 0;
+        }
+
+        /* Estilos para el botón del menú */
+        .menu-button {
+            font-size: 24px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #333;
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            z-index: 1000;
+        }
+
+            .menu-button.open-sidebar {
+                left: 260px; /* Esto lo mueve después del sidebar cuando se abre */
+            }
+
+        .navbar-brand {
+            margin-left: 60px; /* Ajusta la posición del nombre de la app para que quede bien con el botón */
+        }
+
+        /* Estilos para el icono de cerrar sesión */
+        .logout-button {
+            font-size: 24px;
+            cursor: pointer;
+            color: #333;
+            position: absolute;
+            right: 15px;
+            top: 15px;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
+        <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container d-flex align-items-center">
+                <!-- Botón para abrir el sidebar -->
+                <button class="menu-button me-2" onclick="toggleSidebar()">☰</button>
+                <!-- Nombre de la aplicación -->
                 <a class="navbar-brand" asp-area="" asp-page="/Index">VetSite</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
+                <!-- Icono de cerrar sesión -->
+                <form asp-page-handler="Logout" method="post" class="d-inline">
+                    <button class="logout-button">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </form>
+
             </div>
         </nav>
     </header>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <a href="/Usuarios">Usuarios</a>
+        <a href="/Appointments/List">Citas</a>
+    </div>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -38,7 +104,28 @@
     </div>
 
     <partial name="_Footer"></partial>
-    
+
+    <script>
+        // Mostrar y ocultar el sidebar
+        function toggleSidebar() {
+            const sidebar = document.getElementById("sidebar");
+            const menuButton = document.querySelector(".menu-button");
+            if (sidebar.classList.contains("open-sidebar")) {
+                sidebar.classList.remove("open-sidebar");
+                menuButton.classList.remove("open-sidebar");
+            } else {
+                sidebar.classList.add("open-sidebar");
+                menuButton.classList.add("open-sidebar");
+            }
+        }
+
+        // Función de cierre de sesión (ejemplo)
+        function logout() {
+            // Aquí deberías agregar la lógica de cierre de sesión, por ejemplo:
+            // window.location.href = '/logout';
+            alert('Cerrando sesión...');
+        }
+    </script>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

@@ -6,12 +6,9 @@ namespace ProyectoFinal.Repositorio
 {
     public class Contexto : DbContext
     {
-
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Rol> Roles { get; set; }
         public DbSet<TipoIdentificacion> TiposIdentificacion { get; set; }
-
-
         public Contexto(DbContextOptions<Contexto> options) : base(options)
         {
 
@@ -122,7 +119,6 @@ namespace ProyectoFinal.Repositorio
             // Convertir el resultado a booleano
             return resultadoClave == 1;
         }
-
 
         // Método para verificar si un procedimiento almacenado existe
         public async Task<bool> ProcedimientoAlmacenadoExisteAsync(string nombreProcedimiento)
