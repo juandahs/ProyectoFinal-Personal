@@ -139,5 +139,12 @@ namespace ProyectoFinal.Repositorio
             return resultado.FirstOrDefault() > 0;
         }
 
+
+        public async Task UsuarioInsertar(Usuario usuario) 
+        {
+            
+
+        }
+
     }
 }

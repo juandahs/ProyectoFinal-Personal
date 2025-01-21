@@ -16,6 +16,8 @@ namespace ProyectoFinal.Servidor
 
             // Registrar el servicio que usa el repositorio
             services.AddScoped<UsuarioServicios>();
+            services.AddScoped<TipoIdentificacionServicio>();
+            services.AddScoped<RolServicio>();
         }
 
         public static async Task InitializeDatabaseAsync(this IApplicationBuilder app)

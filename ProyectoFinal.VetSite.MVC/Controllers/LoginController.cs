@@ -1,33 +1,22 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
-
-using ProyectoFinal.Repositorio;
 using System.Security.Claims;
-using NuGet.Protocol.Core.Types;
-
+using ProyectoFinal.Servidor;
 
 
 namespace ProyectoFinal.VetSite.MVC.Controllers
 {
-    public class LoginController : Controller
+    public class LoginController(UsuarioServicios usuarioServicios) : Controller
     {
-        private readonly Contexto _contexto;
-        public LoginController(Contexto contexto) => _contexto = contexto;
-
+        private readonly UsuarioServicios _usuarioServicios = usuarioServicios;        
         [HttpGet]
-        public IActionResult Index()
-        {
-            return View();
-        }
-
+        public IActionResult Index() => View();
 
         [HttpPost]
         public async Task<IActionResult> Login(string nombre, string clave)
         {
-            var usuario = await _contexto.Usuarios
-                .FirstOrDefaultAsync(u => u.Nombre == nombre);
+            var usuario = _usuarioServicios.ObtenerPorNombre(nombre);
 
             if (usuario == null)
             {
@@ -35,7 +24,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
                 return View("Index");
             }
 
-            if (!await _contexto.ValidarClaveAsync(usuario.UsuarioID, clave))
+            if (!_usuarioServicios.EsValido(usuario.UsuarioID, clave))
             {
                 ModelState.AddModelError(string.Empty, "Usuario no encontrado");
                 return View("Index");

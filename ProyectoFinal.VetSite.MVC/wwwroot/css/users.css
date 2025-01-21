@@ -1,0 +1,91 @@
+/* ----- Estilo de la Tabla ----- */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+    .table thead {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .table th, .table td {
+        text-align: left;
+        padding: 12px;
+    }
+
+    .table tbody tr {
+        transition: background-color 0.2s ease-in-out;
+    }
+
+        .table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+/* ----- Botones del CRUD ----- */
+.btn {
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.btn-info {
+    background-color: #17a2b8;
+    color: white;
+    border: none;
+}
+
+    .btn-info:hover {
+        background-color: #138496;
+    }
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+}
+
+    .btn-danger:hover {
+        background-color: #b21f2d;
+    }
+
+/* ----- Contenedor Principal ----- */
+.container {
+    margin-top: 40px;
+    max-width: 1200px;
+}
+
+h1 {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* ----- Botón Agregar Usuario ----- */
+.btn-success {
+    font-weight: bold;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+}
+
+    .btn-success:hover {
+        background-color: #218838;
+    }

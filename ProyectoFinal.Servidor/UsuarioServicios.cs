@@ -12,11 +12,13 @@ namespace ProyectoFinal.Servidor
 
         public List<Usuario> ObtenerTodos() => _contexto.Usuarios.AsNoTracking().ToList();
 
+        
         public bool EsValido(Guid usuarioId, string clave) => _contexto.ValidarClaveAsync(usuarioId, clave).Result;
 
         public void Agregar(Usuario usuario)
         {
-            throw new NotImplementedException();
+            _contexto.Usuarios.Add(usuario);
+            _contexto.SaveChangesAsync();            
         }
 
         public Usuario? ObtenerPorId(Guid id) => _contexto.Usuarios.FirstOrDefault(u => u.UsuarioID == id);
