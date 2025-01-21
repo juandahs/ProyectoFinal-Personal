@@ -33,7 +33,9 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             // Set authentication cookie
             var claims = new List<Claim>
             {
-                new(ClaimTypes.Name, usuario.Nombre)
+                new(ClaimTypes.Name, usuario.Nombre),
+                new(ClaimTypes.NameIdentifier, usuario.UsuarioID.ToString())
+
             };
 
             var identity = new ClaimsIdentity(claims, "Cookies");

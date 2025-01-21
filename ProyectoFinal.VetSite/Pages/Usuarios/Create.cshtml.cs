@@ -24,7 +24,7 @@ namespace ProyectoFinal.VetSite.Pages.Usuarios
             Usuario.FechaCreacion = DateTime.Now;
             Usuario.UsuarioCreacionID = Guid.NewGuid();  // Asignar el ID del usuario creador
 
-            _usuarioRepositorio.Agregar(Usuario);
+
             return RedirectToPage("./Index");
         }
     }

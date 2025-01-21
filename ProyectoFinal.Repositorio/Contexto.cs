@@ -140,10 +140,40 @@ namespace ProyectoFinal.Repositorio
         }
 
 
-        public async Task UsuarioInsertar(Usuario usuario) 
+        public async Task UsuarioInsertar(Usuario usuario, Guid usuarioCreacionId) 
         {
+            var tipoIdentificacionIdParameter = new SqlParameter("@TipoIdentificacionID", usuario.TipoIdentificacionID);
+            var rolIdParameter = new SqlParameter("@RolID", usuario.RolID);
+            var numeroIdentificacionParameter = new SqlParameter("@NumeroIdentificacion", usuario.NumeroIdentificacion);
+            var nombreParameter = new SqlParameter("@Nombre", usuario.Nombre);
+            var apellidoParameter = new SqlParameter("@Apellido", usuario.Apellido);
+            var telefonoParameter = new SqlParameter("@Telefono", usuario.Telefono);
+            var correoElectronicoParameter = new SqlParameter("@CorreoElectronico", usuario.CorreoElectronico);
+            var tarjetaProfesionalParameter = new SqlParameter("@TarjetaProfesional",usuario.TarjetaProfesional ?? (object)DBNull.Value);
+            var claveParameter = new SqlParameter("@Clave", usuario.Clave);
+            var fechaCreacionParameter = new SqlParameter("@FechaCreacion", DateTime.Now);
+            var fechaModificacionParameter = new SqlParameter("@FechaModificacion", DateTime.Now);
+            
+            var usuarioCreacionIdParameter = new SqlParameter("@UsuarioCreacionID", usuarioCreacionId);
+            var usuarioModificacionIdParameter = new SqlParameter("@UsuarioModificacionID", usuarioCreacionId);
             
 
+            await Database.ExecuteSqlRawAsync(
+                "EXEC uspUsuarioInsertar @TipoIdentificacionID, @RolID, @NumeroIdentificacion, @Nombre, @Apellido, @Telefono, @CorreoElectronico, @TarjetaProfesional, @Clave, @FechaCreacion, @FechaModificacion, @UsuarioCreacionID, @UsuarioModificacionID",
+                tipoIdentificacionIdParameter,
+                rolIdParameter,
+                numeroIdentificacionParameter,
+                nombreParameter,
+                apellidoParameter,
+                telefonoParameter,
+                correoElectronicoParameter,
+                tarjetaProfesionalParameter,
+                claveParameter,
+                fechaCreacionParameter,
+                fechaModificacionParameter,
+                usuarioCreacionIdParameter,
+                usuarioModificacionIdParameter
+             );
         }
 
     }

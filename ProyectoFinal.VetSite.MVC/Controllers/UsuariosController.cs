@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ProyectoFinal.Entidades;
 using ProyectoFinal.Servidor;
+using System.Security.Claims;
 
 namespace ProyectoFinal.VetSite.MVC.Controllers
 {
+    [Authorize]
     public class UsuariosController(UsuarioServicios usuarioServicios
         ,TipoIdentificacionServicio tipoIdentificacionServicio
         , RolServicio rolServicio): Controller
@@ -22,7 +24,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create() {
+        public IActionResult Crear() {
 
             ViewData["TiposIdentificacion"] = _tipoIdentificacionServicio.ObtenerTodos();
             ViewData["Roles"] = _rolServicio.ObtenerTodos();
@@ -30,7 +32,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         } 
 
         [HttpPost]
-        public IActionResult Create(Usuario usuario)
+        public IActionResult Crear(Usuario usuario)
         {
             if (!ModelState.IsValid)
             {
@@ -40,7 +42,8 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
 
             try
             {
-                _usuarioServicios.Agregar(usuario);
+                var usuarioId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+                _usuarioServicios.Agregar(usuario, Guid.Parse(usuarioId!));
             }
             catch (Exception e)
             {
@@ -50,5 +53,24 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
 
             return RedirectToAction("Index"); 
         }
+
+        [HttpPost]
+        public IActionResult Eliminar(Guid id)
+        {
+            try
+            {
+                _usuarioServicios.Eliminar(id);
+
+                TempData["MensajeExito"] = "El usuario ha sido eliminado exitosamente.";
+            }
+            catch (Exception e)
+            {
+                // Manejo de errores y mensajes al usuario
+                TempData["MensajeError"] = $"Ocurrió un error eliminando el usuario: {e.Message}";
+            }
+
+            return RedirectToAction("Index");
+        }
+
     }
 }
