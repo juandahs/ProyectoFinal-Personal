@@ -72,5 +72,66 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        public IActionResult Editar(Guid id)
+        {
+            if(id == Guid.Empty)
+            {
+                ModelState.AddModelError(string.Empty, "No se establecio un identificador de usuario");
+                return RedirectToAction("Index");
+            }
+
+            try
+            {
+                var usuario = _usuarioServicios.ObtenerPorId(id);
+                if (usuario == null)
+                {
+                    ModelState.AddModelError(string.Empty, "No se encontro un usuario con el identificador proporcionado.");
+                    return RedirectToAction("Index");
+                }
+
+                ViewData["TiposIdentificacion"] = _tipoIdentificacionServicio.ObtenerTodos();
+                ViewData["Roles"] = _rolServicio.ObtenerTodos();
+
+                return View(usuario);
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError(string.Empty, $"Ocurrio el siguiente error:\\n {e.Message}");
+                return RedirectToAction("Index");
+
+            }
+        }
+
+        [HttpPost]
+        public IActionResult Editar(Usuario usuario)
+        {
+            if (usuario == null)
+            {
+                ModelState.AddModelError(string.Empty, "No se establecio un usuario válido.");
+                return RedirectToAction("Index");
+            }
+
+            if (!ModelState.IsValid) 
+            {
+                ModelState.AddModelError(string.Empty, "No se establecio un modelo válido.");
+                return RedirectToAction("Index");
+            }
+
+           
+            try
+            {
+
+                _usuarioServicios.Actualizar(usuario);
+                return RedirectToAction("Index");
+
+            }
+            catch (Exception ex)
+            {
+
+                ModelState.AddModelError(string.Empty, $"Ocurrio el siguiente error:\\n {ex.Message}");
+                return RedirectToAction("Index");
+            }
+        }
     }
 }

@@ -2,12 +2,12 @@
 {
     public class TipoIdentificacion
     {
-        public Guid TipoIdentificacionID { get; set; }
+        public Guid TipoIdentificacionId { get; set; }
         public string Descripcion { get; set; } = string.Empty;
         public DateTime FechaCreacion { get; set; }
         public DateTime FechaModificacion { get; set; }
-        public Guid UsuarioCreacionID { get; set; }
-        public Guid UsuarioModificacionID { get; set; }
+        public Guid UsuarioCreacionId { get; set; }
+        public Guid UsuarioModificacionId { get; set; }
 
         public virtual ICollection<Usuario> Usuarios { get; set; } = [];
     }

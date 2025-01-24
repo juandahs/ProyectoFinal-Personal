@@ -46,7 +46,7 @@ namespace ProyectoFinal.Repositorio
         public static readonly string uspUsuarioInsertarNombre = "uspUsuarioInsertar";
         public static readonly string uspUsuarioInsertar = $"""
             CREATE PROCEDURE {uspUsuarioInsertarNombre}
-                @TipoIdentificacionID UNIQUEIDENTIFIER,
+                @tipoIdentificacionId UNIQUEIDENTIFIER,
                 @RolID UNIQUEIDENTIFIER,
                 @NumeroIdentificacion VARCHAR(16),
                 @Nombre VARCHAR(128),
@@ -96,7 +96,7 @@ namespace ProyectoFinal.Repositorio
                 )
                 VALUES (
                     NEWID(),
-                    @TipoIdentificacionID,
+                    @tipoIdentificacionId,
                     @RolID,
                     @NumeroIdentificacion,
                     @Nombre,

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ProyectoFinal.Repositorio.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class Initi : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,41 +15,41 @@ namespace ProyectoFinal.Repositorio.Migrations
                 name: "Rol",
                 columns: table => new
                 {
-                    RolID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RolId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Descripcion = table.Column<string>(type: "varchar(16)", maxLength: 16, nullable: false),
                     FechaCreacion = table.Column<DateTime>(type: "datetime", nullable: false),
                     FechaModificacion = table.Column<DateTime>(type: "datetime", nullable: false),
-                    UsuarioCreacionID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UsuarioModificacionID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    UsuarioCreacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UsuarioModificacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Rol", x => x.RolID);
+                    table.PrimaryKey("PK_Rol", x => x.RolId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "TipoIdentificacion",
                 columns: table => new
                 {
-                    TipoIdentificacionID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TipoIdentificacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Descripcion = table.Column<string>(type: "varchar(32)", maxLength: 32, nullable: false),
                     FechaCreacion = table.Column<DateTime>(type: "datetime", nullable: false),
                     FechaModificacion = table.Column<DateTime>(type: "datetime", nullable: false),
-                    UsuarioCreacionID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UsuarioModificacionID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    UsuarioCreacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UsuarioModificacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TipoIdentificacion", x => x.TipoIdentificacionID);
+                    table.PrimaryKey("PK_TipoIdentificacion", x => x.TipoIdentificacionId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Usuario",
                 columns: table => new
                 {
-                    UsuarioID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TipoIdentificacionID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RolID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UsuarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TipoIdentificacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RolId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     NumeroIdentificacion = table.Column<string>(type: "varchar(16)", maxLength: 16, nullable: false),
                     Nombre = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
                     Apellido = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
@@ -60,65 +60,65 @@ namespace ProyectoFinal.Repositorio.Migrations
                     Salt = table.Column<string>(type: "varchar(32)", maxLength: 32, nullable: false),
                     FechaCreacion = table.Column<DateTime>(type: "datetime", nullable: false),
                     FechaModificacion = table.Column<DateTime>(type: "datetime", nullable: false),
-                    UsuarioCreacionID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UsuarioModificacionID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    UsuarioCreacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UsuarioModificacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Usuario", x => x.UsuarioID);
+                    table.PrimaryKey("PK_Usuario", x => x.UsuarioId);
                     table.ForeignKey(
-                        name: "FK_Usuario_Rol_RolID",
-                        column: x => x.RolID,
+                        name: "FK_Usuario_Rol_RolId",
+                        column: x => x.RolId,
                         principalTable: "Rol",
-                        principalColumn: "RolID",
+                        principalColumn: "RolId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Usuario_TipoIdentificacion_TipoIdentificacionID",
-                        column: x => x.TipoIdentificacionID,
+                        name: "FK_Usuario_TipoIdentificacion_TipoIdentificacionId",
+                        column: x => x.TipoIdentificacionId,
                         principalTable: "TipoIdentificacion",
-                        principalColumn: "TipoIdentificacionID",
+                        principalColumn: "TipoIdentificacionId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Rol_UsuarioCreacionID",
+                name: "IX_Rol_UsuarioCreacionId",
                 table: "Rol",
-                column: "UsuarioCreacionID");
+                column: "UsuarioCreacionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Rol_UsuarioModificacionID",
+                name: "IX_Rol_UsuarioModificacionId",
                 table: "Rol",
-                column: "UsuarioModificacionID");
+                column: "UsuarioModificacionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TipoIdentificacion_UsuarioCreacionID",
+                name: "IX_TipoIdentificacion_UsuarioCreacionId",
                 table: "TipoIdentificacion",
-                column: "UsuarioCreacionID");
+                column: "UsuarioCreacionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TipoIdentificacion_UsuarioModificacionID",
+                name: "IX_TipoIdentificacion_UsuarioModificacionId",
                 table: "TipoIdentificacion",
-                column: "UsuarioModificacionID");
+                column: "UsuarioModificacionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Usuario_RolID",
+                name: "IX_Usuario_RolId",
                 table: "Usuario",
-                column: "RolID");
+                column: "RolId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Usuario_TipoIdentificacionID",
+                name: "IX_Usuario_TipoIdentificacionId",
                 table: "Usuario",
-                column: "TipoIdentificacionID");
+                column: "TipoIdentificacionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Usuario_UsuarioCreacionID",
+                name: "IX_Usuario_UsuarioCreacionId",
                 table: "Usuario",
-                column: "UsuarioCreacionID");
+                column: "UsuarioCreacionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Usuario_UsuarioModificacionID",
+                name: "IX_Usuario_UsuarioModificacionId",
                 table: "Usuario",
-                column: "UsuarioModificacionID");
+                column: "UsuarioModificacionId");
         }
 
         /// <inheritdoc />

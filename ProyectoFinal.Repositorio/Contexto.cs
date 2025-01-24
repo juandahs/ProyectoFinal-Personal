@@ -38,20 +38,20 @@ namespace ProyectoFinal.Repositorio
                 t.Property(b => b.Salt).HasColumnType("varchar").HasMaxLength(32).IsRequired();
                 t.Property(b => b.FechaCreacion).HasColumnType("datetime").IsRequired();
                 t.Property(b => b.FechaModificacion).HasColumnType("datetime").IsRequired();
-                t.Property(b => b.UsuarioCreacionID).HasColumnType("uniqueidentifier").IsRequired();
-                t.Property(b => b.UsuarioModificacionID).HasColumnType("uniqueidentifier").IsRequired();
+                t.Property(b => b.UsuarioCreacionId).HasColumnType("uniqueidentifier").IsRequired();
+                t.Property(b => b.UsuarioModificacionId).HasColumnType("uniqueidentifier").IsRequired();
 
-                t.HasIndex(b => b.UsuarioCreacionID);
-                t.HasIndex(b => b.UsuarioModificacionID);
+                t.HasIndex(b => b.UsuarioCreacionId);
+                t.HasIndex(b => b.UsuarioModificacionId);
 
                 t.HasOne(b => b.Rol)
                 .WithMany(b => b.Usuarios)
-                .HasForeignKey(b => b.RolID).IsRequired();
+                .HasForeignKey(b => b.RolId).IsRequired();
 
 
                 t.HasOne(b => b.TipoIdentificacion)
                 .WithMany(b => b.Usuarios)
-                .HasForeignKey(u => u.TipoIdentificacionID)
+                .HasForeignKey(u => u.TipoIdentificacionId)
                 .IsRequired();
             });
 
@@ -64,11 +64,11 @@ namespace ProyectoFinal.Repositorio
                 t.Property(b => b.Descripcion).HasColumnType("varchar").HasMaxLength(16).IsRequired();
                 t.Property(b => b.FechaCreacion).HasColumnType("datetime").IsRequired();
                 t.Property(b => b.FechaModificacion).HasColumnType("datetime").IsRequired();
-                t.Property(b => b.UsuarioCreacionID).HasColumnType("uniqueidentifier").IsRequired();
-                t.Property(b => b.UsuarioModificacionID).HasColumnType("uniqueidentifier").IsRequired();
+                t.Property(b => b.UsuarioCreacionId).HasColumnType("uniqueidentifier").IsRequired();
+                t.Property(b => b.UsuarioModificacionId).HasColumnType("uniqueidentifier").IsRequired();
 
-                t.HasIndex(b => b.UsuarioCreacionID);
-                t.HasIndex(b => b.UsuarioModificacionID);
+                t.HasIndex(b => b.UsuarioCreacionId);
+                t.HasIndex(b => b.UsuarioModificacionId);
 
 
             });
@@ -78,18 +78,18 @@ namespace ProyectoFinal.Repositorio
 
             modelBuilder.Entity<TipoIdentificacion>(t =>
             {
-                t.Property(b => b.TipoIdentificacionID)
+                t.Property(b => b.TipoIdentificacionId)
                     .HasColumnType("uniqueidentifier")
                     .IsRequired();
 
                 t.Property(b => b.Descripcion).HasColumnType("varchar").HasMaxLength(32).IsRequired();
                 t.Property(b => b.FechaCreacion).HasColumnType("datetime").IsRequired();
                 t.Property(b => b.FechaModificacion).HasColumnType("datetime").IsRequired();
-                t.Property(b => b.UsuarioCreacionID).HasColumnType("uniqueidentifier").IsRequired();
-                t.Property(b => b.UsuarioModificacionID).HasColumnType("uniqueidentifier").IsRequired();
+                t.Property(b => b.UsuarioCreacionId).HasColumnType("uniqueidentifier").IsRequired();
+                t.Property(b => b.UsuarioModificacionId).HasColumnType("uniqueidentifier").IsRequired();
 
-                t.HasIndex(b => b.UsuarioCreacionID);
-                t.HasIndex(b => b.UsuarioModificacionID);
+                t.HasIndex(b => b.UsuarioCreacionId);
+                t.HasIndex(b => b.UsuarioModificacionId );
 
             });
 
@@ -142,8 +142,8 @@ namespace ProyectoFinal.Repositorio
 
         public async Task UsuarioInsertar(Usuario usuario, Guid usuarioCreacionId) 
         {
-            var tipoIdentificacionIdParameter = new SqlParameter("@TipoIdentificacionID", usuario.TipoIdentificacionID);
-            var rolIdParameter = new SqlParameter("@RolID", usuario.RolID);
+            var tipoIdentificacionIdParameter = new SqlParameter("@tipoIdentificacionId", usuario.TipoIdentificacionId);
+            var rolIdParameter = new SqlParameter("@RolID", usuario.RolId);
             var numeroIdentificacionParameter = new SqlParameter("@NumeroIdentificacion", usuario.NumeroIdentificacion);
             var nombreParameter = new SqlParameter("@Nombre", usuario.Nombre);
             var apellidoParameter = new SqlParameter("@Apellido", usuario.Apellido);
@@ -159,7 +159,7 @@ namespace ProyectoFinal.Repositorio
             
 
             await Database.ExecuteSqlRawAsync(
-                "EXEC uspUsuarioInsertar @TipoIdentificacionID, @RolID, @NumeroIdentificacion, @Nombre, @Apellido, @Telefono, @CorreoElectronico, @TarjetaProfesional, @Clave, @FechaCreacion, @FechaModificacion, @UsuarioCreacionID, @UsuarioModificacionID",
+                "EXEC uspUsuarioInsertar @tipoIdentificacionId, @RolID, @NumeroIdentificacion, @Nombre, @Apellido, @Telefono, @CorreoElectronico, @TarjetaProfesional, @Clave, @FechaCreacion, @FechaModificacion, @UsuarioCreacionID, @UsuarioModificacionID",
                 tipoIdentificacionIdParameter,
                 rolIdParameter,
                 numeroIdentificacionParameter,

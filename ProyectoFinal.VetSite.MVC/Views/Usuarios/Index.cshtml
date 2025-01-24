@@ -46,11 +46,14 @@
                         <td>@usuario.CorreoElectronico</td>
                         <td>@usuario.TarjetaProfesional</td>
                         <td class="text-center">
-                            <a href="/Usuarios/Edit/@usuario.UsuarioID" class="btn btn-primary me-2">
-                                <i class="fas fa-edit"></i> Editar
-                            </a>
+                            <form asp-action="Editar" method="get" class="d-inline">
+                                <input typr="hidden" name="id" value="@usuario.UsuarioId"/>
+                                <button type="submit" class="btn btn-primary me-2">
+                                    <i class="fas fa-edit"></i> Editar
+                                </button>
+                            </form>
                             <form asp-action="Eliminar" method="post" class="d-inline">
-                                <input type="hidden" name="id" value="@usuario.UsuarioID" />
+                                <input type="hidden" name="id" value="@usuario.UsuarioId" />
                                 <button type="submit" class="btn btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar este usuario?');">
                                     <i class="fas fa-trash"></i> Eliminar
                                 </button>

@@ -24,7 +24,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
                 return View("Index");
             }
 
-            if (!_usuarioServicios.EsValido(usuario.UsuarioID, clave))
+            if (!_usuarioServicios.EsValido(usuario.UsuarioId, clave))
             {
                 ModelState.AddModelError(string.Empty, "Usuario no encontrado");
                 return View("Index");
@@ -34,7 +34,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             var claims = new List<Claim>
             {
                 new(ClaimTypes.Name, usuario.Nombre),
-                new(ClaimTypes.NameIdentifier, usuario.UsuarioID.ToString())
+                new(ClaimTypes.NameIdentifier, usuario.UsuarioId.ToString())
 
             };
 

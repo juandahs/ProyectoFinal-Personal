@@ -12,22 +12,22 @@ using ProyectoFinal.Repositorio;
 namespace ProyectoFinal.Repositorio.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20240929200844_Init")]
-    partial class Init
+    [Migration("20250124133539_Initi")]
+    partial class Initi
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.8")
+                .HasAnnotation("ProductVersion", "8.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("ProyectoFinal.Entidades.Rol", b =>
                 {
-                    b.Property<Guid>("RolID")
+                    b.Property<Guid>("RolId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -42,24 +42,24 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.Property<DateTime>("FechaModificacion")
                         .HasColumnType("datetime");
 
-                    b.Property<Guid>("UsuarioCreacionID")
+                    b.Property<Guid>("UsuarioCreacionId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UsuarioModificacionID")
+                    b.Property<Guid>("UsuarioModificacionId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("RolID");
+                    b.HasKey("RolId");
 
-                    b.HasIndex("UsuarioCreacionID");
+                    b.HasIndex("UsuarioCreacionId");
 
-                    b.HasIndex("UsuarioModificacionID");
+                    b.HasIndex("UsuarioModificacionId");
 
                     b.ToTable("Rol", (string)null);
                 });
 
             modelBuilder.Entity("ProyectoFinal.Entidades.TipoIdentificacion", b =>
                 {
-                    b.Property<Guid>("TipoIdentificacionID")
+                    b.Property<Guid>("TipoIdentificacionId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -74,24 +74,24 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.Property<DateTime>("FechaModificacion")
                         .HasColumnType("datetime");
 
-                    b.Property<Guid>("UsuarioCreacionID")
+                    b.Property<Guid>("UsuarioCreacionId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UsuarioModificacionID")
+                    b.Property<Guid>("UsuarioModificacionId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("TipoIdentificacionID");
+                    b.HasKey("TipoIdentificacionId");
 
-                    b.HasIndex("UsuarioCreacionID");
+                    b.HasIndex("UsuarioCreacionId");
 
-                    b.HasIndex("UsuarioModificacionID");
+                    b.HasIndex("UsuarioModificacionId");
 
                     b.ToTable("TipoIdentificacion", (string)null);
                 });
 
             modelBuilder.Entity("ProyectoFinal.Entidades.Usuario", b =>
                 {
-                    b.Property<Guid>("UsuarioID")
+                    b.Property<Guid>("UsuarioId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -126,7 +126,7 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .HasMaxLength(16)
                         .HasColumnType("varchar");
 
-                    b.Property<Guid>("RolID")
+                    b.Property<Guid>("RolId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Salt")
@@ -143,24 +143,24 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .HasMaxLength(16)
                         .HasColumnType("varchar");
 
-                    b.Property<Guid>("TipoIdentificacionID")
+                    b.Property<Guid>("TipoIdentificacionId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UsuarioCreacionID")
+                    b.Property<Guid>("UsuarioCreacionId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UsuarioModificacionID")
+                    b.Property<Guid>("UsuarioModificacionId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("UsuarioID");
+                    b.HasKey("UsuarioId");
 
-                    b.HasIndex("RolID");
+                    b.HasIndex("RolId");
 
-                    b.HasIndex("TipoIdentificacionID");
+                    b.HasIndex("TipoIdentificacionId");
 
-                    b.HasIndex("UsuarioCreacionID");
+                    b.HasIndex("UsuarioCreacionId");
 
-                    b.HasIndex("UsuarioModificacionID");
+                    b.HasIndex("UsuarioModificacionId");
 
                     b.ToTable("Usuario", (string)null);
                 });
@@ -169,13 +169,13 @@ namespace ProyectoFinal.Repositorio.Migrations
                 {
                     b.HasOne("ProyectoFinal.Entidades.Rol", "Rol")
                         .WithMany("Usuarios")
-                        .HasForeignKey("RolID")
+                        .HasForeignKey("RolId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ProyectoFinal.Entidades.TipoIdentificacion", "TipoIdentificacion")
                         .WithMany("Usuarios")
-                        .HasForeignKey("TipoIdentificacionID")
+                        .HasForeignKey("TipoIdentificacionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

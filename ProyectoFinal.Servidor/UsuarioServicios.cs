@@ -11,7 +11,7 @@ namespace ProyectoFinal.Servidor
 
         public Usuario? ObtenerPorNombre(string nombreUsuario) => _contexto.Usuarios.AsNoTracking().FirstOrDefault(x => x.Nombre == nombreUsuario);
 
-        public List<Usuario> ObtenerTodos() => _contexto.Usuarios.AsNoTracking().ToList();
+        public List<Usuario> ObtenerTodos() => [.. _contexto.Usuarios.AsNoTracking()];
 
         
         public bool EsValido(Guid usuarioId, string clave) => _contexto.ValidarClaveAsync(usuarioId, clave).Result;
@@ -19,24 +19,25 @@ namespace ProyectoFinal.Servidor
         public void Agregar(Usuario usuario, Guid usuarioCreacionId) => _contexto.UsuarioInsertar(usuario, usuarioCreacionId).GetAwaiter().GetResult();
 
 
-        public Usuario? ObtenerPorId(Guid id) => _contexto.Usuarios.FirstOrDefault(u => u.UsuarioID == id);
+        public Usuario? ObtenerPorId(Guid id) => _contexto.Usuarios.FirstOrDefault(u => u.UsuarioId == id);
 
         public void Actualizar(Usuario usuario)
         {
-            throw new NotImplementedException();
+            var usuarioDb = _contexto.Usuarios.FirstOrDefault(u => u.UsuarioId == usuario.UsuarioId) ?? throw new Exception("El usuario no existe.");
+
+            _contexto.Entry(usuarioDb).CurrentValues.SetValues(usuario);
+
+            _contexto.SaveChangesAsync().Wait();
         }
 
         public void Eliminar(Guid usuarioId)
         {
-            var usuario = _contexto.Usuarios.FirstOrDefault(u => u.UsuarioID == usuarioId);
-            if (usuario == null)
-                throw new Exception("El usuario no existe.");
-
-            // Aquí podrías registrar auditoría si lo necesitas, usando `usuarioAutenticadoId`.
+            var usuario = _contexto.Usuarios.AsNoTracking().FirstOrDefault(u => u.UsuarioId == usuarioId) ?? throw new Exception("El usuario no existe.");
 
             _contexto.Usuarios.Remove(usuario);
             _contexto.SaveChanges();
         }
 
+       
     }
 }
