@@ -48,3 +48,52 @@ EXEC uspUsuarioInsertar
 
 -- Verificar la inserción
 SELECT * FROM Usuario;
+
+
+
+-- ************************************************************
+--						PROBAR ACTUALIZAR USUARIO
+-- ************************************************************
+USE VetSite;
+
+DECLARE @UsuarioId UNIQUEIDENTIFIER;
+DECLARE @TipoIdentificacionId UNIQUEIDENTIFIER;
+DECLARE @RolId UNIQUEIDENTIFIER;
+DECLARE @UsuarioModificacionId UNIQUEIDENTIFIER;
+DECLARE @Fecha DATETIME;
+SET @Fecha = GETDATE();
+
+-- Obtener el UsuarioId del usuario "Juan Pérez"
+SET @UsuarioId = (SELECT UsuarioId FROM Usuario WHERE Nombre = 'Juan' AND Apellido = 'Pérez');
+
+-- Verificar si el UsuarioId fue encontrado
+IF @UsuarioId IS NULL
+BEGIN
+    PRINT 'El usuario "Juan Pérez" no existe en la tabla Usuario.';
+    RETURN;
+END;
+
+-- Obtener el TipoIdentificacionID, RolID y UsuarioModificacionID
+SET @TipoIdentificacionId = (SELECT TipoIdentificacionId FROM TipoIdentificacion WHERE Descripcion = 'Otro');
+SET @RolId = (SELECT RolId FROM Rol WHERE Descripcion = 'Usuario');
+SET @UsuarioModificacionId = (SELECT UsuarioId FROM Usuario WHERE Nombre = 'Admin');
+
+-- Ejecutar el procedimiento almacenado para actualizar el usuario
+EXEC uspUsuarioActualizar
+    @usuarioId = @UsuarioId,
+    @tipoIdentificacionId = @TipoIdentificacionId,
+    @rolId = @RolId,
+    @numeroIdentificacion = '9876543210',
+    @nombre = 'Juan',
+    @apellido = 'Pérez Actualizado',
+    @telefono = '0987654321',
+    @correoElectronico = 'juan.perez.updated@example.com',
+    @tarjetaProfesional = 'TP987654',
+    @fechaModificacion = @Fecha,
+    @usuarioModificacionId = @UsuarioModificacionId;
+
+-- Verificar la actualización
+PRINT 'Información actualizada del usuario "Juan Pérez":';
+SELECT * 
+FROM Usuario 
+WHERE UsuarioId = @UsuarioId;

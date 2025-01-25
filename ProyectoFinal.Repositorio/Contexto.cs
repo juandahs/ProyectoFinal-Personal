@@ -151,15 +151,14 @@ namespace ProyectoFinal.Repositorio
             var correoElectronicoParameter = new SqlParameter("@CorreoElectronico", usuario.CorreoElectronico);
             var tarjetaProfesionalParameter = new SqlParameter("@TarjetaProfesional",usuario.TarjetaProfesional ?? (object)DBNull.Value);
             var claveParameter = new SqlParameter("@Clave", usuario.Clave);
-            var fechaCreacionParameter = new SqlParameter("@FechaCreacion", DateTime.Now);
-            var fechaModificacionParameter = new SqlParameter("@FechaModificacion", DateTime.Now);
+            var fechaCreacionParameter = new SqlParameter("@FechaCreacion", DateTime.Now);           
             
             var usuarioCreacionIdParameter = new SqlParameter("@UsuarioCreacionID", usuarioCreacionId);
-            var usuarioModificacionIdParameter = new SqlParameter("@UsuarioModificacionID", usuarioCreacionId);
+            
             
 
             await Database.ExecuteSqlRawAsync(
-                "EXEC uspUsuarioInsertar @tipoIdentificacionId, @RolID, @NumeroIdentificacion, @Nombre, @Apellido, @Telefono, @CorreoElectronico, @TarjetaProfesional, @Clave, @FechaCreacion, @FechaModificacion, @UsuarioCreacionID, @UsuarioModificacionID",
+                "EXEC uspUsuarioInsertar @tipoIdentificacionId, @RolID, @NumeroIdentificacion, @Nombre, @Apellido, @Telefono, @CorreoElectronico, @TarjetaProfesional, @Clave, @FechaCreacion, @UsuarioCreacionID",
                 tipoIdentificacionIdParameter,
                 rolIdParameter,
                 numeroIdentificacionParameter,
@@ -169,10 +168,9 @@ namespace ProyectoFinal.Repositorio
                 correoElectronicoParameter,
                 tarjetaProfesionalParameter,
                 claveParameter,
-                fechaCreacionParameter,
-                fechaModificacionParameter,
-                usuarioCreacionIdParameter,
-                usuarioModificacionIdParameter
+                fechaCreacionParameter,                
+                usuarioCreacionIdParameter
+                
              );
         }
 

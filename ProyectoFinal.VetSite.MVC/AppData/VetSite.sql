@@ -448,7 +448,7 @@ END;
 GO
 
 CREATE PROCEDURE [dbo].[uspUsuarioActualizar]
-	@usuarioId UNIQUEIDENTIFIER,
+    @usuarioId UNIQUEIDENTIFIER,
     @tipoIdentificacionId UNIQUEIDENTIFIER,
     @rolId UNIQUEIDENTIFIER,
     @numeroIdentificacion VARCHAR(16),
@@ -457,24 +457,24 @@ CREATE PROCEDURE [dbo].[uspUsuarioActualizar]
     @telefono VARCHAR(16),
     @correoElectronico VARCHAR(128),
     @tarjetaProfesional VARCHAR(64),
-	@fechaModificacion DATETIME,
+    @fechaModificacion DATETIME,
     @usuarioModificacionId UNIQUEIDENTIFIER
 AS
 BEGIN
     SET NOCOUNT ON;
-   -- Actualziar el nuevo usuario en la tabla
-	UPDATE Usuario SET TipoIdentificacionId = @tipoIdentificacionId
-					, RolID = @rolId
-					, NumeroIdentificacion = @numeroIdentificacion
-					, Nombre = @nombre
-					, Apellido = @apellido
-					, Telefono = @telefono
-					, CorreoElectronico = @correoElectronico
-					, TarjetaProfesional = @tarjetaProfesional
-					, FechaModificacion = @fechaModificacion
-					, UsuarioModificacionId = @usuarioModificacionId
-	WHERE Usuario.UsuarioID = @usuarioId
-
+        
+        UPDATE Usuario
+        SET TipoIdentificacionId = @tipoIdentificacionId,
+            RolID = @rolId,
+            NumeroIdentificacion = @numeroIdentificacion,
+            Nombre = @nombre,
+            Apellido = @apellido,
+            Telefono = @telefono,
+            CorreoElectronico = @correoElectronico,
+            TarjetaProfesional = @tarjetaProfesional,
+            FechaModificacion = @fechaModificacion,
+            UsuarioModificacionId = @usuarioModificacionId
+        WHERE UsuarioID = @usuarioId;
 END;
 GO
 

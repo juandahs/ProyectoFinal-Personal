@@ -47,34 +47,32 @@ namespace ProyectoFinal.Repositorio
         public static readonly string uspUsuarioInsertar = $"""
             CREATE PROCEDURE {uspUsuarioInsertarNombre}
                 @tipoIdentificacionId UNIQUEIDENTIFIER,
-                @RolID UNIQUEIDENTIFIER,
-                @NumeroIdentificacion VARCHAR(16),
-                @Nombre VARCHAR(128),
+                @rolId UNIQUEIDENTIFIER,
+                @numeroIdentificacion VARCHAR(16),
+                @nombre VARCHAR(128),
                 @Apellido VARCHAR(128),
-                @Telefono VARCHAR(16),
-                @CorreoElectronico VARCHAR(128),
-                @TarjetaProfesional VARCHAR(64),
-                @Clave VARCHAR(32), 
-            	@FechaCreacion DATETIME,
-            	@FechaModificacion DATETIME,
-                @UsuarioCreacionID UNIQUEIDENTIFIER,
-                @UsuarioModificacionID UNIQUEIDENTIFIER
+                @telefono VARCHAR(16),
+                @correoElectronico VARCHAR(128),
+                @tarjetaProfesional VARCHAR(64),
+                @clave VARCHAR(32), 
+            	@fechaCreacion DATETIME,
+                @usuarioCreacionId UNIQUEIDENTIFIER
             AS
             BEGIN
                 SET NOCOUNT ON;
 
 
-                DECLARE @Salt VARBINARY(32);
-                DECLARE @ClaveConSalt VARBINARY(MAX);
-                DECLARE @HashClave VARBINARY(32);     
+                DECLARE @salt VARBINARY(32);
+                DECLARE @claveConSalt VARBINARY(MAX);
+                DECLARE @hashClave VARBINARY(32);     
 
-               SET @Salt = CAST(CRYPT_GEN_RANDOM(32) AS VARBINARY(32));
+               SET @salt = CAST(CRYPT_GEN_RANDOM(32) AS VARBINARY(32));
 
                 -- Concatenar el salt con la clave
-                SET @ClaveConSalt = @Salt + CAST(@Clave AS VARBINARY(MAX));
+                SET @claveConSalt = @salt + CAST(@clave AS VARBINARY(MAX));
 
                 -- Calcular el hash de la clave concatenada con el salt
-                SET @HashClave = HASHBYTES('SHA2_256', @ClaveConSalt);
+                SET @hashClave = HASHBYTES('SHA2_256', @claveConSalt);
 
                 -- Insertar el nuevo usuario en la tabla
                 INSERT INTO Usuario (
@@ -97,20 +95,53 @@ namespace ProyectoFinal.Repositorio
                 VALUES (
                     NEWID(),
                     @tipoIdentificacionId,
-                    @RolID,
-                    @NumeroIdentificacion,
-                    @Nombre,
+                    @rolId,
+                    @numeroIdentificacion,
+                    @nombre,
                     @Apellido,
-                    @Telefono,
-                    @CorreoElectronico,
-                    @TarjetaProfesional,
-                    @HashClave, 
-                    @Salt,
-                    @FechaCreacion,
-                    @FechaModificacion,
-                    @UsuarioCreacionID,
-                    @UsuarioModificacionID
+                    @telefono,
+                    @correoElectronico,
+                    @tarjetaProfesional,
+                    @hashClave, 
+                    @salt,
+                    @fechaCreacion,
+                    @fechaCreacion,
+                    @usuarioCreacionId,
+                    @usuarioCreacionId
                 );
+            END;
+            """;
+
+        public static readonly string uspUsuarioActualizarNombre = "uspUsuarioActualizar";
+        public static readonly string uspUsuarioActualizar = $"""
+            CREATE PROCEDURE {uspUsuarioActualizarNombre}
+                @usuarioId UNIQUEIDENTIFIER,
+                @tipoIdentificacionId UNIQUEIDENTIFIER,
+                @rolId UNIQUEIDENTIFIER,
+                @numeroIdentificacion VARCHAR(16),
+                @nombre VARCHAR(128),
+                @apellido VARCHAR(128),
+                @telefono VARCHAR(16),
+                @correoElectronico VARCHAR(128),
+                @tarjetaProfesional VARCHAR(64),
+                @fechaModificacion DATETIME,
+                @usuarioModificacionId UNIQUEIDENTIFIER
+            AS
+            BEGIN
+                SET NOCOUNT ON;
+
+                    UPDATE Usuario
+                    SET TipoIdentificacionId = @tipoIdentificacionId,
+                        RolID = @rolId,
+                        NumeroIdentificacion = @numeroIdentificacion,
+                        Nombre = @nombre,
+                        Apellido = @apellido,
+                        Telefono = @telefono,
+                        CorreoElectronico = @correoElectronico,
+                        TarjetaProfesional = @tarjetaProfesional,
+                        FechaModificacion = @fechaModificacion,
+                        UsuarioModificacionId = @usuarioModificacionId
+                    WHERE UsuarioID = @usuarioId;
             END;
             """;
     }
