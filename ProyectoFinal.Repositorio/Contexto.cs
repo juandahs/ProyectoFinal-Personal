@@ -140,20 +140,51 @@ namespace ProyectoFinal.Repositorio
         }
 
 
+
+        public async Task UsuarioActualizar(Usuario usuario, Guid usuarioActualizacionId) 
+        {
+         
+                var usuarioIdParameter = new SqlParameter(@"usuarioId", usuario.UsuarioId);
+                var tipoIdentificacionIdParameter = new SqlParameter("@tipoIdentificacionId", usuario.TipoIdentificacionId);
+                var rolIdParameter = new SqlParameter("@rolID", usuario.RolId);
+                var numeroIdentificacionParameter = new SqlParameter("@numeroIdentificacion", usuario.NumeroIdentificacion);
+                var nombreParameter = new SqlParameter("@nombre", usuario.Nombre);
+                var apellidoParameter = new SqlParameter("@apellido", usuario.Apellido);
+                var telefonoParameter = new SqlParameter("@telefono", usuario.Telefono);
+                var correoElectronicoParameter = new SqlParameter("@correoElectronico", usuario.CorreoElectronico);
+                var tarjetaProfesionalParameter = new SqlParameter("@tarjetaProfesional", usuario.TarjetaProfesional ?? (object)DBNull.Value);
+                var fechaModificacionParameter = new SqlParameter("@fechaModificacion", DateTime.Now);
+                var usuarioModificacionIdParameter = new SqlParameter("@usuarioModificacionId", usuarioActualizacionId);
+
+                await Database.ExecuteSqlRawAsync("EXEC uspUsuarioActualizar @usuarioId, @tipoIdentificacionId, @rolId, @numeroIdentificacion, @nombre, @apellido, @telefono, @correoElectronico, @tarjetaProfesional, @fechaModificacion, @usuarioModificacionId"
+                    , usuarioIdParameter
+                    , tipoIdentificacionIdParameter
+                    , rolIdParameter
+                    , numeroIdentificacionParameter
+                    , nombreParameter
+                    , apellidoParameter
+                    , telefonoParameter
+                    , correoElectronicoParameter
+                    , tarjetaProfesionalParameter
+                    , fechaModificacionParameter
+                    , usuarioModificacionIdParameter);
+           
+        }
+
+
         public async Task UsuarioInsertar(Usuario usuario, Guid usuarioCreacionId) 
         {
             var tipoIdentificacionIdParameter = new SqlParameter("@tipoIdentificacionId", usuario.TipoIdentificacionId);
-            var rolIdParameter = new SqlParameter("@RolID", usuario.RolId);
-            var numeroIdentificacionParameter = new SqlParameter("@NumeroIdentificacion", usuario.NumeroIdentificacion);
-            var nombreParameter = new SqlParameter("@Nombre", usuario.Nombre);
-            var apellidoParameter = new SqlParameter("@Apellido", usuario.Apellido);
-            var telefonoParameter = new SqlParameter("@Telefono", usuario.Telefono);
-            var correoElectronicoParameter = new SqlParameter("@CorreoElectronico", usuario.CorreoElectronico);
-            var tarjetaProfesionalParameter = new SqlParameter("@TarjetaProfesional",usuario.TarjetaProfesional ?? (object)DBNull.Value);
-            var claveParameter = new SqlParameter("@Clave", usuario.Clave);
-            var fechaCreacionParameter = new SqlParameter("@FechaCreacion", DateTime.Now);           
-            
-            var usuarioCreacionIdParameter = new SqlParameter("@UsuarioCreacionID", usuarioCreacionId);
+            var rolIdParameter = new SqlParameter("@rolID", usuario.RolId);
+            var numeroIdentificacionParameter = new SqlParameter("@numeroIdentificacion", usuario.NumeroIdentificacion);
+            var nombreParameter = new SqlParameter("@nombre", usuario.Nombre);
+            var apellidoParameter = new SqlParameter("@apellido", usuario.Apellido);
+            var telefonoParameter = new SqlParameter("@telefono", usuario.Telefono);
+            var correoElectronicoParameter = new SqlParameter("@correoElectronico", usuario.CorreoElectronico);
+            var tarjetaProfesionalParameter = new SqlParameter("@tarjetaProfesional",usuario.TarjetaProfesional ?? (object)DBNull.Value);
+            var claveParameter = new SqlParameter("@clave", usuario.Clave);
+            var fechaCreacionParameter = new SqlParameter("@fechaCreacion", DateTime.Now);  
+            var usuarioCreacionIdParameter = new SqlParameter("@usuarioCreacionID", usuarioCreacionId);
             
             
 

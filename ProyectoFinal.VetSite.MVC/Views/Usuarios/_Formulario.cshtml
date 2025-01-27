@@ -2,6 +2,9 @@
 @model ProyectoFinal.Entidades.Usuario
 
 <div class="row">
+
+    <!-- Campo oculto para el UsuarioId -->
+    <input type="hidden" asp-for="UsuarioId" />
     <!-- Tipo de Identificación -->
     <div class="col-md-6 mb-3">
         <label asp-for="TipoIdentificacionId" class="form-label">Tipo de Identificación</label>

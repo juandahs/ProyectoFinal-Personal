@@ -21,13 +21,11 @@ namespace ProyectoFinal.Servidor
 
         public Usuario? ObtenerPorId(Guid id) => _contexto.Usuarios.FirstOrDefault(u => u.UsuarioId == id);
 
-        public void Actualizar(Usuario usuario)
+        public void Actualizar(Usuario usuario, Guid usuarioModificacionId)
         {
-            var usuarioDb = _contexto.Usuarios.FirstOrDefault(u => u.UsuarioId == usuario.UsuarioId) ?? throw new Exception("El usuario no existe.");
+            var usuarioDb = _contexto.Usuarios.AsNoTracking().FirstOrDefault(u => u.UsuarioId == usuario.UsuarioId) ?? throw new Exception("El usuario no existe.");
 
-            _contexto.Entry(usuarioDb).CurrentValues.SetValues(usuario);
-
-            _contexto.SaveChangesAsync().Wait();
+            _contexto.UsuarioActualizar(usuario, usuarioModificacionId).GetAwaiter().GetResult() ;
         }
 
         public void Eliminar(Guid usuarioId)

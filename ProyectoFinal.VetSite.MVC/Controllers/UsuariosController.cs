@@ -121,8 +121,9 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
            
             try
             {
+                var usuarioModificacionId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
-                _usuarioServicios.Actualizar(usuario);
+                _usuarioServicios.Actualizar(usuario, Guid.Parse(usuarioModificacionId!));
                 return RedirectToAction("Index");
 
             }
