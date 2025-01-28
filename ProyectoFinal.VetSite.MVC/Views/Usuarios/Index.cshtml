@@ -1,5 +1,6 @@
 ﻿@model List<ProyectoFinal.Entidades.Usuario>
 
+
 <title>@ViewBag.Title - VetSite</title>
 
 @if (ViewData.ModelState.ErrorCount > 0)
@@ -11,6 +12,10 @@
         }
     </div>
 }
+<head>
+    <link rel="stylesheet" href="~/css/users.css" asp-append-version="true" />
+</head>
+
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1>@ViewBag.Title</h1>
@@ -23,6 +28,7 @@
         <thead>
             <tr>
                 <th>Nombre</th>
+                <th>Apellido</th>
                 <th>Teléfono</th>
                 <th>Correo electronico</th>
                 <th>Tarjeta profesional</th>
@@ -42,12 +48,13 @@
                 {
                     <tr>
                         <td>@usuario.Nombre @usuario.Apellido</td>
+                        <td>@usuario.Apellido</td>
                         <td>@usuario.Telefono</td>
                         <td>@usuario.CorreoElectronico</td>
                         <td>@usuario.TarjetaProfesional</td>
                         <td class="text-center">
                             <form asp-action="Editar" method="get" class="d-inline">
-                                <input typr="hidden" name="id" value="@usuario.UsuarioId"/>
+                                <input type="hidden" name="id" value="@usuario.UsuarioId"/>
                                 <button type="submit" class="btn btn-primary me-2">
                                     <i class="fas fa-edit"></i> Editar
                                 </button>
@@ -63,6 +70,5 @@
                 }
             }
         </tbody>
-
     </table>
 </div>

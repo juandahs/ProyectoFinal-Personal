@@ -1,10 +1,15 @@
 ﻿@using ProyectoFinal.Entidades
 @model ProyectoFinal.Entidades.Usuario
 
+<head>
+    <link rel="stylesheet" href="~/css/users.css" asp-append-version="true" />
+</head>
+
 <div class="row">
 
     <!-- Campo oculto para el UsuarioId -->
     <input type="hidden" asp-for="UsuarioId" />
+
     <!-- Tipo de Identificación -->
     <div class="col-md-6 mb-3">
         <label asp-for="TipoIdentificacionId" class="form-label">Tipo de Identificación</label>
@@ -73,15 +78,23 @@
         <span asp-validation-for="RolId" class="text-danger"></span>
     </div>
 
-    @if(Model == null){
+    @if (Model == null)
+    {
         <!-- Clave -->
         <div class="col-md-6 mb-3">
             <label asp-for="Clave" class="form-label">Clave</label>
             <input asp-for="Clave" class="form-control" type="password" required />
             <span asp-validation-for="Clave" class="text-danger"></span>
         </div>
+    }else{
+
+        <!-- Botón para abrir el modal de Cambiar Contraseña -->
+        <div class="col-12 mb-3">
+            <button type="button" class="btn btn-warning" onclick="abrirModalCambiarClave()">
+                Cambiar Contraseña
+            </button>
+        </div>
     }
-   
 </div>
 
 <!-- Botón de Guardar -->
@@ -89,3 +102,60 @@
     <button type="submit" class="btn btn-success">Guardar</button>
     <a href="@Url.Action("Index", "Usuarios")" class="btn btn-secondary">Cancelar</a>
 </div>
+
+<!-- Fondo oscuro para opacar -->
+<div id="modalOverlay" class="modal-overlay"></div>
+
+<!-- Modal para cambiar la contraseña -->
+<div class="modal" id="cambiarClaveModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Cambiar Contraseña</h5>
+                <button type="button" class="btn-close" onclick="cerrarModalCambiarClave()" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <!-- Contraseña actual -->
+                    <div class="mb-3">
+                        <label for="contraseñaActual" class="form-label">Contraseña Actual</label>
+                        <input type="password" class="form-control" id="contraseñaActual" required>
+                    </div>
+                    <!-- Nueva contraseña -->
+                    <div class="mb-3">
+                        <label for="nuevaContraseña" class="form-label">Nueva Contraseña</label>
+                        <input type="password" class="form-control" id="nuevaContraseña" required>
+                    </div>
+                    <!-- Repetir nueva contraseña -->
+                    <div class="mb-3">
+                        <label for="repetirNuevaContraseña" class="form-label">Repetir Nueva Contraseña</label>
+                        <input type="password" class="form-control" id="repetirNuevaContraseña" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="cerrarModalCambiarClave()">Cerrar</button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function abrirModalCambiarClave() {
+        const modal = document.getElementById('cambiarClaveModal');
+        const overlay = document.getElementById('modalOverlay');
+        modal.style.display = 'block';
+        modal.classList.add('show');
+        overlay.style.display = 'block'; // Mostrar fondo oscuro
+    }
+
+    function cerrarModalCambiarClave() {
+        const modal = document.getElementById('cambiarClaveModal');
+        const overlay = document.getElementById('modalOverlay');
+        modal.style.display = 'none';
+        modal.classList.remove('show');
+        overlay.style.display = 'none'; // Ocultar fondo oscuro
+    }
+</script>
+
