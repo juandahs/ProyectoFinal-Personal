@@ -478,6 +478,34 @@ BEGIN
 END;
 GO
 
+
+CREATE PROCEDURE [dbo].[uspUsuarioClaveActualiza]
+	@usuarioId UNIQUEIDENTIFIER,
+	@claveNueva VARCHAR(32)
+AS
+BEGIN
+
+	SET NOCOUNT ON;
+
+    DECLARE @salt VARBINARY(32);
+    DECLARE @claveConSalt VARBINARY(MAX);
+    DECLARE @hashClave VARBINARY(32); 
+
+	SET @salt = CAST(CRYPT_GEN_RANDOM(32) AS VARBINARY(32));
+
+    -- Concatenar el salt con la clave
+    SET @claveConSalt = @salt + CAST(@claveNueva AS VARBINARY(MAX));
+
+    -- Calcular el hash de la clave concatenada con el salt
+    SET @hashClave = HASHBYTES('SHA2_256', @claveConSalt);
+
+	UPDATE Usuario  
+	SET Clave = @hashClave
+		, Salt= @salt
+	WHERE Usuario.UsuarioId = @usuarioId
+END;
+GO
+
 -- Insertar TipoIdentificacion
 DECLARE @NewUsuarioId UNIQUEIDENTIFIER;
 SET @newUsuarioId = NEWID();

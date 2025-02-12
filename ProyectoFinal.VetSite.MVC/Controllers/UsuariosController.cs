@@ -42,6 +42,12 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
 
             try
             {
+                if (_usuarioServicios.Existe(usuario.CorreoElectronico))
+                {
+                    ModelState.AddModelError(string.Empty, "El usuario ya existe.");
+                    return View(usuario);
+                }
+                
                 var usuarioId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
                 _usuarioServicios.Agregar(usuario, Guid.Parse(usuarioId!));
             }

@@ -30,9 +30,9 @@ namespace ProyectoFinal.Repositorio
             {
                 t.Property(b => b.NumeroIdentificacion).HasColumnType("varchar").HasMaxLength(16).IsRequired();
                 t.Property(b => b.Nombre).HasColumnType("varchar").HasMaxLength(128).IsRequired();
+                t.Property(b => b.CorreoElectronico).HasColumnType("varchar").HasMaxLength(128).IsRequired();
                 t.Property(b => b.Apellido).HasColumnType("varchar").HasMaxLength(128);
                 t.Property(b => b.Telefono).HasColumnType("varchar").HasMaxLength(16);
-                t.Property(b => b.CorreoElectronico).HasColumnType("varchar").HasMaxLength(128);
                 t.Property(b => b.TarjetaProfesional).HasColumnType("varchar").HasMaxLength(64);
                 t.Property(b => b.Clave).HasColumnType("varchar").HasMaxLength(32).IsRequired();
                 t.Property(b => b.Salt).HasColumnType("varchar").HasMaxLength(32).IsRequired();
@@ -43,6 +43,7 @@ namespace ProyectoFinal.Repositorio
 
                 t.HasIndex(b => b.UsuarioCreacionId);
                 t.HasIndex(b => b.UsuarioModificacionId);
+                t.HasIndex(b => b.CorreoElectronico).IsUnique();
 
                 t.HasOne(b => b.Rol)
                 .WithMany(b => b.Usuarios)

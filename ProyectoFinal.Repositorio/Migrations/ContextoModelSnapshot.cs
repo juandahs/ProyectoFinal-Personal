@@ -151,6 +151,9 @@ namespace ProyectoFinal.Repositorio.Migrations
 
                     b.HasKey("UsuarioId");
 
+                    b.HasIndex("CorreoElectronico")
+                        .IsUnique();
+
                     b.HasIndex("RolId");
 
                     b.HasIndex("TipoIdentificacionId");
