@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProyectoFinal.Entidades;
 using ProyectoFinal.Repositorio;
-using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
+
 
 namespace ProyectoFinal.Servidor
 {
@@ -10,6 +10,8 @@ namespace ProyectoFinal.Servidor
         private readonly Contexto _contexto = contexto;
 
         public Usuario? ObtenerPorNombre(string nombreUsuario) => _contexto.Usuarios.AsNoTracking().FirstOrDefault(x => x.Nombre == nombreUsuario);
+
+        public Usuario? ObtenerPorCorreoElectronico(string correoElectronico) => _contexto.Usuarios.AsNoTracking().FirstOrDefault(x => x.CorreoElectronico == correoElectronico);
 
         public List<Usuario> ObtenerTodos() => [.. _contexto.Usuarios.AsNoTracking()];
 

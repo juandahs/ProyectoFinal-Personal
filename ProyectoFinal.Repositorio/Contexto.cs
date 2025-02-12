@@ -139,8 +139,6 @@ namespace ProyectoFinal.Repositorio
             return resultado.FirstOrDefault() > 0;
         }
 
-
-
         public async Task UsuarioActualizar(Usuario usuario, Guid usuarioActualizacionId) 
         {
          
@@ -170,7 +168,6 @@ namespace ProyectoFinal.Repositorio
                     , usuarioModificacionIdParameter);
            
         }
-
 
         public async Task UsuarioInsertar(Usuario usuario, Guid usuarioCreacionId) 
         {
@@ -204,6 +201,7 @@ namespace ProyectoFinal.Repositorio
                 
              );
         }
+
 
     }
 }

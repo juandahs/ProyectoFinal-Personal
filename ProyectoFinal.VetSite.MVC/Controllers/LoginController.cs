@@ -14,9 +14,9 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         public IActionResult Index() => View();
 
         [HttpPost]
-        public async Task<IActionResult> Login(string nombre, string clave)
+        public async Task<IActionResult> Login(string correoElectronico, string clave)
         {
-            var usuario = _usuarioServicios.ObtenerPorNombre(nombre);
+            var usuario = _usuarioServicios.ObtenerPorCorreoElectronico(correoElectronico);
 
             if (usuario == null)
             {
