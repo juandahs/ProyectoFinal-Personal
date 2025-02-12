@@ -42,6 +42,9 @@ namespace ProyectoFinal.Servidor
 
             if (!await context.ProcedimientoAlmacenadoExisteAsync(Scripts.uspUsuarioActualizarNombre))
                 await context.Database.ExecuteSqlRawAsync(Scripts.uspUsuarioActualizar);
+
+            if (!await context.ProcedimientoAlmacenadoExisteAsync(Scripts.uspUsuarioClaveActualizarNombre))
+                await context.Database.ExecuteSqlRawAsync(Scripts.uspUsuarioClaveActualizar);
         }
     }
 }

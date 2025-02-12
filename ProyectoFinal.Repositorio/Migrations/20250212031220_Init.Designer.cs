@@ -12,7 +12,7 @@ using ProyectoFinal.Repositorio;
 namespace ProyectoFinal.Repositorio.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20250125205514_Init")]
+    [Migration("20250212031220_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -153,6 +153,9 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("UsuarioId");
+
+                    b.HasIndex("CorreoElectronico")
+                        .IsUnique();
 
                     b.HasIndex("RolId");
 

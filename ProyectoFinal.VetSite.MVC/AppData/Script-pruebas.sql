@@ -97,3 +97,27 @@ PRINT 'Información actualizada del usuario "Juan Pérez":';
 SELECT * 
 FROM Usuario 
 WHERE UsuarioId = @UsuarioId;
+
+
+-- ************************************************************
+--						PROBAR ACTUALIZAR USUARIO
+-- ************************************************************
+
+USE VetSite;
+
+DECLARE @UsuarioId UNIQUEIDENTIFIER;
+
+-- Obtener el UsuarioId con TOP 1 para evitar múltiples resultados
+SET @UsuarioId = (SELECT TOP 1 UsuarioId FROM Usuario WHERE Nombre = 'admin');
+
+-- Validar si el usuario existe antes de ejecutar el procedimiento
+IF @UsuarioId IS NOT NULL
+BEGIN
+    EXEC uspUsuarioClaveActualizar 
+        @usuarioId = @UsuarioId, 
+        @claveNueva = 'admin321';
+END
+ELSE
+BEGIN
+    PRINT 'Usuario no encontrado.';
+END

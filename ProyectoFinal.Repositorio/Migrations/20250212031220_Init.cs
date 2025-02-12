@@ -101,6 +101,12 @@ namespace ProyectoFinal.Repositorio.Migrations
                 column: "UsuarioModificacionId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Usuario_CorreoElectronico",
+                table: "Usuario",
+                column: "CorreoElectronico",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Usuario_RolId",
                 table: "Usuario",
                 column: "RolId");
