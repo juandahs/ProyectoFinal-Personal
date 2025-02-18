@@ -8,7 +8,6 @@
         public DateTime FechaModificacion { get; set; }
         public Guid UsuarioCreacionId { get; set; }
         public Guid UsuarioModificacionId { get; set; }
-
         public virtual ICollection<Usuario> Usuarios { get; set; }
     }
 }

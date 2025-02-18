@@ -63,6 +63,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         [HttpPost]
         public IActionResult Eliminar(Guid id)
         {
+            
             try
             {
                 _usuarioServicios.Eliminar(id);
