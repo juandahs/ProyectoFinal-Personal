@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ProyectoFinal.Repositorio.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -149,6 +149,45 @@ namespace ProyectoFinal.Repositorio.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Cirugia",
+                columns: table => new
+                {
+                    CirugiaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TipoCirugiaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PacienteId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UsuarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Descripcion = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false),
+                    Preanestesico = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false),
+                    Observaciones = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false),
+                    FechaCreacion = table.Column<DateTime>(type: "datetime", nullable: false),
+                    FechaModificacion = table.Column<DateTime>(type: "datetime", nullable: false),
+                    UsuarioCreacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UsuarioModificacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cirugia", x => x.CirugiaId);
+                    table.ForeignKey(
+                        name: "FK_Cirugia_Paciente_PacienteId",
+                        column: x => x.PacienteId,
+                        principalTable: "Paciente",
+                        principalColumn: "PacienteId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Cirugia_Usuario_UsuarioCreacionId",
+                        column: x => x.UsuarioCreacionId,
+                        principalTable: "Usuario",
+                        principalColumn: "UsuarioId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Cirugia_Usuario_UsuarioModificacionId",
+                        column: x => x.UsuarioModificacionId,
+                        principalTable: "Usuario",
+                        principalColumn: "UsuarioId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Citas",
                 columns: table => new
                 {
@@ -185,6 +224,21 @@ namespace ProyectoFinal.Repositorio.Migrations
                         principalColumn: "UsuarioId",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cirugia_PacienteId",
+                table: "Cirugia",
+                column: "PacienteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cirugia_UsuarioCreacionId",
+                table: "Cirugia",
+                column: "UsuarioCreacionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cirugia_UsuarioModificacionId",
+                table: "Cirugia",
+                column: "UsuarioModificacionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Citas_PacienteId",
@@ -281,6 +335,9 @@ namespace ProyectoFinal.Repositorio.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Cirugia");
+
             migrationBuilder.DropTable(
                 name: "Citas");
 

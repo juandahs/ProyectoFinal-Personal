@@ -12,8 +12,8 @@ using ProyectoFinal.Repositorio;
 namespace ProyectoFinal.Repositorio.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20250219004211_Init")]
-    partial class Init
+    [Migration("20250219162850_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,59 @@ namespace ProyectoFinal.Repositorio.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("ProyectoFinal.Entidades.Cirugia", b =>
+                {
+                    b.Property<Guid>("CirugiaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar");
+
+                    b.Property<DateTime>("FechaCreacion")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("FechaModificacion")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Observaciones")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar");
+
+                    b.Property<Guid>("PacienteId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Preanestesico")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar");
+
+                    b.Property<Guid>("TipoCirugiaId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UsuarioCreacionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UsuarioId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UsuarioModificacionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CirugiaId");
+
+                    b.HasIndex("PacienteId");
+
+                    b.HasIndex("UsuarioCreacionId");
+
+                    b.HasIndex("UsuarioModificacionId");
+
+                    b.ToTable("Cirugia", (string)null);
+                });
 
             modelBuilder.Entity("ProyectoFinal.Entidades.Cita", b =>
                 {
@@ -323,6 +376,33 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.HasIndex("UsuarioModificacionId");
 
                     b.ToTable("Usuario", (string)null);
+                });
+
+            modelBuilder.Entity("ProyectoFinal.Entidades.Cirugia", b =>
+                {
+                    b.HasOne("ProyectoFinal.Entidades.Paciente", "Paciente")
+                        .WithMany()
+                        .HasForeignKey("PacienteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioCreacion")
+                        .WithMany()
+                        .HasForeignKey("UsuarioCreacionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioModificacion")
+                        .WithMany()
+                        .HasForeignKey("UsuarioModificacionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Paciente");
+
+                    b.Navigation("UsuarioCreacion");
+
+                    b.Navigation("UsuarioModificacion");
                 });
 
             modelBuilder.Entity("ProyectoFinal.Entidades.Cita", b =>
