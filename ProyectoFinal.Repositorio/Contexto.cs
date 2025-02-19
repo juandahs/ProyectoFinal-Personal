@@ -14,6 +14,7 @@ namespace ProyectoFinal.Repositorio
         public DbSet<Medicamento> Medicamentos { get; set; }
         public DbSet<Cirugia> Cirugias { get; set; }
         public DbSet<TipoCirugia> TipoCirugias { get; set; }
+        public DbSet<TipoExamen> TipoExamens { get; set; }
 
 
 
@@ -32,6 +33,7 @@ namespace ProyectoFinal.Repositorio
             modelBuilder.Entity<Medicamento>().ToTable("Medicamento");
             modelBuilder.Entity<Cirugia>().ToTable("Cirugia");
             modelBuilder.Entity<TipoCirugia>().ToTable("TipoCirugia");
+            modelBuilder.Entity<TipoExamen>().ToTable("TipoExamen");
 
             // ******************************************************************
             // Se define Tabla de Usuarios
@@ -340,6 +342,25 @@ namespace ProyectoFinal.Repositorio
                     .HasForeignKey(c => c.UsuarioModificacionId)
                     .OnDelete(DeleteBehavior.Restrict);
 
+
+            });
+
+
+            // ******************************************************************
+            // Se define Tabla de TipoExamen
+            // ******************************************************************
+
+            modelBuilder.Entity<TipoExamen>(t =>
+            {
+                t.Property(b => b.TipoExamenId).HasColumnType("uniqueidentifier").IsRequired();
+                t.Property(b => b.Descripcion).HasColumnType("varchar").HasMaxLength(64).IsRequired();
+                t.Property(b => b.FechaCreacion).HasColumnType("datetime").IsRequired();
+                t.Property(b => b.FechaModificacion).HasColumnType("datetime").IsRequired();
+                t.Property(b => b.UsuarioCreacionId).HasColumnType("uniqueidentifier").IsRequired();
+                t.Property(b => b.UsuarioModificacionId).HasColumnType("uniqueidentifier").IsRequired();
+
+                t.HasIndex(b => b.UsuarioCreacionId);
+                t.HasIndex(b => b.UsuarioModificacionId);
 
             });
 

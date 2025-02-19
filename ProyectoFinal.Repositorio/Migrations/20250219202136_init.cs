@@ -44,6 +44,22 @@ namespace ProyectoFinal.Repositorio.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TipoExamen",
+                columns: table => new
+                {
+                    TipoExamenId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Descripcion = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: false),
+                    FechaCreacion = table.Column<DateTime>(type: "datetime", nullable: false),
+                    FechaModificacion = table.Column<DateTime>(type: "datetime", nullable: false),
+                    UsuarioCreacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UsuarioModificacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TipoExamen", x => x.TipoExamenId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TipoIdentificacion",
                 columns: table => new
                 {
@@ -312,6 +328,16 @@ namespace ProyectoFinal.Repositorio.Migrations
                 column: "UsuarioModificacionId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TipoExamen_UsuarioCreacionId",
+                table: "TipoExamen",
+                column: "UsuarioCreacionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TipoExamen_UsuarioModificacionId",
+                table: "TipoExamen",
+                column: "UsuarioModificacionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TipoIdentificacion_UsuarioCreacionId",
                 table: "TipoIdentificacion",
                 column: "UsuarioCreacionId");
@@ -362,6 +388,9 @@ namespace ProyectoFinal.Repositorio.Migrations
 
             migrationBuilder.DropTable(
                 name: "TipoCirugia");
+
+            migrationBuilder.DropTable(
+                name: "TipoExamen");
 
             migrationBuilder.DropTable(
                 name: "Paciente");

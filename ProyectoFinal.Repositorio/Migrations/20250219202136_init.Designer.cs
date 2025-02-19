@@ -12,7 +12,7 @@ using ProyectoFinal.Repositorio;
 namespace ProyectoFinal.Repositorio.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20250219172902_init")]
+    [Migration("20250219202136_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -292,6 +292,38 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.HasKey("TipoCirugiaId");
 
                     b.ToTable("TipoCirugia", (string)null);
+                });
+
+            modelBuilder.Entity("ProyectoFinal.Entidades.TipoExamen", b =>
+                {
+                    b.Property<Guid>("TipoExamenId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("varchar");
+
+                    b.Property<DateTime>("FechaCreacion")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("FechaModificacion")
+                        .HasColumnType("datetime");
+
+                    b.Property<Guid>("UsuarioCreacionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UsuarioModificacionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("TipoExamenId");
+
+                    b.HasIndex("UsuarioCreacionId");
+
+                    b.HasIndex("UsuarioModificacionId");
+
+                    b.ToTable("TipoExamen", (string)null);
                 });
 
             modelBuilder.Entity("ProyectoFinal.Entidades.TipoIdentificacion", b =>
