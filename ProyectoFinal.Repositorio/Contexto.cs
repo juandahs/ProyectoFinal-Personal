@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using ProyectoFinal.Entidades;
+using System.Net.Http.Headers;
 
 namespace ProyectoFinal.Repositorio
 {
@@ -10,6 +11,8 @@ namespace ProyectoFinal.Repositorio
         public DbSet<Rol> Roles { get; set; }
         public DbSet<TipoIdentificacion> TiposIdentificacion { get; set; }
         public DbSet<Cita> Citas { get; set; }
+        public DbSet<Medicamento> Medicamentos { get; set; }
+
         public Contexto(DbContextOptions<Contexto> options) : base(options)
         {
 
@@ -22,6 +25,7 @@ namespace ProyectoFinal.Repositorio
             modelBuilder.Entity<Usuario>().ToTable("Usuario");
             modelBuilder.Entity<Rol>().ToTable("Rol");
             modelBuilder.Entity<TipoIdentificacion>().ToTable("TipoIdentificacion");
+            modelBuilder.Entity<Medicamento>().ToTable("Medicamento");
 
             // ******************************************************************
             // Se define Tabla de Usuarios
@@ -74,16 +78,14 @@ namespace ProyectoFinal.Repositorio
 
 
             });
+
             // ******************************************************************
             // Se define Tabla de TiposIdentificacion
             // ******************************************************************
 
             modelBuilder.Entity<TipoIdentificacion>(t =>
             {
-                t.Property(b => b.TipoIdentificacionId)
-                    .HasColumnType("uniqueidentifier")
-                    .IsRequired();
-
+                t.Property(b => b.TipoIdentificacionId).HasColumnType("uniqueidentifier").IsRequired();
                 t.Property(b => b.Descripcion).HasColumnType("varchar").HasMaxLength(32).IsRequired();
                 t.Property(b => b.FechaCreacion).HasColumnType("datetime").IsRequired();
                 t.Property(b => b.FechaModificacion).HasColumnType("datetime").IsRequired();
@@ -94,6 +96,10 @@ namespace ProyectoFinal.Repositorio
                 t.HasIndex(b => b.UsuarioModificacionId);
 
             });
+
+            // ******************************************************************
+            // Se define Tabla de Cita
+            // ******************************************************************
 
             modelBuilder.Entity<Cita>(t =>
             {
@@ -151,7 +157,9 @@ namespace ProyectoFinal.Repositorio
                   .OnDelete(DeleteBehavior.Restrict);
             });
 
-
+            // ******************************************************************
+            // Se define Tabla de Paciente
+            // ******************************************************************
             modelBuilder.Entity<Paciente>(t =>
             {
                 t.Property(b => b.PacienteId)
@@ -226,6 +234,38 @@ namespace ProyectoFinal.Repositorio
                     .HasForeignKey(p => p.UsuarioModificacionId)
                     .OnDelete(DeleteBehavior.Restrict);
             });
+
+            modelBuilder.Entity<Medicamento>(t => 
+            {
+                t.Property(b => b.MedicamentoId).HasColumnType("uniqueidentifier").IsRequired();
+                t.Property(b => b.FormulaMedicaId).HasColumnType("uniqueidentifier").IsRequired();
+
+                t.Property(b => b.NombreMedicamento).HasColumnType("varchar").HasMaxLength(128).IsRequired();
+                t.Property(b => b.Dosis).HasColumnType("varchar").HasMaxLength(128).IsRequired();
+                t.Property(b => b.Frecuencia).HasColumnType("varchar").HasMaxLength(128).IsRequired();
+                t.Property(b => b.Observaciones).HasColumnType("varchar").HasMaxLength(256).IsRequired();
+                t.Property(b => b.FechaCreacion).HasColumnType("datetime").IsRequired();
+                t.Property(b => b.FechaModificacion).HasColumnType("datetime").IsRequired();
+                t.Property(b => b.UsuarioCreacionId).HasColumnType("uniqueidentifier").IsRequired();
+                t.Property(b => b.UsuarioModificacionId).HasColumnType("uniqueidentifier").IsRequired();
+
+                t.HasIndex(b => b.UsuarioCreacionId);
+                t.HasIndex(b => b.UsuarioModificacionId);
+
+                //relaciones
+                t.HasOne(c => c.UsuarioCreacion)
+                 .WithMany()
+                 .HasForeignKey(c => c.UsuarioCreacionId)
+                 .OnDelete(DeleteBehavior.Restrict);
+
+                t.HasOne(c => c.UsuarioModificacion)
+                    .WithMany()
+                    .HasForeignKey(c => c.UsuarioModificacionId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+
+            });
+
 
             base.OnModelCreating(modelBuilder);
         }
