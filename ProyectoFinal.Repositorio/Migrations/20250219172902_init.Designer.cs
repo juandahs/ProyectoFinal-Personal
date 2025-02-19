@@ -12,7 +12,7 @@ using ProyectoFinal.Repositorio;
 namespace ProyectoFinal.Repositorio.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20250219162850_init")]
+    [Migration("20250219172902_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -265,6 +265,33 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.HasIndex("UsuarioModificacionId");
 
                     b.ToTable("Rol", (string)null);
+                });
+
+            modelBuilder.Entity("ProyectoFinal.Entidades.TipoCirugia", b =>
+                {
+                    b.Property<Guid>("TipoCirugiaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("FechaCreacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("FechaModificacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UsuarioCreacionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UsuarioModificacionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("TipoCirugiaId");
+
+                    b.ToTable("TipoCirugia", (string)null);
                 });
 
             modelBuilder.Entity("ProyectoFinal.Entidades.TipoIdentificacion", b =>

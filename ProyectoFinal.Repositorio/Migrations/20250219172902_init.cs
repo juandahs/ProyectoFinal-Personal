@@ -28,6 +28,22 @@ namespace ProyectoFinal.Repositorio.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TipoCirugia",
+                columns: table => new
+                {
+                    TipoCirugiaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FechaModificacion = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UsuarioCreacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UsuarioModificacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TipoCirugia", x => x.TipoCirugiaId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TipoIdentificacion",
                 columns: table => new
                 {
@@ -343,6 +359,9 @@ namespace ProyectoFinal.Repositorio.Migrations
 
             migrationBuilder.DropTable(
                 name: "Medicamento");
+
+            migrationBuilder.DropTable(
+                name: "TipoCirugia");
 
             migrationBuilder.DropTable(
                 name: "Paciente");

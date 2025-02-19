@@ -9,6 +9,8 @@ namespace ProyectoFinal.Entidades
     public class Cirugia
     {
         public Guid CirugiaId { get; set; } 
+
+        //TODO: Falta crear la relación con la entidad TipoCirugia
         public Guid TipoCirugiaId { get; set; } 
         public Guid PacienteId { get; set; }
         public Guid UsuarioId { get; set; }
@@ -17,6 +19,7 @@ namespace ProyectoFinal.Entidades
         public string? Observaciones {  get; set; }
         public DateTime FechaCreacion { get; set; }
         public DateTime FechaModificacion { get; set; }
+
         public Guid UsuarioCreacionId { get; set; }
         public Guid UsuarioModificacionId { get; set; }
 
@@ -24,6 +27,7 @@ namespace ProyectoFinal.Entidades
         public virtual Usuario UsuarioCreacion { get; set; }
         public virtual Usuario UsuarioModificacion { get; set; }
         public virtual Paciente Paciente { get; set; }
+
 
     }
 }
