@@ -257,6 +257,52 @@ namespace ProyectoFinal.Repositorio.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Examen",
+                columns: table => new
+                {
+                    ExamenId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PacienteId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UsuarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TipoExamenId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Fecha = table.Column<DateTime>(type: "datetime", nullable: false),
+                    Descripcion = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false),
+                    Resultado = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false),
+                    Observaciones = table.Column<string>(type: "varchar(512)", maxLength: 512, nullable: true),
+                    FechaCreacion = table.Column<DateTime>(type: "datetime", nullable: false),
+                    FechaModificacion = table.Column<DateTime>(type: "datetime", nullable: false),
+                    UsuarioCreacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UsuarioModificacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Examen", x => x.ExamenId);
+                    table.ForeignKey(
+                        name: "FK_Examen_Paciente_PacienteId",
+                        column: x => x.PacienteId,
+                        principalTable: "Paciente",
+                        principalColumn: "PacienteId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Examen_TipoExamen_TipoExamenId",
+                        column: x => x.TipoExamenId,
+                        principalTable: "TipoExamen",
+                        principalColumn: "TipoExamenId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Examen_Usuario_UsuarioCreacionId",
+                        column: x => x.UsuarioCreacionId,
+                        principalTable: "Usuario",
+                        principalColumn: "UsuarioId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Examen_Usuario_UsuarioModificacionId",
+                        column: x => x.UsuarioModificacionId,
+                        principalTable: "Usuario",
+                        principalColumn: "UsuarioId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Cirugia_PacienteId",
                 table: "Cirugia",
@@ -290,6 +336,26 @@ namespace ProyectoFinal.Repositorio.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Citas_UsuarioModificacionId",
                 table: "Citas",
+                column: "UsuarioModificacionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Examen_PacienteId",
+                table: "Examen",
+                column: "PacienteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Examen_TipoExamenId",
+                table: "Examen",
+                column: "TipoExamenId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Examen_UsuarioCreacionId",
+                table: "Examen",
+                column: "UsuarioCreacionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Examen_UsuarioModificacionId",
+                table: "Examen",
                 column: "UsuarioModificacionId");
 
             migrationBuilder.CreateIndex(
@@ -384,16 +450,19 @@ namespace ProyectoFinal.Repositorio.Migrations
                 name: "Citas");
 
             migrationBuilder.DropTable(
+                name: "Examen");
+
+            migrationBuilder.DropTable(
                 name: "Medicamento");
 
             migrationBuilder.DropTable(
                 name: "TipoCirugia");
 
             migrationBuilder.DropTable(
-                name: "TipoExamen");
+                name: "Paciente");
 
             migrationBuilder.DropTable(
-                name: "Paciente");
+                name: "TipoExamen");
 
             migrationBuilder.DropTable(
                 name: "Usuario");

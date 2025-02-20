@@ -364,6 +364,46 @@ namespace ProyectoFinal.Repositorio
 
             });
 
+            // ******************************************************************
+            // Se define Tabla de Examen
+            // ******************************************************************
+
+            modelBuilder.Entity<Examen>(t =>
+            {
+                t.Property(b => b.ExamenId).HasColumnType("uniqueidentifier").IsRequired();
+                t.Property(b => b.PacienteId).HasColumnType("uniqueidentifier").IsRequired();
+                t.Property(b => b.UsuarioId).HasColumnType("uniqueidentifier").IsRequired();
+                t.Property(b => b.TipoExamenId).HasColumnType("uniqueidentifier").IsRequired();
+
+
+                t.Property(b => b.Fecha).HasColumnType("datetime").IsRequired();
+                t.Property(b => b.Descripcion).HasColumnType("varchar").HasMaxLength(256).IsRequired();
+                t.Property(b => b.Resultado).HasColumnType("varchar").HasMaxLength(256).IsRequired();
+                t.Property(b => b.Observaciones).HasColumnType("varchar").HasMaxLength(512);
+
+                t.Property(b => b.FechaCreacion).HasColumnType("datetime").IsRequired();
+                t.Property(b => b.FechaModificacion).HasColumnType("datetime").IsRequired();
+                t.Property(b => b.UsuarioCreacionId).HasColumnType("uniqueidentifier").IsRequired();
+                t.Property(b => b.UsuarioModificacionId).HasColumnType("uniqueidentifier").IsRequired();
+
+                // Índices para optimizar las búsquedas
+                t.HasIndex(b => b.UsuarioCreacionId);
+                t.HasIndex(b => b.UsuarioModificacionId);
+                t.HasIndex(b => b.PacienteId);
+                
+                // Relaciones con Usuario
+                t.HasOne(p => p.UsuarioCreacion)
+                    .WithMany()
+                    .HasForeignKey(p => p.UsuarioCreacionId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                t.HasOne(p => p.UsuarioModificacion)
+                    .WithMany()
+                    .HasForeignKey(p => p.UsuarioModificacionId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+            });
+
             base.OnModelCreating(modelBuilder);
         }
 
