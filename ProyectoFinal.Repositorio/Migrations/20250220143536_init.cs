@@ -76,6 +76,22 @@ namespace ProyectoFinal.Repositorio.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TipoVacuna",
+                columns: table => new
+                {
+                    TipoVacunaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Descripcion = table.Column<string>(type: "varchar(265)", maxLength: 265, nullable: false),
+                    FechaCreacion = table.Column<DateTime>(type: "datetime", nullable: false),
+                    FechaModificacion = table.Column<DateTime>(type: "datetime", nullable: false),
+                    UsuarioCreacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UsuarioModificacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TipoVacuna", x => x.TipoVacunaId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Usuario",
                 columns: table => new
                 {
@@ -414,6 +430,16 @@ namespace ProyectoFinal.Repositorio.Migrations
                 column: "UsuarioModificacionId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TipoVacuna_UsuarioCreacionId",
+                table: "TipoVacuna",
+                column: "UsuarioCreacionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TipoVacuna_UsuarioModificacionId",
+                table: "TipoVacuna",
+                column: "UsuarioModificacionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Usuario_CorreoElectronico",
                 table: "Usuario",
                 column: "CorreoElectronico",
@@ -457,6 +483,9 @@ namespace ProyectoFinal.Repositorio.Migrations
 
             migrationBuilder.DropTable(
                 name: "TipoCirugia");
+
+            migrationBuilder.DropTable(
+                name: "TipoVacuna");
 
             migrationBuilder.DropTable(
                 name: "Paciente");

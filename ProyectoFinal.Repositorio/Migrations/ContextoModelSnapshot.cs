@@ -175,7 +175,7 @@ namespace ProyectoFinal.Repositorio.Migrations
 
                     b.HasIndex("UsuarioModificacionId");
 
-                    b.ToTable("Examen");
+                    b.ToTable("Examen", (string)null);
                 });
 
             modelBuilder.Entity("ProyectoFinal.Entidades.Medicamento", b =>
@@ -410,6 +410,38 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.HasIndex("UsuarioModificacionId");
 
                     b.ToTable("TipoIdentificacion", (string)null);
+                });
+
+            modelBuilder.Entity("ProyectoFinal.Entidades.TipoVacuna", b =>
+                {
+                    b.Property<Guid>("TipoVacunaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(265)
+                        .HasColumnType("varchar");
+
+                    b.Property<DateTime>("FechaCreacion")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("FechaModificacion")
+                        .HasColumnType("datetime");
+
+                    b.Property<Guid>("UsuarioCreacionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UsuarioModificacionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("TipoVacunaId");
+
+                    b.HasIndex("UsuarioCreacionId");
+
+                    b.HasIndex("UsuarioModificacionId");
+
+                    b.ToTable("TipoVacuna", (string)null);
                 });
 
             modelBuilder.Entity("ProyectoFinal.Entidades.Usuario", b =>

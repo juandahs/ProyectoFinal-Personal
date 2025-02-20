@@ -15,6 +15,8 @@ namespace ProyectoFinal.Repositorio
         public DbSet<Cirugia> Cirugias { get; set; }
         public DbSet<TipoCirugia> TipoCirugias { get; set; }
         public DbSet<TipoExamen> TipoExamens { get; set; }
+        public DbSet<Examen> Examens { get; set; }
+        public DbSet<TipoVacuna> TipoVacunas { get; set; }
 
 
 
@@ -34,6 +36,8 @@ namespace ProyectoFinal.Repositorio
             modelBuilder.Entity<Cirugia>().ToTable("Cirugia");
             modelBuilder.Entity<TipoCirugia>().ToTable("TipoCirugia");
             modelBuilder.Entity<TipoExamen>().ToTable("TipoExamen");
+            modelBuilder.Entity<Examen>().ToTable("Examen");
+            modelBuilder.Entity<TipoVacuna>().ToTable("TipoVacuna");
 
             // ******************************************************************
             // Se define Tabla de Usuarios
@@ -342,7 +346,6 @@ namespace ProyectoFinal.Repositorio
                     .HasForeignKey(c => c.UsuarioModificacionId)
                     .OnDelete(DeleteBehavior.Restrict);
 
-
             });
 
 
@@ -375,7 +378,6 @@ namespace ProyectoFinal.Repositorio
                 t.Property(b => b.UsuarioId).HasColumnType("uniqueidentifier").IsRequired();
                 t.Property(b => b.TipoExamenId).HasColumnType("uniqueidentifier").IsRequired();
 
-
                 t.Property(b => b.Fecha).HasColumnType("datetime").IsRequired();
                 t.Property(b => b.Descripcion).HasColumnType("varchar").HasMaxLength(256).IsRequired();
                 t.Property(b => b.Resultado).HasColumnType("varchar").HasMaxLength(256).IsRequired();
@@ -401,6 +403,20 @@ namespace ProyectoFinal.Repositorio
                     .WithMany()
                     .HasForeignKey(p => p.UsuarioModificacionId)
                     .OnDelete(DeleteBehavior.Restrict);
+
+            });
+
+            modelBuilder.Entity<TipoVacuna>(t =>
+            {
+                t.Property(b => b.TipoVacunaId).HasColumnType("uniqueidentifier").IsRequired();
+                t.Property(b => b.Descripcion).HasColumnType("varchar").HasMaxLength(265).IsRequired();
+                t.Property(b => b.FechaCreacion).HasColumnType("datetime").IsRequired();
+                t.Property(b => b.FechaModificacion).HasColumnType("datetime").IsRequired();
+                t.Property(b => b.UsuarioCreacionId).HasColumnType("uniqueidentifier").IsRequired();
+                t.Property(b => b.UsuarioModificacionId).HasColumnType("uniqueidentifier").IsRequired();
+
+                t.HasIndex(b => b.UsuarioCreacionId);
+                t.HasIndex(b => b.UsuarioModificacionId);
 
             });
 
