@@ -15,7 +15,7 @@ namespace ProyectoFinal.Repositorio
         public DbSet<Cirugia> Cirugias { get; set; }
         public DbSet<TipoCirugia> TipoCirugias { get; set; }
         public DbSet<TipoExamen> TipoExamens { get; set; }
-        public DbSet<Examen> Examens { get; set; }
+        public DbSet<Examen> Examenes { get; set; }
         public DbSet<TipoVacuna> TipoVacunas { get; set; }
 
 
@@ -403,6 +403,11 @@ namespace ProyectoFinal.Repositorio
                     .WithMany()
                     .HasForeignKey(p => p.UsuarioModificacionId)
                     .OnDelete(DeleteBehavior.Restrict);
+                //relacion uno a muchos de Tipo Examen
+                t.HasOne(p => p.TipoExamen)
+                    .WithOne(p => p.Examenes)
+                    .HasForeignKey<Examen>(p => p.TipoExamenId)
+                    .IsRequired();
 
             });
 

@@ -169,7 +169,8 @@ namespace ProyectoFinal.Repositorio.Migrations
 
                     b.HasIndex("PacienteId");
 
-                    b.HasIndex("TipoExamenId");
+                    b.HasIndex("TipoExamenId")
+                        .IsUnique();
 
                     b.HasIndex("UsuarioCreacionId");
 
@@ -586,8 +587,8 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .IsRequired();
 
                     b.HasOne("ProyectoFinal.Entidades.TipoExamen", "TipoExamen")
-                        .WithMany("Examen")
-                        .HasForeignKey("TipoExamenId")
+                        .WithOne("Examenes")
+                        .HasForeignKey("ProyectoFinal.Entidades.Examen", "TipoExamenId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -681,7 +682,7 @@ namespace ProyectoFinal.Repositorio.Migrations
 
             modelBuilder.Entity("ProyectoFinal.Entidades.TipoExamen", b =>
                 {
-                    b.Navigation("Examen");
+                    b.Navigation("Examenes");
                 });
 
             modelBuilder.Entity("ProyectoFinal.Entidades.TipoIdentificacion", b =>

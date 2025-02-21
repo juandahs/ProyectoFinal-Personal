@@ -362,7 +362,8 @@ namespace ProyectoFinal.Repositorio.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Examen_TipoExamenId",
                 table: "Examen",
-                column: "TipoExamenId");
+                column: "TipoExamenId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Examen_UsuarioCreacionId",

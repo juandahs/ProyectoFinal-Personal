@@ -18,6 +18,6 @@ namespace ProyectoFinal.Entidades
         public Guid UsuarioCreacionId { get; set; }
         public Guid UsuarioModificacionId { get; set; }
 
-        public virtual ICollection<Examen> Examen { get; set; } = [];
+        public virtual Examen? Examenes { get; set; }
     }
 }
