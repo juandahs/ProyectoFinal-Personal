@@ -17,7 +17,7 @@ namespace ProyectoFinal.Repositorio
         public DbSet<TipoExamen> TipoExamen { get; set; }
         public DbSet<Examen> Examenes { get; set; }
         public DbSet<TipoVacuna> TipoVacunas { get; set; }
-
+        public DbSet<Vacuna> Vacunas { get; set; }
 
 
         public Contexto(DbContextOptions<Contexto> options) : base(options)
@@ -38,6 +38,7 @@ namespace ProyectoFinal.Repositorio
             modelBuilder.Entity<TipoExamen>().ToTable("TipoExamen");
             modelBuilder.Entity<Examen>().ToTable("Examen");
             modelBuilder.Entity<TipoVacuna>().ToTable("TipoVacuna");
+            modelBuilder.Entity<Vacuna>().ToTable("Vacuna");
 
             // ******************************************************************
             // Se define Tabla de Usuarios
@@ -415,6 +416,9 @@ namespace ProyectoFinal.Repositorio
                   .OnDelete(DeleteBehavior.Restrict);
 
             });
+            // ******************************************************************
+            // Se define Tabla de TipoExamen
+            // ******************************************************************
 
             modelBuilder.Entity<TipoVacuna>(t =>
             {
@@ -427,6 +431,54 @@ namespace ProyectoFinal.Repositorio
 
                 t.HasIndex(b => b.UsuarioCreacionId);
                 t.HasIndex(b => b.UsuarioModificacionId);
+
+            });
+            // *****************************************************************
+            // Se define Tabla de Vacuna
+            // *****************************************************************
+            modelBuilder.Entity<Vacuna>(t =>
+            {
+                t.Property(b => b.VacunaId).HasColumnType("uniqueidentifier").IsRequired();
+                t.Property(b => b.PacienteId).HasColumnType("uniqueidentifier").IsRequired();
+                t.Property(b => b.UsuarioId).HasColumnType("uniqueidentifier").IsRequired();
+                t.Property(b => b.TipoVacunaId).HasColumnType("uniqueidentifier").IsRequired();
+
+                t.Property(b => b.Laboratorio).HasColumnType("varchar").HasMaxLength(32);
+                t.Property(b => b.Lote).HasColumnType("varchar").HasMaxLength(64);
+                t.Property(b => b.FechaAplicacion).HasColumnType("datetime").IsRequired();
+                t.Property(b => b.FechaProximaAplicacion).HasColumnType("datetime").IsRequired();
+                t.Property(b => b.Observaciones).HasColumnType("varchar").HasMaxLength(256);
+
+                t.Property(b => b.FechaCreacion).HasColumnType("datetime").IsRequired();
+                t.Property(b => b.FechaModificacion).HasColumnType("datetime").IsRequired();
+                t.Property(b => b.UsuarioCreacionId).HasColumnType("uniqueidentifier").IsRequired();
+                t.Property(b => b.UsuarioModificacionId).HasColumnType("uniqueidentifier").IsRequired();
+
+                // Índices para optimizar las búsquedas
+                t.HasIndex(b => b.UsuarioCreacionId);
+                t.HasIndex(b => b.UsuarioModificacionId);
+                t.HasIndex(b => b.PacienteId);
+
+                // Relaciones con Usuario
+                t.HasOne(p => p.UsuarioCreacion)
+                    .WithMany()
+                    .HasForeignKey(p => p.UsuarioCreacionId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                t.HasOne(p => p.UsuarioModificacion)
+                    .WithMany()
+                    .HasForeignKey(p => p.UsuarioModificacionId)
+                    .OnDelete(DeleteBehavior.Restrict);
+                //relacion uno a muchos de TipoVacuna
+                t.HasOne(p => p.TipoVacuna)
+                    .WithOne(p => p.Vacuna)
+                    .HasForeignKey<Vacuna>(p => p.TipoVacunaId)
+                    .IsRequired();
+                //relacion con paciente (un pciente puede tener varios examnes) de uno a muchos
+                t.HasOne(c => c.Paciente)
+                  .WithMany(p => p.Vacunas)
+                  .HasForeignKey(c => c.PacienteId)
+                  .OnDelete(DeleteBehavior.Restrict);
 
             });
 
