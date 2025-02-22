@@ -28,7 +28,6 @@ namespace ProyectoFinal.Entidades
         public virtual Usuario? UsuarioCreacion { get; set; }
         public virtual Usuario? UsuarioModificacion { get; set; }
         public virtual Paciente? Paciente { get; set; }
-
         public virtual TipoExamen? TipoExamen { get; set; }
 
 

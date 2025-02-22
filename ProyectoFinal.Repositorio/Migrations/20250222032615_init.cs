@@ -298,7 +298,7 @@ namespace ProyectoFinal.Repositorio.Migrations
                         column: x => x.PacienteId,
                         principalTable: "Paciente",
                         principalColumn: "PacienteId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Examen_TipoExamen_TipoExamenId",
                         column: x => x.TipoExamenId,

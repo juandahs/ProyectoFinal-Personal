@@ -581,9 +581,9 @@ namespace ProyectoFinal.Repositorio.Migrations
             modelBuilder.Entity("ProyectoFinal.Entidades.Examen", b =>
                 {
                     b.HasOne("ProyectoFinal.Entidades.Paciente", "Paciente")
-                        .WithMany()
+                        .WithMany("Examenes")
                         .HasForeignKey("PacienteId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("ProyectoFinal.Entidades.TipoExamen", "TipoExamen")
@@ -673,6 +673,8 @@ namespace ProyectoFinal.Repositorio.Migrations
             modelBuilder.Entity("ProyectoFinal.Entidades.Paciente", b =>
                 {
                     b.Navigation("Citas");
+
+                    b.Navigation("Examenes");
                 });
 
             modelBuilder.Entity("ProyectoFinal.Entidades.Rol", b =>
