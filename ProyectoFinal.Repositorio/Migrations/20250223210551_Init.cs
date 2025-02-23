@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ProyectoFinal.Repositorio.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -161,17 +161,57 @@ namespace ProyectoFinal.Repositorio.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Paciente",
+                name: "Propietarios",
+                columns: table => new
+                {
+                    PropietarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TipoIdentificacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    NumeroIdentificacion = table.Column<string>(type: "varchar(16)", maxLength: 16, nullable: false),
+                    Nombre = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
+                    Apellido = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
+                    Telefono = table.Column<string>(type: "varchar(16)", maxLength: 16, nullable: true),
+                    CorreoElectronico = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: true),
+                    Direccion = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: true),
+                    FechaCreacion = table.Column<DateTime>(type: "datetime", nullable: false),
+                    FechaModificacion = table.Column<DateTime>(type: "datetime", nullable: false),
+                    UsuarioCreacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UsuarioModificacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Propietarios", x => x.PropietarioId);
+                    table.ForeignKey(
+                        name: "FK_Propietarios_TipoIdentificacion_TipoIdentificacionId",
+                        column: x => x.TipoIdentificacionId,
+                        principalTable: "TipoIdentificacion",
+                        principalColumn: "TipoIdentificacionId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Propietarios_Usuario_UsuarioCreacionId",
+                        column: x => x.UsuarioCreacionId,
+                        principalTable: "Usuario",
+                        principalColumn: "UsuarioId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Propietarios_Usuario_UsuarioModificacionId",
+                        column: x => x.UsuarioModificacionId,
+                        principalTable: "Usuario",
+                        principalColumn: "UsuarioId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Pacientes",
                 columns: table => new
                 {
                     PacienteId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PropietarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Nombre = table.Column<string>(type: "varchar(128)", nullable: false),
+                    Nombre = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
                     Sexo = table.Column<string>(type: "char(1)", nullable: false),
-                    Especie = table.Column<string>(type: "varchar(64)", nullable: false),
-                    Peso = table.Column<decimal>(type: "decimal(4,2)", nullable: false),
-                    Raza = table.Column<string>(type: "varchar(64)", nullable: false),
-                    Color = table.Column<string>(type: "varchar(64)", nullable: false),
+                    Especie = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: false),
+                    Peso = table.Column<decimal>(type: "decimal(18,0)", nullable: false),
+                    Raza = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: false),
+                    Color = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: false),
                     Edad = table.Column<int>(type: "int", nullable: false),
                     Esterilizado = table.Column<bool>(type: "bit", nullable: false),
                     FechaCreacion = table.Column<DateTime>(type: "datetime", nullable: false),
@@ -181,15 +221,21 @@ namespace ProyectoFinal.Repositorio.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Paciente", x => x.PacienteId);
+                    table.PrimaryKey("PK_Pacientes", x => x.PacienteId);
                     table.ForeignKey(
-                        name: "FK_Paciente_Usuario_UsuarioCreacionId",
+                        name: "FK_Pacientes_Propietarios_PropietarioId",
+                        column: x => x.PropietarioId,
+                        principalTable: "Propietarios",
+                        principalColumn: "PropietarioId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Pacientes_Usuario_UsuarioCreacionId",
                         column: x => x.UsuarioCreacionId,
                         principalTable: "Usuario",
                         principalColumn: "UsuarioId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Paciente_Usuario_UsuarioModificacionId",
+                        name: "FK_Pacientes_Usuario_UsuarioModificacionId",
                         column: x => x.UsuarioModificacionId,
                         principalTable: "Usuario",
                         principalColumn: "UsuarioId",
@@ -216,9 +262,9 @@ namespace ProyectoFinal.Repositorio.Migrations
                 {
                     table.PrimaryKey("PK_Cirugia", x => x.CirugiaId);
                     table.ForeignKey(
-                        name: "FK_Cirugia_Paciente_PacienteId",
+                        name: "FK_Cirugia_Pacientes_PacienteId",
                         column: x => x.PacienteId,
-                        principalTable: "Paciente",
+                        principalTable: "Pacientes",
                         principalColumn: "PacienteId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -254,11 +300,11 @@ namespace ProyectoFinal.Repositorio.Migrations
                 {
                     table.PrimaryKey("PK_Citas", x => x.CitaId);
                     table.ForeignKey(
-                        name: "FK_Citas_Paciente_PacienteId",
+                        name: "FK_Citas_Pacientes_PacienteId",
                         column: x => x.PacienteId,
-                        principalTable: "Paciente",
+                        principalTable: "Pacientes",
                         principalColumn: "PacienteId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Citas_Usuario_UsuarioCreacionId",
                         column: x => x.UsuarioCreacionId,
@@ -267,6 +313,52 @@ namespace ProyectoFinal.Repositorio.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Citas_Usuario_UsuarioModificacionId",
+                        column: x => x.UsuarioModificacionId,
+                        principalTable: "Usuario",
+                        principalColumn: "UsuarioId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Desparasitaciones",
+                columns: table => new
+                {
+                    DesparasitacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PacienteId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PropietarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DesparasitacionTipo = table.Column<string>(type: "varchar", nullable: false),
+                    DesparasitacionForma = table.Column<string>(type: "varchar", nullable: false),
+                    FechaAplicacion = table.Column<DateTime>(type: "datetime", nullable: false),
+                    FechaProximaAplicacion = table.Column<DateTime>(type: "datetime", nullable: false),
+                    Observaciones = table.Column<string>(type: "varchar(512)", maxLength: 512, nullable: true),
+                    FechaCreacion = table.Column<DateTime>(type: "datetime", nullable: false),
+                    FechaModificacion = table.Column<DateTime>(type: "datetime", nullable: false),
+                    UsuarioCreacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UsuarioModificacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Desparasitaciones", x => x.DesparasitacionId);
+                    table.ForeignKey(
+                        name: "FK_Desparasitaciones_Pacientes_PacienteId",
+                        column: x => x.PacienteId,
+                        principalTable: "Pacientes",
+                        principalColumn: "PacienteId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Desparasitaciones_Pacientes_UsuarioCreacionId",
+                        column: x => x.UsuarioCreacionId,
+                        principalTable: "Pacientes",
+                        principalColumn: "PacienteId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Desparasitaciones_Propietarios_PropietarioId",
+                        column: x => x.PropietarioId,
+                        principalTable: "Propietarios",
+                        principalColumn: "PropietarioId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Desparasitaciones_Usuario_UsuarioModificacionId",
                         column: x => x.UsuarioModificacionId,
                         principalTable: "Usuario",
                         principalColumn: "UsuarioId",
@@ -294,9 +386,9 @@ namespace ProyectoFinal.Repositorio.Migrations
                 {
                     table.PrimaryKey("PK_Examen", x => x.ExamenId);
                     table.ForeignKey(
-                        name: "FK_Examen_Paciente_PacienteId",
+                        name: "FK_Examen_Pacientes_PacienteId",
                         column: x => x.PacienteId,
-                        principalTable: "Paciente",
+                        principalTable: "Pacientes",
                         principalColumn: "PacienteId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -341,9 +433,9 @@ namespace ProyectoFinal.Repositorio.Migrations
                 {
                     table.PrimaryKey("PK_Vacuna", x => x.VacunaId);
                     table.ForeignKey(
-                        name: "FK_Vacuna_Paciente_PacienteId",
+                        name: "FK_Vacuna_Pacientes_PacienteId",
                         column: x => x.PacienteId,
-                        principalTable: "Paciente",
+                        principalTable: "Pacientes",
                         principalColumn: "PacienteId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -402,6 +494,26 @@ namespace ProyectoFinal.Repositorio.Migrations
                 column: "UsuarioModificacionId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Desparasitaciones_PacienteId",
+                table: "Desparasitaciones",
+                column: "PacienteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Desparasitaciones_PropietarioId",
+                table: "Desparasitaciones",
+                column: "PropietarioId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Desparasitaciones_UsuarioCreacionId",
+                table: "Desparasitaciones",
+                column: "UsuarioCreacionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Desparasitaciones_UsuarioModificacionId",
+                table: "Desparasitaciones",
+                column: "UsuarioModificacionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Examen_PacienteId",
                 table: "Examen",
                 column: "PacienteId");
@@ -433,18 +545,38 @@ namespace ProyectoFinal.Repositorio.Migrations
                 column: "UsuarioModificacionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Paciente_PropietarioId",
-                table: "Paciente",
+                name: "IX_Pacientes_PropietarioId",
+                table: "Pacientes",
                 column: "PropietarioId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Paciente_UsuarioCreacionId",
-                table: "Paciente",
+                name: "IX_Pacientes_UsuarioCreacionId",
+                table: "Pacientes",
                 column: "UsuarioCreacionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Paciente_UsuarioModificacionId",
-                table: "Paciente",
+                name: "IX_Pacientes_UsuarioModificacionId",
+                table: "Pacientes",
+                column: "UsuarioModificacionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Propietarios_NumeroIdentificacion",
+                table: "Propietarios",
+                column: "NumeroIdentificacion");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Propietarios_TipoIdentificacionId",
+                table: "Propietarios",
+                column: "TipoIdentificacionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Propietarios_UsuarioCreacionId",
+                table: "Propietarios",
+                column: "UsuarioCreacionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Propietarios_UsuarioModificacionId",
+                table: "Propietarios",
                 column: "UsuarioModificacionId");
 
             migrationBuilder.CreateIndex(
@@ -545,6 +677,9 @@ namespace ProyectoFinal.Repositorio.Migrations
                 name: "Citas");
 
             migrationBuilder.DropTable(
+                name: "Desparasitaciones");
+
+            migrationBuilder.DropTable(
                 name: "Examen");
 
             migrationBuilder.DropTable(
@@ -560,10 +695,13 @@ namespace ProyectoFinal.Repositorio.Migrations
                 name: "TipoExamen");
 
             migrationBuilder.DropTable(
-                name: "Paciente");
+                name: "Pacientes");
 
             migrationBuilder.DropTable(
                 name: "TipoVacuna");
+
+            migrationBuilder.DropTable(
+                name: "Propietarios");
 
             migrationBuilder.DropTable(
                 name: "Usuario");
