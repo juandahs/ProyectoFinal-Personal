@@ -6,21 +6,21 @@ using System.Threading.Tasks;
 
 namespace ProyectoFinal.Entidades
 {
-    public class Examen
+    public class Vacuna
     {
-        public Guid ExamenId { get; set; }
-
+        public Guid VacunaId { get; set; }
         public Guid PacienteId { get; set; }
         public Guid UsuarioId { get; set; }
-        public Guid TipoExamenId { get; set; }
+        public Guid TipoVacunaId { get; set; }
 
-        public DateTime Fecha { get; set; } 
-        public string Descripcion { get; set; } = string.Empty;
-        public string Resultado { get; set; } = string.Empty;
+        public string? Laboratorio { get; set; }
+        public string? Lote { get; set; }
+        public DateTime FechaAplicacion { get; set; }
+        public DateTime FechaProximaAplicacion { get; set; }
         public string? Observaciones { get; set; }
+
         public DateTime FechaCreacion { get; set; }
         public DateTime FechaModificacion { get; set; }
-
         public Guid UsuarioCreacionId { get; set; }
         public Guid UsuarioModificacionId { get; set; }
 
@@ -28,8 +28,6 @@ namespace ProyectoFinal.Entidades
         public virtual Usuario? UsuarioCreacion { get; set; }
         public virtual Usuario? UsuarioModificacion { get; set; }
         public virtual Paciente? Paciente { get; set; }
-        public virtual TipoExamen? TipoExamen { get; set; }
-
-
+        public virtual TipoVacuna? TipoVacuna { get; set; }
     }
 }
