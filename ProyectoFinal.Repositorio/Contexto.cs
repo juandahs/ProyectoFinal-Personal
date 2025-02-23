@@ -22,7 +22,7 @@ namespace ProyectoFinal.Repositorio
         public DbSet<TipoCirugia> TipoCirugias { get; set; }
         public DbSet<TipoExamen> TipoExamen { get; set; }
         public DbSet<Examen> Examenes { get; set; }
-        public DbSet<TipoVacuna> TipoVacunas { get; set; }
+        public DbSet<TipoIdentificacion> TiposIdentificacion { get; set; }
         public DbSet<Vacuna> Vacunas { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
