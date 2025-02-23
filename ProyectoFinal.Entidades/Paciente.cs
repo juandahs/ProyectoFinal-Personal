@@ -1,10 +1,12 @@
 ﻿
 
+using System.Net.Http.Headers;
+
 namespace ProyectoFinal.Entidades
 {
     public class Paciente
     {
-        public Guid PacienteId { get; set; } = Guid.NewGuid();
+        public Guid PacienteId { get; set; }
         public Guid PropietarioId { get; set; }
         public string Nombre { get; set; } = string.Empty;
         public char Sexo { get; set; }
@@ -14,14 +16,16 @@ namespace ProyectoFinal.Entidades
         public string Color { get; set; } = string.Empty;
         public int Edad { get; set; }
         public bool Esterilizado { get; set; }
-        public DateTime FechaCreacion { get; set; } = DateTime.UtcNow;
-        public DateTime FechaModificacion { get; set; } = DateTime.UtcNow;
+        public DateTime FechaCreacion { get; set; }
+        public DateTime FechaModificacion { get; set; }
         public Guid UsuarioCreacionId { get; set; }
         public Guid UsuarioModificacionId { get; set; }
 
-        // Relaciones
+        
         public virtual Usuario UsuarioCreacion { get; set; }
         public virtual Usuario UsuarioModificacion { get; set; }
+
+        public virtual Propietario Propietario { get; set; }
 
         public virtual ICollection<Cita> Citas { get; set; } = [];
     }

@@ -1,29 +1,27 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using ProyectoFinal.Entidades;
 using System.Net.Http.Headers;
 
 namespace ProyectoFinal.Repositorio
 {
-    public class Contexto : DbContext
+    public class Contexto(DbContextOptions<Contexto> options) : DbContext(options)
     {
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Rol> Roles { get; set; }
-        public DbSet<TipoIdentificacion> TiposIdentificacion { get; set; }
         public DbSet<Cita> Citas { get; set; }
-        public DbSet<Medicamento> Medicamentos { get; set; }
+        public DbSet<Examen> Examens { get; set; }
         public DbSet<Cirugia> Cirugias { get; set; }
+        public DbSet<Propietario> Propietarios { get; set; }
+        public DbSet<Paciente> Pacientes { get; set; }
+        public DbSet<Desparasitacion> Desparasitaciones { get; set; }
+
+        public DbSet<Medicamento> Medicamentos { get; set; }
+        public DbSet<TipoVacuna> TipoVacunas { get; set; }
         public DbSet<TipoCirugia> TipoCirugias { get; set; }
         public DbSet<TipoExamen> TipoExamens { get; set; }
-        public DbSet<Examen> Examens { get; set; }
-        public DbSet<TipoVacuna> TipoVacunas { get; set; }
-
-
-
-        public Contexto(DbContextOptions<Contexto> options) : base(options)
-        {
-
-        }
+        public DbSet<TipoIdentificacion> TiposIdentificacion { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -174,6 +172,7 @@ namespace ProyectoFinal.Repositorio
             // ******************************************************************
             modelBuilder.Entity<Paciente>(t =>
             {
+                // Propiedades de la entidad Paciente
                 t.Property(b => b.PacienteId)
                     .HasColumnType("uniqueidentifier")
                     .IsRequired();
@@ -183,27 +182,31 @@ namespace ProyectoFinal.Repositorio
                     .IsRequired();
 
                 t.Property(b => b.Nombre)
-                    .HasColumnType("varchar(128)")
+                    .HasColumnType("varchar")
+                    .HasMaxLength(128)
                     .IsRequired();
 
                 t.Property(b => b.Sexo)
-                    .HasColumnType("char(1)")
+                    .HasColumnType("char")
                     .IsRequired();
 
                 t.Property(b => b.Especie)
-                    .HasColumnType("varchar(64)")
+                    .HasColumnType("varchar")
+                    .HasMaxLength(64)
                     .IsRequired();
 
                 t.Property(b => b.Peso)
-                    .HasColumnType("decimal(4,2)")
+                    .HasColumnType("decimal")
                     .IsRequired();
 
                 t.Property(b => b.Raza)
-                    .HasColumnType("varchar(64)")
+                    .HasColumnType("varchar")
+                    .HasMaxLength(64)
                     .IsRequired();
 
                 t.Property(b => b.Color)
-                    .HasColumnType("varchar(64)")
+                    .HasColumnType("varchar")
+                    .HasMaxLength(64)
                     .IsRequired();
 
                 t.Property(b => b.Edad)
@@ -230,12 +233,11 @@ namespace ProyectoFinal.Repositorio
                     .HasColumnType("uniqueidentifier")
                     .IsRequired();
 
-                // Índices para optimizar las búsquedas
+
                 t.HasIndex(b => b.PropietarioId);
                 t.HasIndex(b => b.UsuarioCreacionId);
                 t.HasIndex(b => b.UsuarioModificacionId);
 
-                // Relaciones con Usuario
                 t.HasOne(p => p.UsuarioCreacion)
                     .WithMany()
                     .HasForeignKey(p => p.UsuarioCreacionId)
@@ -245,6 +247,16 @@ namespace ProyectoFinal.Repositorio
                     .WithMany()
                     .HasForeignKey(p => p.UsuarioModificacionId)
                     .OnDelete(DeleteBehavior.Restrict);
+
+                t.HasOne(p => p.Propietario)
+                    .WithMany()
+                    .HasForeignKey(p => p.PropietarioId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                t.HasMany(p => p.Citas)
+                    .WithOne(c => c.Paciente)
+                    .HasForeignKey(c => c.PacienteId)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             // ******************************************************************
@@ -370,7 +382,6 @@ namespace ProyectoFinal.Repositorio
             // ******************************************************************
             // Se define Tabla de Examen
             // ******************************************************************
-
             modelBuilder.Entity<Examen>(t =>
             {
                 t.Property(b => b.ExamenId).HasColumnType("uniqueidentifier").IsRequired();
@@ -406,6 +417,9 @@ namespace ProyectoFinal.Repositorio
 
             });
 
+            // ******************************************************************
+            // Se define Tabla de TipoVacuna
+            // ******************************************************************
             modelBuilder.Entity<TipoVacuna>(t =>
             {
                 t.Property(b => b.TipoVacunaId).HasColumnType("uniqueidentifier").IsRequired();
@@ -419,6 +433,99 @@ namespace ProyectoFinal.Repositorio
                 t.HasIndex(b => b.UsuarioModificacionId);
 
             });
+
+            // ******************************************************************
+            // Se define Tabla de Desparacitación
+            // ******************************************************************
+            modelBuilder.Entity<Desparasitacion>(t =>
+            {
+                // Propiedades de la entidad Desparasitacion
+                t.Property(b => b.DesparasitacionId).HasColumnType("uniqueidentifier").IsRequired();
+                t.Property(b => b.PacienteId).HasColumnType("uniqueidentifier").IsRequired();
+                t.Property(b => b.PropietarioId).HasColumnType("uniqueidentifier").IsRequired();
+                t.Property(b => b.DesparasitacionTipo).HasColumnType("varchar").HasConversion<string>().IsRequired();
+                t.Property(b => b.DesparasitacionForma).HasColumnType("varchar").HasConversion<string>().IsRequired();
+
+                t.Property(b => b.FechaAplicacion).HasColumnType("datetime").IsRequired();
+                t.Property(b => b.FechaProximaAplicacion).HasColumnType("datetime").IsRequired();
+
+                t.Property(b => b.Observaciones).HasColumnType("varchar").HasMaxLength(512);
+
+                t.Property(b => b.FechaCreacion).HasColumnType("datetime").IsRequired();
+                t.Property(b => b.FechaModificacion).HasColumnType("datetime").IsRequired();
+                t.Property(b => b.UsuarioCreacionId).HasColumnType("uniqueidentifier").IsRequired();
+                t.Property(b => b.UsuarioModificacionId).HasColumnType("uniqueidentifier").IsRequired();
+
+                // Índices para optimizar las búsquedas
+                t.HasIndex(b => b.UsuarioCreacionId);
+                t.HasIndex(b => b.UsuarioModificacionId);
+                t.HasIndex(b => b.PacienteId);
+                t.HasIndex(b => b.PropietarioId);
+
+                t.HasOne(p => p.Paciente)
+                    .WithMany()
+                    .HasForeignKey(p => p.PacienteId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                t.HasOne(p => p.Propietario)
+                    .WithMany()
+                    .HasForeignKey(p => p.PropietarioId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                t.HasOne(p => p.UsuarioCreacion)
+                    .WithMany()
+                    .HasForeignKey(p => p.UsuarioCreacionId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                t.HasOne(p => p.UsuarioModificacion)
+                    .WithMany()
+                    .HasForeignKey(p => p.UsuarioModificacionId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            // ******************************************************************
+            // Se define Tabla de Propietario
+            // ******************************************************************
+
+            modelBuilder.Entity<Propietario>(t =>
+            {
+                t.Property(b => b.PropietarioId)
+                    .HasColumnType("uniqueidentifier")
+                    .IsRequired();
+
+                t.Property(b => b.TipoIdentificacionId)
+                    .HasColumnType("uniqueidentifier")
+                    .IsRequired();
+
+                t.Property(b => b.NumeroIdentificacion).HasColumnType("varchar").HasMaxLength(16).IsRequired();
+                t.Property(b => b.Nombre).HasColumnType("varchar").HasMaxLength(128).IsRequired();
+                t.Property(b => b.Apellido).HasColumnType("varchar").HasMaxLength(128).IsRequired();
+                t.Property(b => b.Telefono).HasColumnType("varchar").HasMaxLength(16);
+                t.Property(b => b.CorreoElectronico).HasColumnType("varchar").HasMaxLength(128);
+                t.Property(b => b.Direccion).HasColumnType("varchar").HasMaxLength(128);
+
+                t.Property(b => b.FechaCreacion).HasColumnType("datetime").IsRequired();
+                t.Property(b => b.FechaModificacion).HasColumnType("datetime").IsRequired();
+                t.Property(b => b.UsuarioCreacionId).HasColumnType("uniqueidentifier").IsRequired();
+
+                t.HasIndex(b => b.UsuarioCreacionId);
+                t.HasIndex(b => b.TipoIdentificacionId);
+                t.HasIndex(b => b.NumeroIdentificacion);
+
+                
+                t.HasOne(p => p.UsuarioCreacion)
+                    .WithMany()
+                    .HasForeignKey(p => p.UsuarioCreacionId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                
+                t.HasOne(p => p.TipoIdentificacion)
+                    .WithMany()
+                    .HasForeignKey(p => p.TipoIdentificacionId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+
 
             base.OnModelCreating(modelBuilder);
         }
