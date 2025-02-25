@@ -12,8 +12,8 @@ using ProyectoFinal.Repositorio;
 namespace ProyectoFinal.Repositorio.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20250225211230_init")]
-    partial class init
+    [Migration("20250225233037_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -124,6 +124,61 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.ToTable("Citas");
                 });
 
+            modelBuilder.Entity("ProyectoFinal.Entidades.Consulta", b =>
+                {
+                    b.Property<Guid>("ConsultaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CitaId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Diagnostico")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar");
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("FechaCreacion")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("FechaModificacion")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Motivo")
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar");
+
+                    b.Property<Guid>("PacienteId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Sintomas")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar");
+
+                    b.Property<Guid>("UsuarioCreacionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UsuarioId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UsuarioModificacionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ConsultaId");
+
+                    b.HasIndex("PacienteId");
+
+                    b.HasIndex("UsuarioCreacionId");
+
+                    b.HasIndex("UsuarioModificacionId");
+
+                    b.ToTable("Consulta", (string)null);
+                });
+
             modelBuilder.Entity("ProyectoFinal.Entidades.Desparasitacion", b =>
                 {
                     b.Property<Guid>("DesparasitacionId")
@@ -132,10 +187,12 @@ namespace ProyectoFinal.Repositorio.Migrations
 
                     b.Property<string>("DesparasitacionForma")
                         .IsRequired()
+                        .HasMaxLength(32)
                         .HasColumnType("varchar");
 
                     b.Property<string>("DesparasitacionTipo")
                         .IsRequired()
+                        .HasMaxLength(32)
                         .HasColumnType("varchar");
 
                     b.Property<DateTime>("FechaAplicacion")
@@ -239,6 +296,106 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.ToTable("Examen", (string)null);
                 });
 
+            modelBuilder.Entity("ProyectoFinal.Entidades.FormulaMedica", b =>
+                {
+                    b.Property<Guid>("FormulaMedicaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Observaciones")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar");
+
+                    b.Property<Guid>("PacienteId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UsuarioCreacionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UsuarioId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UsuarioModificacionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("FormulaMedicaId");
+
+                    b.HasIndex("PacienteId");
+
+                    b.HasIndex("UsuarioCreacionId");
+
+                    b.HasIndex("UsuarioModificacionId");
+
+                    b.ToTable("FormulaMedica", (string)null);
+                });
+
+            modelBuilder.Entity("ProyectoFinal.Entidades.ImagenDiagnostica", b =>
+                {
+                    b.Property<Guid>("ImagenDiagnosticaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("DiagnosticoPresuntivo")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("varchar");
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("FechaCreacion")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("FechaModificacion")
+                        .HasColumnType("datetime");
+
+                    b.Property<byte[]>("Imagen")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("Observaciones")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("varchar");
+
+                    b.Property<Guid>("PacienteId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("SignosClinicos")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("varchar");
+
+                    b.Property<Guid>("TipoImagenDiagnosticaId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UsuarioCreacionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UsuarioId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UsuarioModificacionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ImagenDiagnosticaId");
+
+                    b.HasIndex("PacienteId");
+
+                    b.HasIndex("TipoImagenDiagnosticaId")
+                        .IsUnique();
+
+                    b.HasIndex("UsuarioCreacionId");
+
+                    b.HasIndex("UsuarioModificacionId");
+
+                    b.ToTable("ImagenDiagnostica", (string)null);
+                });
+
             modelBuilder.Entity("ProyectoFinal.Entidades.Medicamento", b =>
                 {
                     b.Property<Guid>("MedicamentoId")
@@ -266,11 +423,10 @@ namespace ProyectoFinal.Repositorio.Migrations
 
                     b.Property<string>("NombreMedicamento")
                         .IsRequired()
-                        .HasMaxLength(128)
+                        .HasMaxLength(256)
                         .HasColumnType("varchar");
 
                     b.Property<string>("Observaciones")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("varchar");
 
@@ -281,6 +437,8 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("MedicamentoId");
+
+                    b.HasIndex("FormulaMedicaId");
 
                     b.HasIndex("UsuarioCreacionId");
 
@@ -538,6 +696,38 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.ToTable("TipoIdentificacion", (string)null);
                 });
 
+            modelBuilder.Entity("ProyectoFinal.Entidades.TipoImagenDiagnostica", b =>
+                {
+                    b.Property<Guid>("TipoImagenDiagnosticaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("varchar");
+
+                    b.Property<DateTime>("FechaCreacion")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("FechaModificacion")
+                        .HasColumnType("datetime");
+
+                    b.Property<Guid>("UsuarioCreacionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UsuarioModificacionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("TipoImagenDiagnosticaId");
+
+                    b.HasIndex("UsuarioCreacionId");
+
+                    b.HasIndex("UsuarioModificacionId");
+
+                    b.ToTable("TipoImagenDiagnostica", (string)null);
+                });
+
             modelBuilder.Entity("ProyectoFinal.Entidades.TipoVacuna", b =>
                 {
                     b.Property<Guid>("TipoVacunaId")
@@ -764,6 +954,33 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.Navigation("UsuarioModificacion");
                 });
 
+            modelBuilder.Entity("ProyectoFinal.Entidades.Consulta", b =>
+                {
+                    b.HasOne("ProyectoFinal.Entidades.Paciente", "Paciente")
+                        .WithMany()
+                        .HasForeignKey("PacienteId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioCreacion")
+                        .WithMany()
+                        .HasForeignKey("UsuarioCreacionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioModificacion")
+                        .WithMany()
+                        .HasForeignKey("UsuarioModificacionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Paciente");
+
+                    b.Navigation("UsuarioCreacion");
+
+                    b.Navigation("UsuarioModificacion");
+                });
+
             modelBuilder.Entity("ProyectoFinal.Entidades.Desparasitacion", b =>
                 {
                     b.HasOne("ProyectoFinal.Entidades.Paciente", "Paciente")
@@ -842,8 +1059,47 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.Navigation("UsuarioModificacion");
                 });
 
-            modelBuilder.Entity("ProyectoFinal.Entidades.Medicamento", b =>
+            modelBuilder.Entity("ProyectoFinal.Entidades.FormulaMedica", b =>
                 {
+                    b.HasOne("ProyectoFinal.Entidades.Paciente", "Paciente")
+                        .WithMany()
+                        .HasForeignKey("PacienteId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioCreacion")
+                        .WithMany()
+                        .HasForeignKey("UsuarioCreacionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioModidificacion")
+                        .WithMany()
+                        .HasForeignKey("UsuarioModificacionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Paciente");
+
+                    b.Navigation("UsuarioCreacion");
+
+                    b.Navigation("UsuarioModidificacion");
+                });
+
+            modelBuilder.Entity("ProyectoFinal.Entidades.ImagenDiagnostica", b =>
+                {
+                    b.HasOne("ProyectoFinal.Entidades.Paciente", "Paciente")
+                        .WithMany("ImagenesDiagnosticas")
+                        .HasForeignKey("PacienteId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ProyectoFinal.Entidades.TipoImagenDiagnostica", null)
+                        .WithOne("ImagenesDiagnosticas")
+                        .HasForeignKey("ProyectoFinal.Entidades.ImagenDiagnostica", "TipoImagenDiagnosticaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioCreacion")
                         .WithMany()
                         .HasForeignKey("UsuarioCreacionId")
@@ -855,6 +1111,35 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .HasForeignKey("UsuarioModificacionId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Paciente");
+
+                    b.Navigation("UsuarioCreacion");
+
+                    b.Navigation("UsuarioModificacion");
+                });
+
+            modelBuilder.Entity("ProyectoFinal.Entidades.Medicamento", b =>
+                {
+                    b.HasOne("ProyectoFinal.Entidades.FormulaMedica", "FormulaMedica")
+                        .WithMany()
+                        .HasForeignKey("FormulaMedicaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioCreacion")
+                        .WithMany()
+                        .HasForeignKey("UsuarioCreacionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioModificacion")
+                        .WithMany()
+                        .HasForeignKey("UsuarioModificacionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("FormulaMedica");
 
                     b.Navigation("UsuarioCreacion");
 
@@ -927,6 +1212,25 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .WithMany()
                         .HasForeignKey("UsuarioModificacionId")
                         .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("UsuarioCreacion");
+
+                    b.Navigation("UsuarioModificacion");
+                });
+
+            modelBuilder.Entity("ProyectoFinal.Entidades.TipoImagenDiagnostica", b =>
+                {
+                    b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioCreacion")
+                        .WithMany()
+                        .HasForeignKey("UsuarioCreacionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioModificacion")
+                        .WithMany()
+                        .HasForeignKey("UsuarioModificacionId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("UsuarioCreacion");
@@ -1021,6 +1325,8 @@ namespace ProyectoFinal.Repositorio.Migrations
 
                     b.Navigation("Examenes");
 
+                    b.Navigation("ImagenesDiagnosticas");
+
                     b.Navigation("Vacunas");
                 });
 
@@ -1037,6 +1343,11 @@ namespace ProyectoFinal.Repositorio.Migrations
             modelBuilder.Entity("ProyectoFinal.Entidades.TipoIdentificacion", b =>
                 {
                     b.Navigation("Usuarios");
+                });
+
+            modelBuilder.Entity("ProyectoFinal.Entidades.TipoImagenDiagnostica", b =>
+                {
+                    b.Navigation("ImagenesDiagnosticas");
                 });
 
             modelBuilder.Entity("ProyectoFinal.Entidades.TipoVacuna", b =>
