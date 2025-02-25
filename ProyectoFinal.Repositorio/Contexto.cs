@@ -380,6 +380,17 @@ namespace ProyectoFinal.Repositorio
                 t.HasIndex(b => b.UsuarioCreacionId);
                 t.HasIndex(b => b.UsuarioModificacionId);
 
+                // Relaciones con Usuario
+                t.HasOne(p => p.UsuarioCreacion)
+                    .WithMany()
+                    .HasForeignKey(p => p.UsuarioCreacionId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                t.HasOne(p => p.UsuarioModificacion)
+                    .WithMany()
+                    .HasForeignKey(p => p.UsuarioModificacionId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
             });
 
             // ******************************************************************
@@ -427,12 +438,14 @@ namespace ProyectoFinal.Repositorio
                   .WithMany(p => p.Examenes)
                   .HasForeignKey(c => c.PacienteId)
                   .OnDelete(DeleteBehavior.Restrict);
+                //relacion con usuario (Un usuario puede hacer varios examens)
+                t.HasOne(c => c.Usuario)
+                  .WithMany(p => p.Examenes)
+                  .HasForeignKey(c => c.UsuarioId)
+                  .OnDelete(DeleteBehavior.Restrict);
 
             });
-            // ******************************************************************
-            // Se define Tabla de TipoExamen
-            // ******************************************************************
-
+            
             // ******************************************************************
             // Se define Tabla de TipoVacuna
             // ******************************************************************

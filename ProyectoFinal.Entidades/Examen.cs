@@ -27,6 +27,7 @@ namespace ProyectoFinal.Entidades
         //Relaciones
         public virtual Usuario? UsuarioCreacion { get; set; }
         public virtual Usuario? UsuarioModificacion { get; set; }
+        public virtual Usuario? Usuario {  get; set; }
         public virtual Paciente? Paciente { get; set; }
         public virtual TipoExamen? TipoExamen { get; set; }
 

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ProyectoFinal.Repositorio.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -41,22 +41,6 @@ namespace ProyectoFinal.Repositorio.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TipoCirugia", x => x.TipoCirugiaId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TipoExamen",
-                columns: table => new
-                {
-                    TipoExamenId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Descripcion = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: false),
-                    FechaCreacion = table.Column<DateTime>(type: "datetime", nullable: false),
-                    FechaModificacion = table.Column<DateTime>(type: "datetime", nullable: false),
-                    UsuarioCreacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UsuarioModificacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TipoExamen", x => x.TipoExamenId);
                 });
 
             migrationBuilder.CreateTable(
@@ -198,6 +182,34 @@ namespace ProyectoFinal.Repositorio.Migrations
                         principalTable: "Usuario",
                         principalColumn: "UsuarioId",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TipoExamen",
+                columns: table => new
+                {
+                    TipoExamenId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Descripcion = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: false),
+                    FechaCreacion = table.Column<DateTime>(type: "datetime", nullable: false),
+                    FechaModificacion = table.Column<DateTime>(type: "datetime", nullable: false),
+                    UsuarioCreacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UsuarioModificacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TipoExamen", x => x.TipoExamenId);
+                    table.ForeignKey(
+                        name: "FK_TipoExamen_Usuario_UsuarioCreacionId",
+                        column: x => x.UsuarioCreacionId,
+                        principalTable: "Usuario",
+                        principalColumn: "UsuarioId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_TipoExamen_Usuario_UsuarioModificacionId",
+                        column: x => x.UsuarioModificacionId,
+                        principalTable: "Usuario",
+                        principalColumn: "UsuarioId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -404,52 +416,17 @@ namespace ProyectoFinal.Repositorio.Migrations
                         principalColumn: "UsuarioId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
+                        name: "FK_Examen_Usuario_UsuarioId",
+                        column: x => x.UsuarioId,
+                        principalTable: "Usuario",
+                        principalColumn: "UsuarioId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_Examen_Usuario_UsuarioModificacionId",
                         column: x => x.UsuarioModificacionId,
                         principalTable: "Usuario",
                         principalColumn: "UsuarioId",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ImagenDiagnostica",
-                columns: table => new
-                {
-                    ImagenDiagnosticaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PacienteId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UsuarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TipoImagenDiagnosticaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    SignosClinicos = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DiagnosticoPresuntivo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Imagen = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
-                    Observaciones = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    FechaModificacion = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UsuarioCreacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UsuarioModificacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ImagenDiagnostica", x => x.ImagenDiagnosticaId);
-                    table.ForeignKey(
-                        name: "FK_ImagenDiagnostica_Pacientes_PacienteId",
-                        column: x => x.PacienteId,
-                        principalTable: "Pacientes",
-                        principalColumn: "PacienteId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ImagenDiagnostica_Usuario_UsuarioCreacionId",
-                        column: x => x.UsuarioCreacionId,
-                        principalTable: "Usuario",
-                        principalColumn: "UsuarioId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ImagenDiagnostica_Usuario_UsuarioModificacionId",
-                        column: x => x.UsuarioModificacionId,
-                        principalTable: "Usuario",
-                        principalColumn: "UsuarioId",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -571,23 +548,13 @@ namespace ProyectoFinal.Repositorio.Migrations
                 column: "UsuarioCreacionId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Examen_UsuarioId",
+                table: "Examen",
+                column: "UsuarioId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Examen_UsuarioModificacionId",
                 table: "Examen",
-                column: "UsuarioModificacionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ImagenDiagnostica_PacienteId",
-                table: "ImagenDiagnostica",
-                column: "PacienteId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ImagenDiagnostica_UsuarioCreacionId",
-                table: "ImagenDiagnostica",
-                column: "UsuarioCreacionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ImagenDiagnostica_UsuarioModificacionId",
-                table: "ImagenDiagnostica",
                 column: "UsuarioModificacionId");
 
             migrationBuilder.CreateIndex(
@@ -737,9 +704,6 @@ namespace ProyectoFinal.Repositorio.Migrations
 
             migrationBuilder.DropTable(
                 name: "Examen");
-
-            migrationBuilder.DropTable(
-                name: "ImagenDiagnostica");
 
             migrationBuilder.DropTable(
                 name: "Medicamento");

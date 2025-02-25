@@ -229,63 +229,11 @@ namespace ProyectoFinal.Repositorio.Migrations
 
                     b.HasIndex("UsuarioCreacionId");
 
+                    b.HasIndex("UsuarioId");
+
                     b.HasIndex("UsuarioModificacionId");
 
                     b.ToTable("Examen", (string)null);
-                });
-
-            modelBuilder.Entity("ProyectoFinal.Entidades.ImagenDiagnostica", b =>
-                {
-                    b.Property<Guid>("ImagenDiagnosticaId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("DiagnosticoPresuntivo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Fecha")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("FechaCreacion")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("FechaModificacion")
-                        .HasColumnType("datetime2");
-
-                    b.Property<byte[]>("Imagen")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<string>("Observaciones")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("PacienteId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("SignosClinicos")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("TipoImagenDiagnosticaId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UsuarioCreacionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UsuarioId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UsuarioModificacionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("ImagenDiagnosticaId");
-
-                    b.HasIndex("PacienteId");
-
-                    b.HasIndex("UsuarioCreacionId");
-
-                    b.HasIndex("UsuarioModificacionId");
-
-                    b.ToTable("ImagenDiagnostica");
                 });
 
             modelBuilder.Entity("ProyectoFinal.Entidades.Medicamento", b =>
@@ -866,6 +814,12 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("ProyectoFinal.Entidades.Usuario", "Usuario")
+                        .WithMany("Examenes")
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioModificacion")
                         .WithMany()
                         .HasForeignKey("UsuarioModificacionId")
@@ -876,32 +830,7 @@ namespace ProyectoFinal.Repositorio.Migrations
 
                     b.Navigation("TipoExamen");
 
-                    b.Navigation("UsuarioCreacion");
-
-                    b.Navigation("UsuarioModificacion");
-                });
-
-            modelBuilder.Entity("ProyectoFinal.Entidades.ImagenDiagnostica", b =>
-                {
-                    b.HasOne("ProyectoFinal.Entidades.Paciente", "Paciente")
-                        .WithMany("ImagenesDiagnosticas")
-                        .HasForeignKey("PacienteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioCreacion")
-                        .WithMany()
-                        .HasForeignKey("UsuarioCreacionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioModificacion")
-                        .WithMany()
-                        .HasForeignKey("UsuarioModificacionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Paciente");
+                    b.Navigation("Usuario");
 
                     b.Navigation("UsuarioCreacion");
 
@@ -981,6 +910,25 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.Navigation("UsuarioModificacion");
                 });
 
+            modelBuilder.Entity("ProyectoFinal.Entidades.TipoExamen", b =>
+                {
+                    b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioCreacion")
+                        .WithMany()
+                        .HasForeignKey("UsuarioCreacionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioModificacion")
+                        .WithMany()
+                        .HasForeignKey("UsuarioModificacionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("UsuarioCreacion");
+
+                    b.Navigation("UsuarioModificacion");
+                });
+
             modelBuilder.Entity("ProyectoFinal.Entidades.Usuario", b =>
                 {
                     b.HasOne("ProyectoFinal.Entidades.Rol", "Rol")
@@ -1041,8 +989,6 @@ namespace ProyectoFinal.Repositorio.Migrations
 
                     b.Navigation("Examenes");
 
-                    b.Navigation("ImagenesDiagnosticas");
-
                     b.Navigation("Vacunas");
                 });
 
@@ -1064,6 +1010,11 @@ namespace ProyectoFinal.Repositorio.Migrations
             modelBuilder.Entity("ProyectoFinal.Entidades.TipoVacuna", b =>
                 {
                     b.Navigation("Vacuna");
+                });
+
+            modelBuilder.Entity("ProyectoFinal.Entidades.Usuario", b =>
+                {
+                    b.Navigation("Examenes");
                 });
 #pragma warning restore 612, 618
         }
