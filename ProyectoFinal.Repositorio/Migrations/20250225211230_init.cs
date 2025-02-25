@@ -60,22 +60,6 @@ namespace ProyectoFinal.Repositorio.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TipoVacuna",
-                columns: table => new
-                {
-                    TipoVacunaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Descripcion = table.Column<string>(type: "varchar(265)", maxLength: 265, nullable: false),
-                    FechaCreacion = table.Column<DateTime>(type: "datetime", nullable: false),
-                    FechaModificacion = table.Column<DateTime>(type: "datetime", nullable: false),
-                    UsuarioCreacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UsuarioModificacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TipoVacuna", x => x.TipoVacunaId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Usuario",
                 columns: table => new
                 {
@@ -206,6 +190,34 @@ namespace ProyectoFinal.Repositorio.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_TipoExamen_Usuario_UsuarioModificacionId",
+                        column: x => x.UsuarioModificacionId,
+                        principalTable: "Usuario",
+                        principalColumn: "UsuarioId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TipoVacuna",
+                columns: table => new
+                {
+                    TipoVacunaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Descripcion = table.Column<string>(type: "varchar(265)", maxLength: 265, nullable: false),
+                    FechaCreacion = table.Column<DateTime>(type: "datetime", nullable: false),
+                    FechaModificacion = table.Column<DateTime>(type: "datetime", nullable: false),
+                    UsuarioCreacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UsuarioModificacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TipoVacuna", x => x.TipoVacunaId);
+                    table.ForeignKey(
+                        name: "FK_TipoVacuna_Usuario_UsuarioCreacionId",
+                        column: x => x.UsuarioCreacionId,
+                        principalTable: "Usuario",
+                        principalColumn: "UsuarioId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_TipoVacuna_Usuario_UsuarioModificacionId",
                         column: x => x.UsuarioModificacionId,
                         principalTable: "Usuario",
                         principalColumn: "UsuarioId",
@@ -473,7 +485,7 @@ namespace ProyectoFinal.Repositorio.Migrations
                         column: x => x.UsuarioId,
                         principalTable: "Usuario",
                         principalColumn: "UsuarioId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Vacuna_Usuario_UsuarioModificacionId",
                         column: x => x.UsuarioModificacionId,

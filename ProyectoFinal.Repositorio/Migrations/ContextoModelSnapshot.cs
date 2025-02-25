@@ -931,6 +931,25 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.Navigation("UsuarioModificacion");
                 });
 
+            modelBuilder.Entity("ProyectoFinal.Entidades.TipoVacuna", b =>
+                {
+                    b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioCreacion")
+                        .WithMany()
+                        .HasForeignKey("UsuarioCreacionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioModificacion")
+                        .WithMany()
+                        .HasForeignKey("UsuarioModificacionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("UsuarioCreacion");
+
+                    b.Navigation("UsuarioModificacion");
+                });
+
             modelBuilder.Entity("ProyectoFinal.Entidades.Usuario", b =>
                 {
                     b.HasOne("ProyectoFinal.Entidades.Rol", "Rol")
@@ -973,7 +992,7 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.HasOne("ProyectoFinal.Entidades.Usuario", "Usuario")
                         .WithMany("Vacunas")
                         .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioModificacion")

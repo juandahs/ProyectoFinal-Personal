@@ -461,6 +461,17 @@ namespace ProyectoFinal.Repositorio
                 t.HasIndex(b => b.UsuarioCreacionId);
                 t.HasIndex(b => b.UsuarioModificacionId);
 
+                // Relaciones con Usuario
+                t.HasOne(p => p.UsuarioCreacion)
+                    .WithMany()
+                    .HasForeignKey(p => p.UsuarioCreacionId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                t.HasOne(p => p.UsuarioModificacion)
+                    .WithMany()
+                    .HasForeignKey(p => p.UsuarioModificacionId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
             });
             // *****************************************************************
             // Se define Tabla de Vacuna
@@ -503,15 +514,10 @@ namespace ProyectoFinal.Repositorio
                     .WithOne(p => p.Vacuna)
                     .HasForeignKey<Vacuna>(p => p.TipoVacunaId)
                     .IsRequired();
-                //relacion con paciente (un pciente puede tener varios examnes) de uno a muchos
+                //relacion con paciente (un pciente puede tener varias vacuna) de uno a muchos
                 t.HasOne(c => c.Paciente)
                   .WithMany(p => p.Vacunas)
                   .HasForeignKey(c => c.PacienteId)
-                  .OnDelete(DeleteBehavior.Restrict);
-                //relacion con usuario (Un usuario puede hacer varios examens)
-                t.HasOne(c => c.Usuario)
-                  .WithMany(p => p.Vacunas)
-                  .HasForeignKey(c => c.UsuarioId)
                   .OnDelete(DeleteBehavior.Restrict);
             });
 
