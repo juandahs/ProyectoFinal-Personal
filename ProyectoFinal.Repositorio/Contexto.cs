@@ -25,6 +25,8 @@ namespace ProyectoFinal.Repositorio
         public DbSet<TipoIdentificacion> TiposIdentificacion { get; set; }
         public DbSet<Vacuna> Vacunas { get; set; }
         public DbSet<FormulaMedica> FormulasMedica { get; set; }
+        public DbSet<TipoImagenDiagnostica> TipoImagenesDiagnosticas { get; set; }
+        public DbSet<ImagenDiagnostica> ImagenesDiagnosticas { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -40,6 +42,9 @@ namespace ProyectoFinal.Repositorio
             modelBuilder.Entity<TipoExamen>().ToTable("TipoExamen");
             modelBuilder.Entity<TipoVacuna>().ToTable("TipoVacuna");
             modelBuilder.Entity<Vacuna>().ToTable("Vacuna");
+            modelBuilder.Entity<TipoImagenDiagnostica>().ToTable("TipoImagenDiagnostica");
+            modelBuilder.Entity<ImagenDiagnostica>().ToTable("ImagenDiagnostica");
+
             modelBuilder.Entity<FormulaMedica>().ToTable("FormulaMedica");
             modelBuilder.Entity<Consulta>().ToTable("Consulta");
 
@@ -435,6 +440,7 @@ namespace ProyectoFinal.Repositorio
                 t.HasIndex(b => b.UsuarioCreacionId);
                 t.HasIndex(b => b.UsuarioModificacionId);
 
+                // Relaciones con Usuario
                 t.HasOne(p => p.UsuarioCreacion)
                     .WithMany()
                     .HasForeignKey(p => p.UsuarioCreacionId)
@@ -492,9 +498,14 @@ namespace ProyectoFinal.Repositorio
                   .WithMany(p => p.Examenes)
                   .HasForeignKey(c => c.PacienteId)
                   .OnDelete(DeleteBehavior.Restrict);
+                //relacion con usuario (Un usuario puede hacer varios examens)
+                t.HasOne(c => c.Usuario)
+                  .WithMany(p => p.Examenes)
+                  .HasForeignKey(c => c.UsuarioId)
+                  .OnDelete(DeleteBehavior.Restrict);
 
-            });          
-
+            });
+            
             // ******************************************************************
             // Se define Tabla de TipoVacuna
             // ******************************************************************
@@ -509,6 +520,17 @@ namespace ProyectoFinal.Repositorio
 
                 t.HasIndex(b => b.UsuarioCreacionId);
                 t.HasIndex(b => b.UsuarioModificacionId);
+
+                // Relaciones con Usuario
+                t.HasOne(p => p.UsuarioCreacion)
+                    .WithMany()
+                    .HasForeignKey(p => p.UsuarioCreacionId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                t.HasOne(p => p.UsuarioModificacion)
+                    .WithMany()
+                    .HasForeignKey(p => p.UsuarioModificacionId)
+                    .OnDelete(DeleteBehavior.Restrict);
 
             });
             // *****************************************************************
@@ -554,12 +576,11 @@ namespace ProyectoFinal.Repositorio
                     .WithOne(p => p.Vacuna)
                     .HasForeignKey<Vacuna>(p => p.TipoVacunaId)
                     .IsRequired();
-                //relacion con paciente (un pciente puede tener varios examnes) de uno a muchos
+                //relacion con paciente (un pciente puede tener varias vacuna) de uno a muchos
                 t.HasOne(c => c.Paciente)
                   .WithMany(p => p.Vacunas)
                   .HasForeignKey(c => c.PacienteId)
                   .OnDelete(DeleteBehavior.Restrict);
-
             });
 
             // ******************************************************************
@@ -684,6 +705,72 @@ namespace ProyectoFinal.Repositorio
                     .WithMany()
                     .HasForeignKey(p => p.TipoIdentificacionId)
                     .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            // ******************************************************************
+            // Se define Tabla de TipoImagenDiagnostica
+            // ******************************************************************
+            modelBuilder.Entity<TipoImagenDiagnostica>(t =>
+            {
+                t.Property(b => b.TipoImagenDiagnosticaId).HasColumnType("uniqueidentifier").IsRequired();
+                t.Property(b => b.Descripcion).HasColumnType("varchar").HasMaxLength(64).IsRequired();
+                t.Property(b => b.FechaCreacion).HasColumnType("datetime").IsRequired();
+                t.Property(b => b.FechaModificacion).HasColumnType("datetime").IsRequired();
+                t.Property(b => b.UsuarioCreacionId).HasColumnType("uniqueidentifier").IsRequired();
+                t.Property(b => b.UsuarioModificacionId).HasColumnType("uniqueidentifier").IsRequired();
+
+                t.HasIndex(b => b.UsuarioCreacionId);
+                t.HasIndex(b => b.UsuarioModificacionId);
+
+            });
+
+            // ******************************************************************
+            // Se define Tabla de ImagenDiagnostica
+            // ******************************************************************
+
+            modelBuilder.Entity<ImagenDiagnostica>(t =>
+            {
+                t.Property(b => b.ImagenDiagnosticaId).HasColumnType("uniqueidentifier").IsRequired();
+                t.Property(b => b.PacienteId).HasColumnType("uniqueidentifier").IsRequired();
+                t.Property(b => b.UsuarioId).HasColumnType("uniqueidentifier").IsRequired();
+                t.Property(b => b.TipoImagenDiagnosticaId).HasColumnType("uniqueidentifier").IsRequired();
+
+                t.Property(b => b.Fecha).HasColumnType("datetime").IsRequired();
+                t.Property(b => b.SignosClinicos).HasColumnType("varchar").HasMaxLength(128).IsRequired();
+                t.Property(b => b.DiagnosticoPresuntivo).HasColumnType("varchar").HasMaxLength(512).IsRequired();
+                t.Property(b => b.Imagen).HasColumnType("varbinary(max)").IsRequired();
+                t.Property(b => b.Observaciones).HasColumnType("varchar").HasMaxLength(512).IsRequired();
+                t.Property(b => b.FechaCreacion).HasColumnType("datetime").IsRequired();
+                t.Property(b => b.FechaModificacion).HasColumnType("datetime").IsRequired();
+                t.Property(b => b.UsuarioCreacionId).HasColumnType("uniqueidentifier").IsRequired();
+                t.Property(b => b.UsuarioModificacionId).HasColumnType("uniqueidentifier").IsRequired();
+
+                t.HasIndex(b => b.UsuarioCreacionId);
+                t.HasIndex(b => b.UsuarioModificacionId);
+
+                //relaciones
+                t.HasOne(c => c.UsuarioCreacion)
+                 .WithMany()
+                 .HasForeignKey(c => c.UsuarioCreacionId)
+                 .OnDelete(DeleteBehavior.Restrict);
+
+                t.HasOne(c => c.UsuarioModificacion)
+                    .WithMany()
+                    .HasForeignKey(c => c.UsuarioModificacionId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                //relacion uno a uno de TipoImagenDiagnostica
+                //t.HasOne(p => p.TipoImagenDiagnostica)
+                //.WithOne(p => p.ImagenesDiagnosticas)
+                //.HasForeignKey<ImagenDiagnostica>(p => p.TipoImagenDiagnosticaId)
+                //.IsRequired();
+
+                //relacion con paciente (un paciente puede tener varias ImagenesDiagnosticas)
+                t.HasOne(c => c.Paciente)
+                  .WithMany(p => p.ImagenesDiagnosticas)
+                  .HasForeignKey(c => c.PacienteId)
+                  .OnDelete(DeleteBehavior.Restrict);
+
             });
 
             // ******************************************************************
@@ -816,6 +903,10 @@ namespace ProyectoFinal.Repositorio
                     .HasForeignKey(c => c.UsuarioModificacionId)
                     .OnDelete(DeleteBehavior.Restrict);
             });
+
+
+
+
 
 
 

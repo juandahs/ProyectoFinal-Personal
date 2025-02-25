@@ -30,6 +30,7 @@ namespace ProyectoFinal.Entidades
         public virtual ICollection<Cita> Citas { get; set; } = [];
         public virtual ICollection<Examen> Examenes { get; set; } = []; //un paciente puede tener varios examnes
         public virtual ICollection<Vacuna> Vacunas { get; set; } = []; //un paciente puede tener varios examnes
+        public virtual ICollection<ImagenDiagnostica> ImagenesDiagnosticas { get; set; } = [];
     }
 
 }
