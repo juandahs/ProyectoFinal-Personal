@@ -700,6 +700,8 @@ namespace ProyectoFinal.Repositorio.Migrations
 
                     b.HasIndex("UsuarioCreacionId");
 
+                    b.HasIndex("UsuarioId");
+
                     b.HasIndex("UsuarioModificacionId");
 
                     b.ToTable("Vacuna", (string)null);
@@ -968,6 +970,12 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("ProyectoFinal.Entidades.Usuario", "Usuario")
+                        .WithMany("Vacunas")
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioModificacion")
                         .WithMany()
                         .HasForeignKey("UsuarioModificacionId")
@@ -977,6 +985,8 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.Navigation("Paciente");
 
                     b.Navigation("TipoVacuna");
+
+                    b.Navigation("Usuario");
 
                     b.Navigation("UsuarioCreacion");
 
@@ -1015,6 +1025,8 @@ namespace ProyectoFinal.Repositorio.Migrations
             modelBuilder.Entity("ProyectoFinal.Entidades.Usuario", b =>
                 {
                     b.Navigation("Examenes");
+
+                    b.Navigation("Vacunas");
                 });
 #pragma warning restore 612, 618
         }

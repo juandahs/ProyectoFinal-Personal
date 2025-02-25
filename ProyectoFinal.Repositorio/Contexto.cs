@@ -508,7 +508,11 @@ namespace ProyectoFinal.Repositorio
                   .WithMany(p => p.Vacunas)
                   .HasForeignKey(c => c.PacienteId)
                   .OnDelete(DeleteBehavior.Restrict);
-
+                //relacion con usuario (Un usuario puede hacer varios examens)
+                t.HasOne(c => c.Usuario)
+                  .WithMany(p => p.Vacunas)
+                  .HasForeignKey(c => c.UsuarioId)
+                  .OnDelete(DeleteBehavior.Restrict);
             });
 
             // ******************************************************************

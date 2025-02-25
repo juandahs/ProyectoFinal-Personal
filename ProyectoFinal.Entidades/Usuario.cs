@@ -20,6 +20,7 @@
 
         public virtual Rol? Rol { get; set; } 
         public virtual TipoIdentificacion? TipoIdentificacion { get; set; }
-        public virtual ICollection<Examen> Examenes { get; set; } = []; 
+        public virtual ICollection<Examen> Examenes { get; set; } = [];
+        public virtual ICollection<Vacuna> Vacunas { get; set; } = [];
     }
 }

@@ -469,6 +469,12 @@ namespace ProyectoFinal.Repositorio.Migrations
                         principalColumn: "UsuarioId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
+                        name: "FK_Vacuna_Usuario_UsuarioId",
+                        column: x => x.UsuarioId,
+                        principalTable: "Usuario",
+                        principalColumn: "UsuarioId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_Vacuna_Usuario_UsuarioModificacionId",
                         column: x => x.UsuarioModificacionId,
                         principalTable: "Usuario",
@@ -683,6 +689,11 @@ namespace ProyectoFinal.Repositorio.Migrations
                 name: "IX_Vacuna_UsuarioCreacionId",
                 table: "Vacuna",
                 column: "UsuarioCreacionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vacuna_UsuarioId",
+                table: "Vacuna",
+                column: "UsuarioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Vacuna_UsuarioModificacionId",
