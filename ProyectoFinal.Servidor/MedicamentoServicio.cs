@@ -5,7 +5,7 @@ using ProyectoFinal.Repositorio;
 
 namespace ProyectoFinal.Servidor
 {
-    public class ServicioMedicamento(Contexto contexto) 
+    public class MedicamentoServicio(Contexto contexto) 
     {
         private readonly Contexto _contexto = contexto;
 

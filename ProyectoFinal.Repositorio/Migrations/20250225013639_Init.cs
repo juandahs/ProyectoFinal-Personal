@@ -412,6 +412,47 @@ namespace ProyectoFinal.Repositorio.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ImagenDiagnostica",
+                columns: table => new
+                {
+                    ImagenDiagnosticaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PacienteId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UsuarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TipoImagenDiagnosticaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SignosClinicos = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DiagnosticoPresuntivo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Imagen = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    Observaciones = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FechaModificacion = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UsuarioCreacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UsuarioModificacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ImagenDiagnostica", x => x.ImagenDiagnosticaId);
+                    table.ForeignKey(
+                        name: "FK_ImagenDiagnostica_Pacientes_PacienteId",
+                        column: x => x.PacienteId,
+                        principalTable: "Pacientes",
+                        principalColumn: "PacienteId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ImagenDiagnostica_Usuario_UsuarioCreacionId",
+                        column: x => x.UsuarioCreacionId,
+                        principalTable: "Usuario",
+                        principalColumn: "UsuarioId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ImagenDiagnostica_Usuario_UsuarioModificacionId",
+                        column: x => x.UsuarioModificacionId,
+                        principalTable: "Usuario",
+                        principalColumn: "UsuarioId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Vacuna",
                 columns: table => new
                 {
@@ -532,6 +573,21 @@ namespace ProyectoFinal.Repositorio.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Examen_UsuarioModificacionId",
                 table: "Examen",
+                column: "UsuarioModificacionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ImagenDiagnostica_PacienteId",
+                table: "ImagenDiagnostica",
+                column: "PacienteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ImagenDiagnostica_UsuarioCreacionId",
+                table: "ImagenDiagnostica",
+                column: "UsuarioCreacionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ImagenDiagnostica_UsuarioModificacionId",
+                table: "ImagenDiagnostica",
                 column: "UsuarioModificacionId");
 
             migrationBuilder.CreateIndex(
@@ -681,6 +737,9 @@ namespace ProyectoFinal.Repositorio.Migrations
 
             migrationBuilder.DropTable(
                 name: "Examen");
+
+            migrationBuilder.DropTable(
+                name: "ImagenDiagnostica");
 
             migrationBuilder.DropTable(
                 name: "Medicamento");
