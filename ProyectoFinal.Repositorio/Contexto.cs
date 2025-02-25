@@ -24,6 +24,8 @@ namespace ProyectoFinal.Repositorio
         public DbSet<Examen> Examenes { get; set; }
         public DbSet<TipoIdentificacion> TiposIdentificacion { get; set; }
         public DbSet<Vacuna> Vacunas { get; set; }
+        public DbSet<TipoImagenDiagnostica> TipoImagenesDiagnosticas { get; set; }
+        public DbSet<ImagenDiagnostica> ImagenesDiagnosticas { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -39,6 +41,9 @@ namespace ProyectoFinal.Repositorio
             modelBuilder.Entity<Examen>().ToTable("Examen");
             modelBuilder.Entity<TipoVacuna>().ToTable("TipoVacuna");
             modelBuilder.Entity<Vacuna>().ToTable("Vacuna");
+            modelBuilder.Entity<TipoImagenDiagnostica>().ToTable("TipoImagenDiagnostica");
+            modelBuilder.Entity<ImagenDiagnostica>().ToTable("ImagenDiagnostica");
+
 
             // ******************************************************************
             // Se define Tabla de Usuarios
@@ -611,6 +616,76 @@ namespace ProyectoFinal.Repositorio
                     .HasForeignKey(p => p.TipoIdentificacionId)
                     .OnDelete(DeleteBehavior.Restrict);
             });
+
+            // ******************************************************************
+            // Se define Tabla de TipoImagenDiagnostica
+            // ******************************************************************
+            modelBuilder.Entity<TipoImagenDiagnostica>(t =>
+            {
+                t.Property(b => b.TipoImagenDiagnosticaId).HasColumnType("uniqueidentifier").IsRequired();
+                t.Property(b => b.Descripcion).HasColumnType("varchar").HasMaxLength(64).IsRequired();
+                t.Property(b => b.FechaCreacion).HasColumnType("datetime").IsRequired();
+                t.Property(b => b.FechaModificacion).HasColumnType("datetime").IsRequired();
+                t.Property(b => b.UsuarioCreacionId).HasColumnType("uniqueidentifier").IsRequired();
+                t.Property(b => b.UsuarioModificacionId).HasColumnType("uniqueidentifier").IsRequired();
+
+                t.HasIndex(b => b.UsuarioCreacionId);
+                t.HasIndex(b => b.UsuarioModificacionId);
+
+            });
+
+            // ******************************************************************
+            // Se define Tabla de ImagenDiagnostica
+            // ******************************************************************
+
+            modelBuilder.Entity<ImagenDiagnostica>(t =>
+            {
+                t.Property(b => b.ImagenDiagnosticaId).HasColumnType("uniqueidentifier").IsRequired();
+                t.Property(b => b.PacienteId).HasColumnType("uniqueidentifier").IsRequired();
+                t.Property(b => b.UsuarioId).HasColumnType("uniqueidentifier").IsRequired();
+                t.Property(b => b.TipoImagenDiagnosticaId).HasColumnType("uniqueidentifier").IsRequired();
+
+                t.Property(b => b.Fecha).HasColumnType("datetime").IsRequired();
+                t.Property(b => b.SignosClinicos).HasColumnType("varchar").HasMaxLength(128).IsRequired();
+                t.Property(b => b.DiagnosticoPresuntivo).HasColumnType("varchar").HasMaxLength(512).IsRequired();
+                t.Property(b => b.Imagen).HasColumnType("varbinary(max)").IsRequired();
+                t.Property(b => b.Observaciones).HasColumnType("varchar").HasMaxLength(512).IsRequired();
+                t.Property(b => b.FechaCreacion).HasColumnType("datetime").IsRequired();
+                t.Property(b => b.FechaModificacion).HasColumnType("datetime").IsRequired();
+                t.Property(b => b.UsuarioCreacionId).HasColumnType("uniqueidentifier").IsRequired();
+                t.Property(b => b.UsuarioModificacionId).HasColumnType("uniqueidentifier").IsRequired();
+
+                t.HasIndex(b => b.UsuarioCreacionId);
+                t.HasIndex(b => b.UsuarioModificacionId);
+
+                //relaciones
+                t.HasOne(c => c.UsuarioCreacion)
+                 .WithMany()
+                 .HasForeignKey(c => c.UsuarioCreacionId)
+                 .OnDelete(DeleteBehavior.Restrict);
+
+                t.HasOne(c => c.UsuarioModificacion)
+                    .WithMany()
+                    .HasForeignKey(c => c.UsuarioModificacionId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                //relacion uno a uno de TipoImagenDiagnostica
+                //t.HasOne(p => p.TipoImagenDiagnostica)
+                //.WithOne(p => p.ImagenesDiagnosticas)
+                //.HasForeignKey<ImagenDiagnostica>(p => p.TipoImagenDiagnosticaId)
+                //.IsRequired();
+
+                //relacion con paciente (un paciente puede tener varias ImagenesDiagnosticas)
+                t.HasOne(c => c.Paciente)
+                  .WithMany(p => p.ImagenesDiagnosticas)
+                  .HasForeignKey(c => c.PacienteId)
+                  .OnDelete(DeleteBehavior.Restrict);
+
+            });
+
+
+
+
 
 
 
