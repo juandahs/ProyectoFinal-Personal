@@ -8,5 +8,6 @@ namespace ProyectoFinal.Servidor
     {
         private readonly Contexto _contexto = contexto;
         public IEnumerable<TipoIdentificacion> ObtenerTodos()  => _contexto.TiposIdentificacion.AsNoTracking();
+                
     }
 }
