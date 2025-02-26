@@ -283,7 +283,13 @@ namespace ProyectoFinal.Repositorio
                 t.HasMany(p => p.Citas)
                     .WithOne(c => c.Paciente)
                     .HasForeignKey(c => c.PacienteId)
-                    .OnDelete(DeleteBehavior.Cascade);
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                t.HasMany(p => p.Desparasitaciones)
+                    .WithOne(d => d.Paciente)
+                    .HasForeignKey(d => d.PacienteId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
             });
 
             // ******************************************************************
@@ -757,12 +763,6 @@ namespace ProyectoFinal.Repositorio
                 t.HasIndex(b => b.UsuarioModificacionId);
                 t.HasIndex(b => b.PacienteId);
                 
-
-                t.HasOne(p => p.Paciente)
-                    .WithMany()
-                    .HasForeignKey(p => p.PacienteId)
-                    .OnDelete(DeleteBehavior.Restrict);
-
                 t.HasOne(p => p.UsuarioCreacion)
                     .WithMany()
                     .HasForeignKey(p => p.UsuarioCreacionId)
@@ -787,18 +787,51 @@ namespace ProyectoFinal.Repositorio
                     .HasColumnType("uniqueidentifier")
                     .IsRequired();
 
-                t.Property(b => b.NumeroIdentificacion).HasColumnType("varchar").HasMaxLength(16).IsRequired();
-                t.Property(b => b.Nombre).HasColumnType("varchar").HasMaxLength(128).IsRequired();
-                t.Property(b => b.Apellido).HasColumnType("varchar").HasMaxLength(128).IsRequired();
-                t.Property(b => b.Telefono).HasColumnType("varchar").HasMaxLength(16);
-                t.Property(b => b.CorreoElectronico).HasColumnType("varchar").HasMaxLength(128);
-                t.Property(b => b.Direccion).HasColumnType("varchar").HasMaxLength(128);
+                t.Property(b => b.NumeroIdentificacion)
+                    .HasColumnType("varchar")
+                    .HasMaxLength(16)
+                    .IsRequired();
 
-                t.Property(b => b.FechaCreacion).HasColumnType("datetime").IsRequired();
-                t.Property(b => b.FechaModificacion).HasColumnType("datetime").IsRequired();
-                t.Property(b => b.UsuarioCreacionId).HasColumnType("uniqueidentifier").IsRequired();
+                t.Property(b => b.Nombre)
+                    .HasColumnType("varchar")
+                    .HasMaxLength(128)
+                    .IsRequired();
+
+                t.Property(b => b.Apellido)
+                    .HasColumnType("varchar")
+                    .HasMaxLength(128)
+                    .IsRequired();
+
+                t.Property(b => b.Telefono)
+                    .HasColumnType("varchar")
+                    .HasMaxLength(16);
+
+                t.Property(b => b.CorreoElectronico)
+                    .HasColumnType("varchar")
+                    .HasMaxLength(128);
+
+                t.Property(b => b.Direccion)
+                    .HasColumnType("varchar")
+                    .HasMaxLength(128);
+
+                t.Property(b => b.FechaCreacion)
+                    .HasColumnType("datetime")
+                    .IsRequired();
+
+                t.Property(b => b.FechaModificacion)
+                    .HasColumnType("datetime")
+                    .IsRequired();
+
+                t.Property(b => b.UsuarioCreacionId)
+                    .HasColumnType("uniqueidentifier")
+                    .IsRequired();
+
+                t.Property(b => b.UsuarioModificacionId)
+                    .HasColumnType("uniqueidentifier")
+                    .IsRequired();
 
                 t.HasIndex(b => b.UsuarioCreacionId);
+                t.HasIndex(b => b.UsuarioModificacionId);
                 t.HasIndex(b => b.TipoIdentificacionId);
                 t.HasIndex(b => b.NumeroIdentificacion);
 
@@ -808,11 +841,21 @@ namespace ProyectoFinal.Repositorio
                     .HasForeignKey(p => p.UsuarioCreacionId)
                     .OnDelete(DeleteBehavior.Restrict);
 
-                
+                t.HasOne(p => p.UsuarioModificacion)
+                    .WithMany()
+                    .HasForeignKey(p => p.UsuarioModificacionId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
                 t.HasOne(p => p.TipoIdentificacion)
                     .WithMany()
                     .HasForeignKey(p => p.TipoIdentificacionId)
                     .OnDelete(DeleteBehavior.Restrict);
+
+                t.HasMany(p => p.Pacientes)
+                    .WithOne(p => p.Propietario)
+                    .HasForeignKey(p => p.PropietarioId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
             });
 
           
@@ -834,11 +877,7 @@ namespace ProyectoFinal.Repositorio
                 t.Property(c => c.UsuarioId)
                     .HasColumnType("uniqueidentifier")
                     .IsRequired();
-
-                t.Property(c => c.CitaId)
-                    .HasColumnType("uniqueidentifier")
-                    .IsRequired();
-
+        
                 t.Property(c => c.Fecha)
                     .HasColumnType("datetime")
                     .IsRequired();
@@ -876,11 +915,6 @@ namespace ProyectoFinal.Repositorio
                 t.HasIndex(c => c.PacienteId);
                 t.HasIndex(c => c.UsuarioCreacionId);
                 t.HasIndex(c => c.UsuarioModificacionId);
-
-                t.HasOne(c => c.Cita)
-                   .WithMany()
-                   .HasForeignKey(c => c.CitaId)
-                   .OnDelete(DeleteBehavior.Cascade);
 
                 t.HasOne(c => c.Paciente)
                     .WithMany()

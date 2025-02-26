@@ -137,9 +137,6 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CitaId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Diagnostico")
                         .IsRequired()
                         .HasMaxLength(256)
@@ -176,8 +173,6 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ConsultaId");
-
-                    b.HasIndex("CitaId");
 
                     b.HasIndex("PacienteId");
 
@@ -866,7 +861,7 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.HasOne("ProyectoFinal.Entidades.Paciente", "Paciente")
                         .WithMany("Citas")
                         .HasForeignKey("PacienteId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioCreacion")
@@ -898,12 +893,6 @@ namespace ProyectoFinal.Repositorio.Migrations
 
             modelBuilder.Entity("ProyectoFinal.Entidades.Consulta", b =>
                 {
-                    b.HasOne("ProyectoFinal.Entidades.Cita", "Cita")
-                        .WithMany()
-                        .HasForeignKey("CitaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("ProyectoFinal.Entidades.Paciente", "Paciente")
                         .WithMany()
                         .HasForeignKey("PacienteId")
@@ -922,8 +911,6 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Cita");
-
                     b.Navigation("Paciente");
 
                     b.Navigation("UsuarioCreacion");
@@ -934,12 +921,12 @@ namespace ProyectoFinal.Repositorio.Migrations
             modelBuilder.Entity("ProyectoFinal.Entidades.Desparasitacion", b =>
                 {
                     b.HasOne("ProyectoFinal.Entidades.Paciente", "Paciente")
-                        .WithMany()
+                        .WithMany("Desparasitaciones")
                         .HasForeignKey("PacienteId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ProyectoFinal.Entidades.Paciente", "UsuarioCreacion")
+                    b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioCreacion")
                         .WithMany()
                         .HasForeignKey("UsuarioCreacionId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1085,7 +1072,7 @@ namespace ProyectoFinal.Repositorio.Migrations
             modelBuilder.Entity("ProyectoFinal.Entidades.Paciente", b =>
                 {
                     b.HasOne("ProyectoFinal.Entidades.Propietario", "Propietario")
-                        .WithMany()
+                        .WithMany("Pacientes")
                         .HasForeignKey("PropietarioId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -1126,7 +1113,7 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioModificacion")
                         .WithMany()
                         .HasForeignKey("UsuarioModificacionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("TipoIdentificacion");
@@ -1231,9 +1218,16 @@ namespace ProyectoFinal.Repositorio.Migrations
                 {
                     b.Navigation("Citas");
 
+                    b.Navigation("Desparasitaciones");
+
                     b.Navigation("Examenes");
 
                     b.Navigation("Vacunas");
+                });
+
+            modelBuilder.Entity("ProyectoFinal.Entidades.Propietario", b =>
+                {
+                    b.Navigation("Pacientes");
                 });
 
             modelBuilder.Entity("ProyectoFinal.Entidades.Rol", b =>
