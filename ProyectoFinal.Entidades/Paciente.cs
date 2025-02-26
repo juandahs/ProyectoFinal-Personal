@@ -25,7 +25,7 @@
         public virtual ICollection<Vacuna> Vacunas { get; set; } = [];
         public virtual ICollection<Desparasitacion> Desparasitaciones { get; set; } = [];
 
-        //public virtual ICollection<ImagenDiagnostica> ImagenesDiagnosticas { get; set; } = [];
+        public virtual ICollection<ImagenDiagnostica> ImagenesDiagnosticas { get; set; } = [];
     }
 
 }

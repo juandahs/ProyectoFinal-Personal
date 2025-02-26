@@ -22,5 +22,7 @@
         public virtual TipoIdentificacion? TipoIdentificacion { get; set; }
         public virtual ICollection<Examen> Examenes { get; set; } = [];
         public virtual ICollection<Vacuna> Vacunas { get; set; } = [];
+        public virtual ICollection<ImagenDiagnostica> ImagenesDiagnosticas { get; set; } = [];
+
     }
 }
