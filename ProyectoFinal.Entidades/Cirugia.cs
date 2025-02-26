@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ProyectoFinal.Entidades
+﻿namespace ProyectoFinal.Entidades
 {
     public class Cirugia
     {
-        public Guid CirugiaId { get; set; } 
-
-        //TODO: Falta crear la relación con la entidad TipoCirugia
+        public Guid CirugiaId { get; set; }         
         public Guid TipoCirugiaId { get; set; } 
-        public Guid PacienteId { get; set; }
+        public Guid PacienteId { get; set; }        
+        
         public Guid UsuarioId { get; set; }
         public string? Descripcion { get; set; }
         public string? Preanestesico { get; set; }
@@ -27,6 +20,9 @@ namespace ProyectoFinal.Entidades
         public virtual Usuario UsuarioCreacion { get; set; }
         public virtual Usuario UsuarioModificacion { get; set; }
         public virtual Paciente Paciente { get; set; }
+        public virtual TipoCirugia TipoCirugia { get; set; }
+
+        
 
 
     }

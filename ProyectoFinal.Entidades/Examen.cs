@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ProyectoFinal.Entidades
+﻿namespace ProyectoFinal.Entidades
 {
     public class Examen
     {
@@ -25,11 +19,11 @@ namespace ProyectoFinal.Entidades
         public Guid UsuarioModificacionId { get; set; }
 
         //Relaciones
+        public virtual Paciente? Paciente { get; set; }
+        public virtual Usuario? Usuario {  get; set; }
+        public virtual TipoExamen? TipoExamen { get; set; }
         public virtual Usuario? UsuarioCreacion { get; set; }
         public virtual Usuario? UsuarioModificacion { get; set; }
-        public virtual Usuario? Usuario {  get; set; }
-        public virtual Paciente? Paciente { get; set; }
-        public virtual TipoExamen? TipoExamen { get; set; }
 
 
     }

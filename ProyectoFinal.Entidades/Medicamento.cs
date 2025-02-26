@@ -4,8 +4,8 @@ namespace ProyectoFinal.Entidades
 {
     public class Medicamento
     {
-        public Guid MedicamentoId { get; set; } = Guid.NewGuid();
-        public Guid FormulaMedicaId { get; set; }
+        public Guid MedicamentoId { get; set; }
+        public Guid UsuarioId { get; set; }
         public string NombreMedicamento { get; set; } = string.Empty;
         public string Dosis { get; set; } = string.Empty;
         public string Frecuencia { get; set; } = string.Empty;
@@ -15,9 +15,10 @@ namespace ProyectoFinal.Entidades
         public Guid UsuarioCreacionId { get; set; }
         public Guid UsuarioModificacionId { get; set; }
 
-        public virtual FormulaMedica FormulaMedica { get; set; }
+        public virtual ICollection<FormulaMedicaMedicamento> FormulaMedicaMedicamentos { get; set; } = [];
+        public virtual Usuario Usuario { get; set; }
         public virtual Usuario UsuarioCreacion { get; set; }
         public virtual Usuario UsuarioModificacion { get; set; }
-
     }
+
 }

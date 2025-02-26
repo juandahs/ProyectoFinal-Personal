@@ -1,8 +1,4 @@
-﻿
-
-using System.Net.Http.Headers;
-
-namespace ProyectoFinal.Entidades
+﻿namespace ProyectoFinal.Entidades
 {
     public class Paciente
     {
@@ -28,8 +24,8 @@ namespace ProyectoFinal.Entidades
         public virtual Propietario Propietario { get; set; }
 
         public virtual ICollection<Cita> Citas { get; set; } = [];
-        public virtual ICollection<Examen> Examenes { get; set; } = []; //un paciente puede tener varios examnes
-        public virtual ICollection<Vacuna> Vacunas { get; set; } = []; //un paciente puede tener varios examnes
+        public virtual ICollection<Examen> Examenes { get; set; } = []; 
+        public virtual ICollection<Vacuna> Vacunas { get; set; } = []; 
         //public virtual ICollection<ImagenDiagnostica> ImagenesDiagnosticas { get; set; } = [];
     }
 

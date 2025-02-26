@@ -7,8 +7,6 @@ namespace ProyectoFinal.Entidades
         public Guid DesparasitacionId { get; set; }
 
         public Guid PacienteId { get; set; }
-        public Guid PropietarioId { get; set; }
-
         public DesparasitacionTipo DesparasitacionTipo { get; set; }
         public DesparasitacionForma DesparasitacionForma { get; set; }
 
@@ -21,8 +19,7 @@ namespace ProyectoFinal.Entidades
         public Guid UsuarioCreacionId { get; set; }
         public Guid UsuarioModificacionId { get; set; }
 
-        public virtual Paciente Paciente { get; set; }
-        public virtual Propietario Propietario { get; set; }
+        public virtual Paciente Paciente { get; set; }        
         public virtual Paciente UsuarioCreacion { get; set; }
         public virtual Usuario  UsuarioModificacion { get; set; }
 

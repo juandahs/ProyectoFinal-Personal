@@ -12,7 +12,7 @@ using ProyectoFinal.Repositorio;
 namespace ProyectoFinal.Repositorio.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20250226003129_Init")]
+    [Migration("20250226033141_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -71,6 +71,8 @@ namespace ProyectoFinal.Repositorio.Migrations
 
                     b.HasIndex("PacienteId");
 
+                    b.HasIndex("TipoCirugiaId");
+
                     b.HasIndex("UsuarioCreacionId");
 
                     b.HasIndex("UsuarioModificacionId");
@@ -84,8 +86,10 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Estado")
-                        .HasColumnType("int");
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("varchar");
 
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime");
@@ -97,7 +101,8 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .HasColumnType("datetime");
 
                     b.Property<string>("Motivo")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar");
 
                     b.Property<Guid>("PacienteId")
                         .HasColumnType("uniqueidentifier");
@@ -106,6 +111,9 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("UsuarioCreacionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UsuarioId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("UsuarioModificacionId")
@@ -119,9 +127,11 @@ namespace ProyectoFinal.Repositorio.Migrations
 
                     b.HasIndex("UsuarioCreacionId");
 
+                    b.HasIndex("UsuarioId");
+
                     b.HasIndex("UsuarioModificacionId");
 
-                    b.ToTable("Citas");
+                    b.ToTable("Cita", (string)null);
                 });
 
             modelBuilder.Entity("ProyectoFinal.Entidades.Consulta", b =>
@@ -170,6 +180,8 @@ namespace ProyectoFinal.Repositorio.Migrations
 
                     b.HasKey("ConsultaId");
 
+                    b.HasIndex("CitaId");
+
                     b.HasIndex("PacienteId");
 
                     b.HasIndex("UsuarioCreacionId");
@@ -214,9 +226,6 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.Property<Guid>("PacienteId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("PropietarioId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("UsuarioCreacionId")
                         .HasColumnType("uniqueidentifier");
 
@@ -226,8 +235,6 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.HasKey("DesparasitacionId");
 
                     b.HasIndex("PacienteId");
-
-                    b.HasIndex("PropietarioId");
 
                     b.HasIndex("UsuarioCreacionId");
 
@@ -328,9 +335,26 @@ namespace ProyectoFinal.Repositorio.Migrations
 
                     b.HasIndex("UsuarioCreacionId");
 
+                    b.HasIndex("UsuarioId");
+
                     b.HasIndex("UsuarioModificacionId");
 
                     b.ToTable("FormulaMedica", (string)null);
+                });
+
+            modelBuilder.Entity("ProyectoFinal.Entidades.FormulaMedicaMedicamento", b =>
+                {
+                    b.Property<Guid>("FormulaMedicaId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("MedicamentoId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("FormulaMedicaId", "MedicamentoId");
+
+                    b.HasIndex("MedicamentoId");
+
+                    b.ToTable("FormulaMedicaMedicamento", (string)null);
                 });
 
             modelBuilder.Entity("ProyectoFinal.Entidades.Medicamento", b =>
@@ -350,9 +374,6 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.Property<DateTime>("FechaModificacion")
                         .HasColumnType("datetime");
 
-                    b.Property<Guid>("FormulaMedicaId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Frecuencia")
                         .IsRequired()
                         .HasMaxLength(128)
@@ -370,14 +391,17 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.Property<Guid>("UsuarioCreacionId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("UsuarioId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("UsuarioModificacionId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("MedicamentoId");
 
-                    b.HasIndex("FormulaMedicaId");
-
                     b.HasIndex("UsuarioCreacionId");
+
+                    b.HasIndex("UsuarioId");
 
                     b.HasIndex("UsuarioModificacionId");
 
@@ -810,7 +834,13 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.HasOne("ProyectoFinal.Entidades.Paciente", "Paciente")
                         .WithMany()
                         .HasForeignKey("PacienteId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ProyectoFinal.Entidades.TipoCirugia", "TipoCirugia")
+                        .WithMany()
+                        .HasForeignKey("TipoCirugiaId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioCreacion")
@@ -826,6 +856,8 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .IsRequired();
 
                     b.Navigation("Paciente");
+
+                    b.Navigation("TipoCirugia");
 
                     b.Navigation("UsuarioCreacion");
 
@@ -846,6 +878,12 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("ProyectoFinal.Entidades.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioModificacion")
                         .WithMany()
                         .HasForeignKey("UsuarioModificacionId")
@@ -854,6 +892,8 @@ namespace ProyectoFinal.Repositorio.Migrations
 
                     b.Navigation("Paciente");
 
+                    b.Navigation("Usuario");
+
                     b.Navigation("UsuarioCreacion");
 
                     b.Navigation("UsuarioModificacion");
@@ -861,6 +901,12 @@ namespace ProyectoFinal.Repositorio.Migrations
 
             modelBuilder.Entity("ProyectoFinal.Entidades.Consulta", b =>
                 {
+                    b.HasOne("ProyectoFinal.Entidades.Cita", "Cita")
+                        .WithMany()
+                        .HasForeignKey("CitaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ProyectoFinal.Entidades.Paciente", "Paciente")
                         .WithMany()
                         .HasForeignKey("PacienteId")
@@ -879,6 +925,8 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.Navigation("Cita");
+
                     b.Navigation("Paciente");
 
                     b.Navigation("UsuarioCreacion");
@@ -891,12 +939,6 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.HasOne("ProyectoFinal.Entidades.Paciente", "Paciente")
                         .WithMany()
                         .HasForeignKey("PacienteId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ProyectoFinal.Entidades.Propietario", "Propietario")
-                        .WithMany()
-                        .HasForeignKey("PropietarioId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -913,8 +955,6 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .IsRequired();
 
                     b.Navigation("Paciente");
-
-                    b.Navigation("Propietario");
 
                     b.Navigation("UsuarioCreacion");
 
@@ -978,30 +1018,9 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioModidificacion")
+                    b.HasOne("ProyectoFinal.Entidades.Usuario", "Usuario")
                         .WithMany()
-                        .HasForeignKey("UsuarioModificacionId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Paciente");
-
-                    b.Navigation("UsuarioCreacion");
-
-                    b.Navigation("UsuarioModidificacion");
-                });
-
-            modelBuilder.Entity("ProyectoFinal.Entidades.Medicamento", b =>
-                {
-                    b.HasOne("ProyectoFinal.Entidades.FormulaMedica", "FormulaMedica")
-                        .WithMany()
-                        .HasForeignKey("FormulaMedicaId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioCreacion")
-                        .WithMany()
-                        .HasForeignKey("UsuarioCreacionId")
+                        .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -1011,7 +1030,55 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.Navigation("Paciente");
+
+                    b.Navigation("Usuario");
+
+                    b.Navigation("UsuarioCreacion");
+
+                    b.Navigation("UsuarioModificacion");
+                });
+
+            modelBuilder.Entity("ProyectoFinal.Entidades.FormulaMedicaMedicamento", b =>
+                {
+                    b.HasOne("ProyectoFinal.Entidades.FormulaMedica", "FormulaMedica")
+                        .WithMany("FormulaMedicaMedicamentos")
+                        .HasForeignKey("FormulaMedicaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ProyectoFinal.Entidades.Medicamento", "Medicamento")
+                        .WithMany("FormulaMedicaMedicamentos")
+                        .HasForeignKey("MedicamentoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("FormulaMedica");
+
+                    b.Navigation("Medicamento");
+                });
+
+            modelBuilder.Entity("ProyectoFinal.Entidades.Medicamento", b =>
+                {
+                    b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioCreacion")
+                        .WithMany()
+                        .HasForeignKey("UsuarioCreacionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ProyectoFinal.Entidades.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioModificacion")
+                        .WithMany()
+                        .HasForeignKey("UsuarioModificacionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Usuario");
 
                     b.Navigation("UsuarioCreacion");
 
@@ -1151,6 +1218,16 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.Navigation("UsuarioCreacion");
 
                     b.Navigation("UsuarioModificacion");
+                });
+
+            modelBuilder.Entity("ProyectoFinal.Entidades.FormulaMedica", b =>
+                {
+                    b.Navigation("FormulaMedicaMedicamentos");
+                });
+
+            modelBuilder.Entity("ProyectoFinal.Entidades.Medicamento", b =>
+                {
+                    b.Navigation("FormulaMedicaMedicamentos");
                 });
 
             modelBuilder.Entity("ProyectoFinal.Entidades.Paciente", b =>
