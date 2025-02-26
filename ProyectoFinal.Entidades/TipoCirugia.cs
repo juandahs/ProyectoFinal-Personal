@@ -11,7 +11,7 @@ namespace ProyectoFinal.Entidades
         public Guid TipoCirugiaId { get; set; }
 
         //TODO: Falta crear la relacion con la entidad Cirugia
-        public String Descripcion { get; set; } = string.Empty;
+        public string Descripcion { get; set; } = string.Empty;
         public DateTime FechaCreacion { get; set; }
         public DateTime FechaModificacion { get; set; }
         public Guid UsuarioCreacionId { get; set; }
