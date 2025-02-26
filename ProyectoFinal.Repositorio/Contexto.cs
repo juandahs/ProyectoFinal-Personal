@@ -639,10 +639,10 @@ namespace ProyectoFinal.Repositorio
                   .HasForeignKey(c => c.PacienteId)
                   .OnDelete(DeleteBehavior.Restrict);
                 //relacion con usuario (Un usuario puede hacer varios examens)
-                //t.HasOne(c => c.Usuario)
-                //  .WithMany(p => p.Examenes)
-                //  .HasForeignKey(c => c.UsuarioId)
-                //  .OnDelete(DeleteBehavior.Restrict);
+                t.HasOne(c => c.Usuario)
+                  .WithMany(p => p.Examenes)
+                  .HasForeignKey(c => c.UsuarioId)
+                  .OnDelete(DeleteBehavior.Restrict);
 
             });
             
