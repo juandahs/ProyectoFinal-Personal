@@ -7,13 +7,20 @@ using System.Security.Claims;
 namespace ProyectoFinal.VetSite.MVC.Controllers
 {
     [Authorize]
-    public class UsuariosController(UsuarioServicios usuarioServicios
-        ,TipoIdentificacionServicio tipoIdentificacionServicio
-        , RolServicio rolServicio): Controller
+    public class UsuariosController : Controller
     {
-        private readonly UsuarioServicios _usuarioServicios =  usuarioServicios;
-        private readonly TipoIdentificacionServicio _tipoIdentificacionServicio = tipoIdentificacionServicio;
-        private readonly RolServicio _rolServicio = rolServicio;
+        private readonly UsuarioServicios _usuarioServicios;
+        private readonly TipoIdentificacionServicio _tipoIdentificacionServicio;
+        private readonly RolServicio _rolServicio;
+
+        public UsuariosController(UsuarioServicios usuarioServicios,
+                                  TipoIdentificacionServicio tipoIdentificacionServicio,
+                                  RolServicio rolServicio)
+        {
+            _usuarioServicios = usuarioServicios;
+            _tipoIdentificacionServicio = tipoIdentificacionServicio;
+            _rolServicio = rolServicio;
+        }
 
         [HttpGet]
         public IActionResult Index()
@@ -24,55 +31,59 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult Crear() {
-
+        public IActionResult Crear()
+        {
             ViewData["TiposIdentificacion"] = _tipoIdentificacionServicio.ObtenerTodos();
             ViewData["Roles"] = _rolServicio.ObtenerTodos();
             return View();
-        } 
+        }
 
         [HttpPost]
         public IActionResult Crear(Usuario usuario)
         {
             if (!ModelState.IsValid)
             {
-                ModelState.AddModelError(string.Empty, "Por favor valide los campos.");
-                return View(usuario); 
+                TempData["MensajeError"] = "La información del usuario no es válida. Revísela y trate nuevamente.";
+                return RedirectToAction("Index");
             }
 
             try
             {
                 if (_usuarioServicios.Existe(usuario.CorreoElectronico))
                 {
-                    ModelState.AddModelError(string.Empty, "El usuario ya existe.");
-                    return View(usuario);
+                    TempData["MensajeError"] = "Ya existe un usuario con el correo electrónico indicado.";
+                    return RedirectToAction("Index");
                 }
-                
+
                 var usuarioId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
                 _usuarioServicios.Agregar(usuario, Guid.Parse(usuarioId!));
+                TempData["MensajeExito"] = "Usuario creado exitosamente.";
             }
             catch (Exception e)
             {
-                ModelState.AddModelError(string.Empty, $"Ocurrio el siguiente error agregando el usuario. {e.Message}");
-                return View(usuario); 
+                TempData["MensajeError"] = $"Ocurrió el siguiente error tratando de crear el usuario: {e.Message}";
+                return RedirectToAction("Index");
             }
 
-            return RedirectToAction("Index"); 
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
         public IActionResult Eliminar(Guid id)
         {
-            
+            if (_usuarioServicios.TotalUsuarios() == 1)
+            {
+                TempData["MensajeError"] = "No se puede eliminar el usuario ya que debe existir mínimo un usuario en el sistema.";
+                return RedirectToAction("Index");
+            }
+
             try
             {
                 _usuarioServicios.Eliminar(id);
-
                 TempData["MensajeExito"] = "El usuario ha sido eliminado exitosamente.";
             }
             catch (Exception e)
             {
-                // Manejo de errores y mensajes al usuario
                 TempData["MensajeError"] = $"Ocurrió un error eliminando el usuario: {e.Message}";
             }
 
@@ -82,9 +93,9 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         [HttpGet]
         public IActionResult Editar(Guid id)
         {
-            if(id == Guid.Empty)
+            if (id == Guid.Empty)
             {
-                ModelState.AddModelError(string.Empty, "No se establecio un identificador de usuario");
+                TempData["MensajeError"] = "No se estableció un identificador de usuario.";
                 return RedirectToAction("Index");
             }
 
@@ -93,20 +104,18 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
                 var usuario = _usuarioServicios.ObtenerPorId(id);
                 if (usuario == null)
                 {
-                    ModelState.AddModelError(string.Empty, "No se encontro un usuario con el identificador proporcionado.");
+                    TempData["MensajeError"] = "No se encontró un usuario con el identificador proporcionado.";
                     return RedirectToAction("Index");
                 }
 
                 ViewData["TiposIdentificacion"] = _tipoIdentificacionServicio.ObtenerTodos();
                 ViewData["Roles"] = _rolServicio.ObtenerTodos();
-
                 return View(usuario);
             }
             catch (Exception e)
             {
-                ModelState.AddModelError(string.Empty, $"Ocurrio el siguiente error:\\n {e.Message}");
+                TempData["MensajeError"] = $"Ocurrió el siguiente error: {e.Message}";
                 return RedirectToAction("Index");
-
             }
         }
 
@@ -115,31 +124,29 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         {
             if (usuario == null)
             {
-                ModelState.AddModelError(string.Empty, "No se establecio un usuario válido.");
+                TempData["MensajeError"] = "No se estableció un usuario válido.";
                 return RedirectToAction("Index");
             }
 
-            if (!ModelState.IsValid) 
+            if (!ModelState.IsValid)
             {
-                ModelState.AddModelError(string.Empty, "No se establecio un modelo válido.");
+                TempData["MensajeError"] = "No se estableció un modelo válido.";
                 return RedirectToAction("Index");
             }
 
-           
             try
             {
                 var usuarioModificacionId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-
                 _usuarioServicios.Actualizar(usuario, Guid.Parse(usuarioModificacionId!));
-                return RedirectToAction("Index");
-
+                TempData["MensajeExito"] = "El usuario ha sido actualizado exitosamente.";
             }
             catch (Exception ex)
             {
-
-                ModelState.AddModelError(string.Empty, $"Ocurrio el siguiente error:\\n {ex.Message}");
+                TempData["MensajeError"] = $"Ocurrió el siguiente error: {ex.Message}";
                 return RedirectToAction("Index");
             }
+
+            return RedirectToAction("Index");
         }
     }
 }

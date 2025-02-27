@@ -28,6 +28,7 @@ namespace ProyectoFinal.Servidor
 
         public void Eliminar(Guid usuarioId)
         {
+            
             var usuario = _contexto.Usuarios.AsNoTracking().FirstOrDefault(u => u.UsuarioId == usuarioId) ?? throw new Exception("El usuario no existe.");
 
             _contexto.Usuarios.Remove(usuario);
@@ -36,6 +37,8 @@ namespace ProyectoFinal.Servidor
 
 
         public bool Existe(string correoElectronico)  => _contexto.Usuarios.AsNoTracking().Any(x => x.CorreoElectronico == correoElectronico);
+
+        public int TotalUsuarios() => _contexto.Usuarios.Count();
        
     }
 }

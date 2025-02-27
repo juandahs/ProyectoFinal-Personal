@@ -60,8 +60,16 @@ namespace ProyectoFinal.Repositorio
 
             modelBuilder.Entity<Usuario>(t =>
             {
-                t.Property(b => b.NumeroIdentificacion).HasColumnType("varchar").HasMaxLength(16).IsRequired();
-                t.Property(b => b.Nombre).HasColumnType("varchar").HasMaxLength(128).IsRequired();
+                t.Property(b => b.NumeroIdentificacion)
+                    .HasColumnType("varchar")
+                    .HasMaxLength(16)
+                    .IsRequired();
+
+                t.Property(b => b.Nombre)
+                    .HasColumnType("varchar")
+                    .HasMaxLength(128)
+                    .IsRequired();
+
                 t.Property(b => b.CorreoElectronico).HasColumnType("varchar").HasMaxLength(128).IsRequired();
                 t.Property(b => b.Apellido).HasColumnType("varchar").HasMaxLength(128);
                 t.Property(b => b.Telefono).HasColumnType("varchar").HasMaxLength(16);
@@ -639,11 +647,6 @@ namespace ProyectoFinal.Repositorio
                   .WithMany(p => p.Examenes)
                   .HasForeignKey(c => c.PacienteId)
                   .OnDelete(DeleteBehavior.Restrict);
-                //relacion con usuario (Un usuario puede hacer varios examens)
-                t.HasOne(c => c.Usuario)
-                  .WithMany(p => p.Examenes)
-                  .HasForeignKey(c => c.UsuarioId)
-                  .OnDelete(DeleteBehavior.Restrict);
 
             });
             
@@ -1030,11 +1033,6 @@ namespace ProyectoFinal.Repositorio
                   .WithMany(p => p.ImagenesDiagnosticas)
                   .HasForeignKey(c => c.PacienteId)
                   .OnDelete(DeleteBehavior.Restrict);
-                //relacion con usuario (Un usuario puede hacer varias ImagenesDiagnosticas)
-                t.HasOne(c => c.Usuario)
-                  .WithMany(p => p.ImagenesDiagnosticas)
-                  .HasForeignKey(c => c.UsuarioId)
-                  .OnDelete(DeleteBehavior.Restrict);
 
             });
 
@@ -1118,9 +1116,9 @@ namespace ProyectoFinal.Repositorio
             var tipoIdentificacionIdParameter = new SqlParameter("@tipoIdentificacionId", usuario.TipoIdentificacionId);
             var rolIdParameter = new SqlParameter("@rolID", usuario.RolId);
             var numeroIdentificacionParameter = new SqlParameter("@numeroIdentificacion", usuario.NumeroIdentificacion);
-            var nombreParameter = new SqlParameter("@nombre", usuario.Nombre);
-            var apellidoParameter = new SqlParameter("@apellido", usuario.Apellido);
-            var telefonoParameter = new SqlParameter("@telefono", usuario.Telefono);
+            var nombreParameter = new SqlParameter("@nombre", usuario.Nombre );
+            var apellidoParameter = new SqlParameter("@apellido", usuario.Apellido ?? (object)DBNull.Value);
+            var telefonoParameter = new SqlParameter("@telefono", usuario.Telefono ?? (object)DBNull.Value);
             var correoElectronicoParameter = new SqlParameter("@correoElectronico", usuario.CorreoElectronico);
             var tarjetaProfesionalParameter = new SqlParameter("@tarjetaProfesional", usuario.TarjetaProfesional ?? (object)DBNull.Value);
             var claveParameter = new SqlParameter("@clave", usuario.Clave);

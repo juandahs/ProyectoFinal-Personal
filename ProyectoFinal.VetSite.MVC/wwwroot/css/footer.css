@@ -1,11 +1,10 @@
-﻿/* Footer que ocupa todo el ancho */
-footer {
-    position: fixed; /* Fijo en la parte inferior */
-    bottom: 0; /* Posición en la parte inferior */
-    left: 0; /* Posición a la izquierda */
-    width: 100%; /* Ocupa todo el ancho */
-    background-color: rgba(0, 0, 0, 0.1); /* Color de fondo */
-    text-align: center; /* Centrar texto */
-    padding: 10px; /* Espaciado interno */
-    font-size: 0.9rem; /* Tamaño del texto */
+﻿footer {
+    flex-shrink: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding: 5px; /* Menos espacio */
+    font-size: 0.8rem; /* Texto más pequeño */
+    line-height: 1.2; /* Reduce la altura de línea */
 }
+

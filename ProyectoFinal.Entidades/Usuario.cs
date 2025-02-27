@@ -7,8 +7,8 @@
         public Guid RolId { get; set; }
         public string NumeroIdentificacion { get; set; } = string.Empty;
         public string Nombre { get; set;} = string.Empty;
-        public string Apellido { get; set;} = string.Empty;
-        public string Telefono { get; set; } = string.Empty;
+        public string? Apellido { get; set;}
+        public string? Telefono { get; set; } = string.Empty;
         public string CorreoElectronico { get; set; } = string.Empty;
         public string? TarjetaProfesional { get; set; }
         public string Clave { get; set;} = string.Empty;
@@ -20,9 +20,11 @@
 
         public virtual Rol? Rol { get; set; } 
         public virtual TipoIdentificacion? TipoIdentificacion { get; set; }
-        public virtual ICollection<Examen> Examenes { get; set; } = [];
-        public virtual ICollection<Vacuna> Vacunas { get; set; } = [];
-        public virtual ICollection<ImagenDiagnostica> ImagenesDiagnosticas { get; set; } = [];
+
+        //TODO: revisar, esto es necesario aca?
+        //public virtual ICollection<Examen> Examenes { get; set; } = [];
+        //public virtual ICollection<Vacuna> Vacunas { get; set; } = [];
+        //public virtual ICollection<ImagenDiagnostica> ImagenesDiagnosticas { get; set; } = [];
 
     }
 }

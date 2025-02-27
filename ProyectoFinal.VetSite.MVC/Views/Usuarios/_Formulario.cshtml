@@ -8,7 +8,10 @@
 <div class="row">
 
     <!-- Campo oculto para el UsuarioId -->
-    <input type="hidden" asp-for="UsuarioId" />
+    @if (Model != null)
+    {
+        <input type="hidden" asp-for="UsuarioId" />
+    }
 
     <!-- Tipo de Identificación -->
     <div class="col-md-6 mb-3">
@@ -25,14 +28,14 @@
 
     <!-- Número de Identificación -->
     <div class="col-md-6 mb-3">
-        <label asp-for="NumeroIdentificacion" class="form-label">Número de Identificación</label>
+        <label asp-for="NumeroIdentificacion" class="form-label">Número de Identificación *</label>
         <input asp-for="NumeroIdentificacion" class="form-control" required />
         <span asp-validation-for="NumeroIdentificacion" class="text-danger"></span>
     </div>
 
     <!-- Nombre -->
     <div class="col-md-6 mb-3">
-        <label asp-for="Nombre" class="form-label">Nombre</label>
+        <label asp-for="Nombre" class="form-label">Nombre*</label>
         <input asp-for="Nombre" class="form-control" required />
         <span asp-validation-for="Nombre" class="text-danger"></span>
     </div>
@@ -40,20 +43,20 @@
     <!-- Apellido -->
     <div class="col-md-6 mb-3">
         <label asp-for="Apellido" class="form-label">Apellido</label>
-        <input asp-for="Apellido" class="form-control" required />
+        <input asp-for="Apellido" class="form-control" />
         <span asp-validation-for="Apellido" class="text-danger"></span>
     </div>
 
     <!-- Teléfono -->
     <div class="col-md-6 mb-3">
         <label asp-for="Telefono" class="form-label">Teléfono</label>
-        <input asp-for="Telefono" class="form-control" required />
+        <input asp-for="Telefono" class="form-control" />
         <span asp-validation-for="Telefono" class="text-danger"></span>
     </div>
 
     <!-- Correo Electrónico -->
     <div class="col-md-6 mb-3">
-        <label asp-for="CorreoElectronico" class="form-label">Correo Electrónico</label>
+        <label asp-for="CorreoElectronico" class="form-label">Correo Electrónico*</label>
         <input asp-for="CorreoElectronico" class="form-control" type="email" required />
         <span asp-validation-for="CorreoElectronico" class="text-danger"></span>
     </div>
@@ -67,7 +70,7 @@
 
     <!-- Rol -->
     <div class="col-md-6 mb-3">
-        <label asp-for="RolId" class="form-label">Rol</label>
+        <label asp-for="RolId" class="form-label">Rol*</label>
         <select asp-for="RolId" class="form-select" required>
             <option value="" disabled selected>Seleccione un rol</option>
             @foreach (var rol in ViewData["Roles"] as IEnumerable<Rol>)
@@ -119,17 +122,17 @@
                     <!-- Contraseña actual -->
                     <div class="mb-3">
                         <label for="contraseñaActual" class="form-label">Contraseña Actual</label>
-                        <input type="password" class="form-control" id="contraseñaActual" required>
+                        <input type="password" class="form-control" id="contraseñaActual">
                     </div>
                     <!-- Nueva contraseña -->
                     <div class="mb-3">
                         <label for="nuevaContraseña" class="form-label">Nueva Contraseña</label>
-                        <input type="password" class="form-control" id="nuevaContraseña" required>
+                        <input type="password" class="form-control" id="nuevaContraseña">
                     </div>
                     <!-- Repetir nueva contraseña -->
                     <div class="mb-3">
                         <label for="repetirNuevaContraseña" class="form-label">Repetir Nueva Contraseña</label>
-                        <input type="password" class="form-control" id="repetirNuevaContraseña" required>
+                        <input type="password" class="form-control" id="repetirNuevaContraseña">
                     </div>
                 </form>
             </div>

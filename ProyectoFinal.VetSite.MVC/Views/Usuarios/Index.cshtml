@@ -3,15 +3,19 @@
 
 <title>@ViewBag.Title - VetSite</title>
 
-@if (ViewData.ModelState.ErrorCount > 0)
+@if (TempData["MensajeError"] != null)
 {
-    <div class="alert alert-danger text-center" role="alert">
-        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
-        {
-            <p>@error.ErrorMessage</p>
-        }
+    <div class="alert alert-danger" role="alert">
+        @TempData["MensajeError"]
     </div>
 }
+@if (TempData["MensajeExito"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["MensajeExito"]
+    </div>
+}
+
 <head>
     <link rel="stylesheet" href="~/css/users.css" asp-append-version="true" />
 </head>
@@ -36,7 +40,7 @@
             </tr>
         </thead>
         <tbody>
-            @if (!Model.Any())
+            @if (Model== null || !Model.Any())
             {
                 <tr>
                     <td colspan="5" class="text-center">No hay usuarios registrados.</td>
@@ -47,7 +51,7 @@
                 @foreach (var usuario in Model)
                 {
                     <tr>
-                        <td>@usuario.Nombre @usuario.Apellido</td>
+                        <td>@usuario.Nombre</td>
                         <td>@usuario.Apellido</td>
                         <td>@usuario.Telefono</td>
                         <td>@usuario.CorreoElectronico</td>

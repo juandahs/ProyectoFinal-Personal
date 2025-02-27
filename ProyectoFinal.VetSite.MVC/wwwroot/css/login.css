@@ -11,16 +11,6 @@
     position: relative; /* Permite posicionar el footer de forma fija */
 }
 
-/* Mensaje de error que ocupa todo el ancho */
-.alert {
-    position: fixed; /* Fijo en la parte superior */
-    top: 0; /* Posición superior */
-    left: 0; /* Posición a la izquierda */
-    width: 100%; /* Ocupa todo el ancho */
-    z-index: 1050; /* Por encima de otros elementos */
-    margin: 0; /* Sin márgenes */
-    border-radius: 0; /* Sin bordes redondeados */
-}
 
 
 .card {

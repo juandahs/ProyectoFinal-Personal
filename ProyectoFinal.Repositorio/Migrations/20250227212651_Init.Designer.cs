@@ -12,8 +12,8 @@ using ProyectoFinal.Repositorio;
 namespace ProyectoFinal.Repositorio.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20250226214903_init")]
-    partial class init
+    [Migration("20250227212651_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -786,7 +786,6 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Apellido")
-                        .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("varchar");
 
@@ -829,7 +828,6 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .HasColumnType("varchar");
 
                     b.Property<string>("Telefono")
-                        .IsRequired()
                         .HasMaxLength(16)
                         .HasColumnType("varchar");
 
@@ -1064,7 +1062,7 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .IsRequired();
 
                     b.HasOne("ProyectoFinal.Entidades.Usuario", "Usuario")
-                        .WithMany("Examenes")
+                        .WithMany()
                         .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1161,9 +1159,9 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .IsRequired();
 
                     b.HasOne("ProyectoFinal.Entidades.Usuario", "Usuario")
-                        .WithMany("ImagenesDiagnosticas")
+                        .WithMany()
                         .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioModificacion")
@@ -1342,7 +1340,7 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .IsRequired();
 
                     b.HasOne("ProyectoFinal.Entidades.Usuario", "Usuario")
-                        .WithMany("Vacunas")
+                        .WithMany()
                         .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1417,15 +1415,6 @@ namespace ProyectoFinal.Repositorio.Migrations
                 {
                     b.Navigation("Vacuna")
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("ProyectoFinal.Entidades.Usuario", b =>
-                {
-                    b.Navigation("Examenes");
-
-                    b.Navigation("ImagenesDiagnosticas");
-
-                    b.Navigation("Vacunas");
                 });
 #pragma warning restore 612, 618
         }

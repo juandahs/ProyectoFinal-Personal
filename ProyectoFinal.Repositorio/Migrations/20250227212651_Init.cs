@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ProyectoFinal.Repositorio.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -84,8 +84,8 @@ namespace ProyectoFinal.Repositorio.Migrations
                     RolId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     NumeroIdentificacion = table.Column<string>(type: "varchar(16)", maxLength: 16, nullable: false),
                     Nombre = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
-                    Apellido = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
-                    Telefono = table.Column<string>(type: "varchar(16)", maxLength: 16, nullable: false),
+                    Apellido = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: true),
+                    Telefono = table.Column<string>(type: "varchar(16)", maxLength: 16, nullable: true),
                     CorreoElectronico = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
                     TarjetaProfesional = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: true),
                     Clave = table.Column<string>(type: "varchar(32)", maxLength: 32, nullable: false),
@@ -593,7 +593,7 @@ namespace ProyectoFinal.Repositorio.Migrations
                         column: x => x.UsuarioId,
                         principalTable: "Usuario",
                         principalColumn: "UsuarioId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ImagenDiagnostica_Usuario_UsuarioModificacionId",
                         column: x => x.UsuarioModificacionId,
