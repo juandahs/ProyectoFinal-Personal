@@ -15,6 +15,13 @@ namespace ProyectoFinal.Servidor
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             // Registrar el servicio que usa el repositorio
+            services.AddScoped<CitaServicio>();
+            services.AddScoped<ConsultaServicio>();
+            services.AddScoped<DesparasitacionServicio>();
+            services.AddScoped<FormulaMedicaServicio>();
+            services.AddScoped<MedicamentoServicio>();
+            services.AddScoped<PacienteServicio>();
+            services.AddScoped<PropietarioServicio>();
             services.AddScoped<UsuarioServicios>();
             services.AddScoped<TipoIdentificacionServicio>();
             services.AddScoped<RolServicio>();

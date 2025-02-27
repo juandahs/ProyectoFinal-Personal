@@ -9,7 +9,8 @@ namespace ProyectoFinal.Repositorio
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Rol> Roles { get; set; }
         public DbSet<Cita> Citas { get; set; }
-        public DbSet<Examen> Examens { get; set; }
+       
+        public DbSet<Consulta> Consultas { get; set; }
         public DbSet<Cirugia> Cirugias { get; set; }
         public DbSet<Propietario> Propietarios { get; set; }
         public DbSet<Paciente> Pacientes { get; set; }
