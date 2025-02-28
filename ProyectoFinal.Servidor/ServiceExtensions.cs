@@ -25,6 +25,7 @@ namespace ProyectoFinal.Servidor
             services.AddScoped<UsuarioServicios>();
             services.AddScoped<TipoIdentificacionServicio>();
             services.AddScoped<RolServicio>();
+            services.AddScoped<TipoExamenServicio>();
         }
 
         public static async Task InitializeDatabaseAsync(this IApplicationBuilder app)

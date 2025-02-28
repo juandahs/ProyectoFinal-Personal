@@ -12,8 +12,8 @@ using ProyectoFinal.Repositorio;
 namespace ProyectoFinal.Repositorio.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20250227212651_Init")]
-    partial class Init
+    [Migration("20250228010257_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
