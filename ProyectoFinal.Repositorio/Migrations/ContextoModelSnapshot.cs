@@ -645,6 +645,10 @@ namespace ProyectoFinal.Repositorio.Migrations
 
                     b.HasKey("TipoCirugiaId");
 
+                    b.HasIndex("UsuarioCreacionId");
+
+                    b.HasIndex("UsuarioModificacionId");
+
                     b.ToTable("TipoCirugia", (string)null);
                 });
 
@@ -700,14 +704,24 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.Property<Guid>("UsuarioCreacionId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("UsuarioCreacionUsuarioId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("UsuarioModificacionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("UsuarioModificacionUsuarioId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("TipoIdentificacionId");
 
                     b.HasIndex("UsuarioCreacionId");
 
+                    b.HasIndex("UsuarioCreacionUsuarioId");
+
                     b.HasIndex("UsuarioModificacionId");
+
+                    b.HasIndex("UsuarioModificacionUsuarioId");
 
                     b.ToTable("TipoIdentificacion", (string)null);
                 });
@@ -1259,6 +1273,25 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.Navigation("UsuarioModificacion");
                 });
 
+            modelBuilder.Entity("ProyectoFinal.Entidades.TipoCirugia", b =>
+                {
+                    b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioCreacion")
+                        .WithMany()
+                        .HasForeignKey("UsuarioCreacionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioModificacion")
+                        .WithMany()
+                        .HasForeignKey("UsuarioModificacionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UsuarioCreacion");
+
+                    b.Navigation("UsuarioModificacion");
+                });
+
             modelBuilder.Entity("ProyectoFinal.Entidades.TipoExamen", b =>
                 {
                     b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioCreacion")
@@ -1272,6 +1305,21 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .HasForeignKey("UsuarioModificacionId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("UsuarioCreacion");
+
+                    b.Navigation("UsuarioModificacion");
+                });
+
+            modelBuilder.Entity("ProyectoFinal.Entidades.TipoIdentificacion", b =>
+                {
+                    b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioCreacion")
+                        .WithMany()
+                        .HasForeignKey("UsuarioCreacionUsuarioId");
+
+                    b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioModificacion")
+                        .WithMany()
+                        .HasForeignKey("UsuarioModificacionUsuarioId");
 
                     b.Navigation("UsuarioCreacion");
 
@@ -1394,8 +1442,7 @@ namespace ProyectoFinal.Repositorio.Migrations
 
             modelBuilder.Entity("ProyectoFinal.Entidades.TipoExamen", b =>
                 {
-                    b.Navigation("Examenes")
-                        .IsRequired();
+                    b.Navigation("Examenes");
                 });
 
             modelBuilder.Entity("ProyectoFinal.Entidades.TipoIdentificacion", b =>
