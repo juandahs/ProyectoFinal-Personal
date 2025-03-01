@@ -14,8 +14,8 @@ namespace ProyectoFinal.Entidades
 
         public virtual ICollection<ImagenDiagnostica> ImagenesDiagnosticas { get; set; } = [];
 
-        public virtual Usuario UsuarioCreacion { get; set; }
-        public virtual Usuario UsuarioModificacion { get; set; }
+        public virtual Usuario? UsuarioCreacion { get; set; }
+        public virtual Usuario? UsuarioModificacion { get; set; }
 
 
     }

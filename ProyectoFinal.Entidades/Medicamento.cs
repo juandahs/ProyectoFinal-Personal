@@ -16,9 +16,9 @@ namespace ProyectoFinal.Entidades
         public Guid UsuarioModificacionId { get; set; }
 
         public virtual ICollection<FormulaMedicaMedicamento> FormulaMedicaMedicamentos { get; set; } = [];
-        public virtual Usuario Usuario { get; set; }
-        public virtual Usuario UsuarioCreacion { get; set; }
-        public virtual Usuario UsuarioModificacion { get; set; }
+        public virtual Usuario? Usuario { get; set; }
+        public virtual Usuario? UsuarioCreacion { get; set; }
+        public virtual Usuario? UsuarioModificacion { get; set; }
     }
 
 }

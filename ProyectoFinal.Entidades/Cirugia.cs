@@ -17,10 +17,10 @@
         public Guid UsuarioModificacionId { get; set; }
 
         //Relaciones
-        public virtual Usuario UsuarioCreacion { get; set; }
-        public virtual Usuario UsuarioModificacion { get; set; }
-        public virtual Paciente Paciente { get; set; }
-        public virtual TipoCirugia TipoCirugia { get; set; }
+        public virtual Usuario? UsuarioCreacion { get; set; }
+        public virtual Usuario? UsuarioModificacion { get; set; }
+        public virtual Paciente? Paciente { get; set; }
+        public virtual TipoCirugia? TipoCirugia { get; set; }
 
         
 

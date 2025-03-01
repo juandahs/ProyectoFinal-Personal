@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ProyectoFinal.Entidades
+﻿namespace ProyectoFinal.Entidades
 {
     public class TipoCirugia
     {
@@ -16,6 +10,9 @@ namespace ProyectoFinal.Entidades
         public DateTime FechaModificacion { get; set; }
         public Guid UsuarioCreacionId { get; set; }
         public Guid UsuarioModificacionId { get; set; }
+
+        public virtual Usuario? UsuarioCreacion { get; set; }
+        public virtual Usuario? UsuarioModificacion { get; set; }
 
 
     }
