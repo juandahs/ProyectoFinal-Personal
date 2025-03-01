@@ -9,7 +9,7 @@ using ProyectoFinal.Repositorio;
 
 namespace ProyectoFinal.Servidor
 {
-    internal class TipoVacunaServicio(Contexto contexto)
+    public class TipoVacunaServicio(Contexto contexto)
     {
         private readonly Contexto _contexto = contexto;
         public IEnumerable<TipoVacuna> ObtenerTodos() => _contexto.TipoVacunas.AsNoTracking();

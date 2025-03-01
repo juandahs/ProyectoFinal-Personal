@@ -28,6 +28,8 @@ namespace ProyectoFinal.Servidor
             services.AddScoped<TipoExamenServicio>();
             services.AddScoped<ExamenServicio>();
             services.AddScoped<TipoVacunaServicio>();
+            services.AddScoped<VacunaServicio>();
+
         }
 
         public static async Task InitializeDatabaseAsync(this IApplicationBuilder app)
