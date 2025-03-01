@@ -15,8 +15,16 @@ namespace ProyectoFinal.Servidor
 
         public void Agregar(Propietario propietario)
         {
-            _contexto.Propietarios.Add(propietario);
-            _contexto.SaveChanges();
+            try
+            {
+                _contexto.Propietarios.Add(propietario);
+                _contexto.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
         }
 
         public void Actualizar(Propietario propietario)

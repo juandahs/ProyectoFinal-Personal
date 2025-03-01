@@ -17,9 +17,9 @@
 
         public Guid UsuarioCreacionId { get; set; }
         public Guid UsuarioModificacionId { get; set; }
-        public virtual Usuario UsuarioCreacion { get; set; } 
-        public virtual Usuario UsuarioModificacion { get; set; } 
-        public virtual TipoIdentificacion TipoIdentificacion { get; set; }
+        public virtual Usuario? UsuarioCreacion { get; set; }
+        public virtual Usuario? UsuarioModificacion { get; set; }
+        public virtual TipoIdentificacion? TipoIdentificacion { get; set; }
         public virtual ICollection<Paciente> Pacientes { get; set; } = [];
 
     }

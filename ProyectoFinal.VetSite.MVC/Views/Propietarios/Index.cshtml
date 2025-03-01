@@ -1,4 +1,4 @@
-﻿@model List<ProyectoFinal.Entidades.Usuario>
+﻿@model IEnumerable<ProyectoFinal.Entidades.Propietario>
 
 
 <title>@ViewBag.Title - VetSite</title>
@@ -23,8 +23,8 @@
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1>@ViewBag.Title</h1>
-        <a href="/Usuarios/Crear" class="btn btn-success">
-            <i class="fas fa-plus me-2"></i>Agregar usuario
+        <a href="/Propietarios/Crear" class="btn btn-success">
+            <i class="fas fa-plus me-2"></i>Agregar Propietario
         </a>
     </div>
 
@@ -32,40 +32,38 @@
         <thead>
             <tr>
                 <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Teléfono</th>
-                <th>Correo electronico</th>
-                <th>Tarjeta profesional</th>
+                <th>Edad</th>
+                <th>Propietario</th>
                 <th class="text-center">Acciones</th>
             </tr>
         </thead>
         <tbody>
-            @if (Model== null || !Model.Any())
+            @if (Model == null || !Model.Any())
             {
                 <tr>
-                    <td colspan="5" class="text-center">No hay usuarios registrados.</td>
+                    <td colspan="5" class="text-center">No hay propietarios registrados.</td>
                 </tr>
             }
             else
             {
-                @foreach (var usuario in Model)
+                @foreach (var propietario in Model)
                 {
                     <tr>
-                        <td>@usuario.Nombre</td>
-                        <td>@usuario.Apellido</td>
-                        <td>@usuario.Telefono</td>
-                        <td>@usuario.CorreoElectronico</td>
-                        <td>@usuario.TarjetaProfesional</td>
+                        <td>@propietario.Nombre</td>
+                        <td>@propietario.Apellido</td>
+                        <td>@propietario.Telefono</td>
+                        <td>@propietario.CorreoElectronico</td>
+
                         <td class="text-center">
                             <form asp-action="Editar" method="get" class="d-inline">
-                                <input type="hidden" name="id" value="@usuario.UsuarioId"/>
+                                <input type="hidden" name="id" value="@propietario.PropietarioId" />
                                 <button type="submit" class="btn btn-primary me-2">
                                     <i class="fas fa-edit"></i> Editar
                                 </button>
                             </form>
                             <form asp-action="Eliminar" method="post" class="d-inline">
-                                <input type="hidden" name="id" value="@usuario.UsuarioId" />
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar este usuario?');">
+                                <input type="hidden" name="id" value="@propietario.PropietarioId" />
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar este propietario?');">
                                     <i class="fas fa-trash"></i> Eliminar
                                 </button>
                             </form>

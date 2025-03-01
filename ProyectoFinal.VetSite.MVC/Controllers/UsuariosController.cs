@@ -67,29 +67,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
 
             return RedirectToAction("Index");
         }
-
-        [HttpPost]
-        public IActionResult Eliminar(Guid id)
-        {
-            if (_usuarioServicios.TotalUsuarios() == 1)
-            {
-                TempData["MensajeError"] = "No se puede eliminar el usuario ya que debe existir mínimo un usuario en el sistema.";
-                return RedirectToAction("Index");
-            }
-
-            try
-            {
-                _usuarioServicios.Eliminar(id);
-                TempData["MensajeExito"] = "El usuario ha sido eliminado exitosamente.";
-            }
-            catch (Exception e)
-            {
-                TempData["MensajeError"] = $"Ocurrió un error eliminando el usuario: {e.Message}";
-            }
-
-            return RedirectToAction("Index");
-        }
-
+    
         [HttpGet]
         public IActionResult Editar(Guid id)
         {
@@ -148,5 +126,28 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public IActionResult Eliminar(Guid id)
+        {
+            if (_usuarioServicios.TotalUsuarios() == 1)
+            {
+                TempData["MensajeError"] = "No se puede eliminar el usuario ya que debe existir mínimo un usuario en el sistema.";
+                return RedirectToAction("Index");
+            }
+
+            try
+            {
+                _usuarioServicios.Eliminar(id);
+                TempData["MensajeExito"] = "El usuario ha sido eliminado exitosamente.";
+            }
+            catch (Exception e)
+            {
+                TempData["MensajeError"] = $"Ocurrió un error eliminando el usuario: {e.Message}";
+            }
+
+            return RedirectToAction("Index");
+        }
+
     }
 }
