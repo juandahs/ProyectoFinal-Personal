@@ -529,7 +529,7 @@ namespace ProyectoFinal.Repositorio
             // ******************************************************************
             // Se define Tabla de TipoCirugia
             // ******************************************************************
-            modelBuilder.Entity<Cirugia>(t =>
+            modelBuilder.Entity<TipoCirugia>(t =>
             {
                 t.Property(b => b.TipoCirugiaId).HasColumnType("uniqueidentifier").IsRequired();
 
@@ -809,8 +809,7 @@ namespace ProyectoFinal.Repositorio
 
                 t.Property(b => b.Apellido)
                     .HasColumnType("varchar")
-                    .HasMaxLength(128)
-                    .IsRequired();
+                    .HasMaxLength(128);
 
                 t.Property(b => b.Telefono)
                     .HasColumnType("varchar")

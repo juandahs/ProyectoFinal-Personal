@@ -259,7 +259,7 @@ namespace ProyectoFinal.Repositorio.Migrations
                     TipoIdentificacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     NumeroIdentificacion = table.Column<string>(type: "varchar(16)", maxLength: 16, nullable: false),
                     Nombre = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
-                    Apellido = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
+                    Apellido = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: true),
                     Telefono = table.Column<string>(type: "varchar(16)", maxLength: 16, nullable: true),
                     CorreoElectronico = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: true),
                     Direccion = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: true),
@@ -278,9 +278,9 @@ namespace ProyectoFinal.Repositorio.Migrations
                 columns: table => new
                 {
                     TipoCirugiaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    FechaModificacion = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Descripcion = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false),
+                    FechaCreacion = table.Column<DateTime>(type: "datetime", nullable: false),
+                    FechaModificacion = table.Column<DateTime>(type: "datetime", nullable: false),
                     UsuarioCreacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UsuarioModificacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
@@ -1074,7 +1074,7 @@ namespace ProyectoFinal.Repositorio.Migrations
                 column: "UsuarioCreacionId",
                 principalTable: "Usuario",
                 principalColumn: "UsuarioId",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_TipoCirugia_Usuario_UsuarioModificacionId",
@@ -1082,7 +1082,7 @@ namespace ProyectoFinal.Repositorio.Migrations
                 column: "UsuarioModificacionId",
                 principalTable: "Usuario",
                 principalColumn: "UsuarioId",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_TipoExamen_Usuario_UsuarioCreacionId",

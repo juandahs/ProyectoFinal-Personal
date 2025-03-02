@@ -44,10 +44,9 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             {
 
                 var usuarioId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-                var usuario = _usuarioServicios.ObtenerPorId(Guid.Parse(usuarioId!));
-                
-                propietario.UsuarioCreacionId = usuario!.UsuarioId;
-                propietario.UsuarioModificacionId = usuario.UsuarioId;
+                                
+                propietario.UsuarioCreacionId = Guid.Parse(usuarioId!);
+                propietario.UsuarioModificacionId = Guid.Parse(usuarioId!);
                 propietario.FechaCreacion = DateTime.Now;
                 propietario.FechaModificacion= DateTime.Now;
                 
@@ -64,6 +63,43 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             return RedirectToAction("Index");
         }
 
+
+        [HttpGet]
+        public IActionResult Editar(Guid id)
+        {
+            
+            ViewData["TiposIdentificacion"] = _tipoIdentificacionServicio.ObtenerTodos();
+            return View(_propietarioServicio.ObtenerPorId(id));
+        }
+
+        [HttpPost]
+        public IActionResult Editar(Propietario propietario)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                TempData["MensajeError"] = "No se estableció un modelo válido.";
+                return RedirectToAction("Index");
+            }
+
+            try
+            {
+                var usuarioModificacionId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+                propietario.UsuarioModificacionId = Guid.Parse(usuarioModificacionId!);
+                propietario.FechaModificacion = DateTime.Now;
+
+                _propietarioServicio.Actualizar(propietario);
+                TempData["MensajeExito"] = "El usuario ha sido actualizado exitosamente.";
+            }
+            catch (Exception ex)
+            {
+                TempData["MensajeError"] = $"Ocurrió el siguiente error: {ex.Message}";
+                return RedirectToAction("Index");
+            }
+
+            return RedirectToAction("Index");
+        }
 
         [HttpPost]
         public IActionResult Eliminar(Guid id)

@@ -535,7 +535,6 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Apellido")
-                        .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("varchar");
 
@@ -629,13 +628,14 @@ namespace ProyectoFinal.Repositorio.Migrations
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar");
 
                     b.Property<DateTime>("FechaCreacion")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<DateTime>("FechaModificacion")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<Guid>("UsuarioCreacionId")
                         .HasColumnType("uniqueidentifier");
@@ -1278,13 +1278,13 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioCreacion")
                         .WithMany()
                         .HasForeignKey("UsuarioCreacionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioModificacion")
                         .WithMany()
                         .HasForeignKey("UsuarioModificacionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("UsuarioCreacion");
