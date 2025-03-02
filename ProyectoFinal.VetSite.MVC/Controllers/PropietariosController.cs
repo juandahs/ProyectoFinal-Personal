@@ -52,11 +52,11 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
                 
                 _propietarioServicio.Agregar(propietario);
 
-                TempData["MensajeExito"] = "Paciente creado exitosamente.";
+                TempData["MensajeExito"] = "Propietario creado exitosamente.";
             }
             catch (Exception e)
             {
-                TempData["MensajeError"] = $"Ocurrió el siguiente error tratando de crear el paciente: {e.Message}";
+                TempData["MensajeError"] = $"Ocurrió el siguiente error tratando de crear el propietario: {e.Message}";
                 return RedirectToAction("Index");
             }
 
@@ -90,7 +90,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
                 propietario.FechaModificacion = DateTime.Now;
 
                 _propietarioServicio.Actualizar(propietario);
-                TempData["MensajeExito"] = "El usuario ha sido actualizado exitosamente.";
+                TempData["MensajeExito"] = "El propietario ha sido actualizado exitosamente.";
             }
             catch (Exception ex)
             {
@@ -107,11 +107,11 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             try
             {
                 _propietarioServicio.Eliminar(id);
-                TempData["MensajeExito"] = "El usuario ha sido eliminado exitosamente.";
+                TempData["MensajeExito"] = "El propietario ha sido eliminado exitosamente.";
             }
             catch (Exception e)
             {
-                TempData["MensajeError"] = $"Ocurrió un error eliminando el usuario: {e.Message}";
+                TempData["MensajeError"] = $"Ocurrió un error eliminando el propietario: {e.Message}";
             }
 
             return RedirectToAction("Index");

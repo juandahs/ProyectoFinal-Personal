@@ -41,8 +41,9 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             {
                 
                 var usuarioId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-                
 
+                paciente.FechaCreacion = DateTime.Now;
+                paciente.FechaModificacion = DateTime.Now;
                 paciente.UsuarioCreacionId = Guid.Parse(usuarioId!);
                 paciente.UsuarioModificacionId = Guid.Parse(usuarioId!);
 

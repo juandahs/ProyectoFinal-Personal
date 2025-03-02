@@ -1,6 +1,5 @@
 ﻿@model IEnumerable<ProyectoFinal.Entidades.Paciente>
 
-
 <title>@ViewBag.Title - VetSite</title>
 
 @if (TempData["MensajeError"] != null)
@@ -28,11 +27,11 @@
         </a>
     </div>
 
-    <table class="table">
+    <table id="pacientesTable" class="table">
         <thead>
             <tr>
                 <th>Nombre</th>
-                <th>Edad</th>                
+                <th>Edad</th>
                 <th>Propietario</th>
                 <th class="text-center">Acciones</th>
             </tr>
@@ -46,22 +45,21 @@
             }
             else
             {
-                @foreach (var usuario in Model)
+                @foreach (var paciente in Model)
                 {
                     <tr>
-                        <td>@usuario.Nombre</td>
-                        <td>@usuario.Edad</td>
-                        <td>@usuario.Propietario.Nombre</td>                       
-                        
+                        <td>@paciente.Nombre</td>
+                        <td>@paciente.Edad</td>
+                        <td>@paciente.Propietario.Nombre</td>
                         <td class="text-center">
                             <form asp-action="Editar" method="get" class="d-inline">
-                                <input type="hidden" name="id" value="@usuario.PacienteId" />
+                                <input type="hidden" name="id" value="@paciente.PacienteId" />
                                 <button type="submit" class="btn btn-primary me-2">
                                     <i class="fas fa-edit"></i> Editar
                                 </button>
                             </form>
                             <form asp-action="Eliminar" method="post" class="d-inline">
-                                <input type="hidden" name="id" value="@usuario.PacienteId" />
+                                <input type="hidden" name="id" value="@paciente.PacienteId" />
                                 <button type="submit" class="btn btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar este paciente?');">
                                     <i class="fas fa-trash"></i> Eliminar
                                 </button>
@@ -73,3 +71,24 @@
         </tbody>
     </table>
 </div>
+
+@section Scripts {
+   
+    <!-- DataTables JS para Bootstrap 5 -->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script><
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#pacientesTable').DataTable({
+                language: {
+                    search: "Buscar:",
+                    lengthMenu: "Mostrar _MENU_ registros por página",
+                    zeroRecords: "No se encontraron registros",
+                    info: "Mostrando página _PAGE_ de _PAGES_",
+                    infoEmpty: "No hay registros disponibles",
+                    infoFiltered: "(filtrado de _MAX_ registros totales)"
+                }
+            });
+        });
+    </script>
+}
