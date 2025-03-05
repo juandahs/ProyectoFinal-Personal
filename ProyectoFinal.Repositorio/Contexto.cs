@@ -143,10 +143,6 @@ namespace ProyectoFinal.Repositorio
                     .HasColumnType("uniqueidentifier")
                     .IsRequired();
 
-                t.Property(b => b.PropietarioId)
-                    .HasColumnType("uniqueidentifier")
-                    .IsRequired();
-
                 t.Property(b => b.PacienteId)
                     .HasColumnType("uniqueidentifier")
                     .IsRequired();
@@ -181,12 +177,10 @@ namespace ProyectoFinal.Repositorio
                     .HasColumnType("uniqueidentifier")
                     .IsRequired();
 
-                t.HasIndex(b => b.PropietarioId);
                 t.HasIndex(b => b.PacienteId);
                 t.HasIndex(b => b.UsuarioId);
                 t.HasIndex(b => b.UsuarioCreacionId);
                 t.HasIndex(b => b.UsuarioModificacionId);
-
 
                 t.HasOne(c => c.Usuario)
                     .WithMany()
@@ -239,16 +233,6 @@ namespace ProyectoFinal.Repositorio
 
                 t.Property(b => b.Peso)
                     .HasColumnType("decimal")
-                    .IsRequired();
-
-                t.Property(b => b.Raza)
-                    .HasColumnType("varchar")
-                    .HasMaxLength(64)
-                    .IsRequired();
-
-                t.Property(b => b.Color)
-                    .HasColumnType("varchar")
-                    .HasMaxLength(64)
                     .IsRequired();
 
                 t.Property(b => b.Edad)

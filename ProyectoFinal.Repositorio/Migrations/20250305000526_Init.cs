@@ -69,7 +69,6 @@ namespace ProyectoFinal.Repositorio.Migrations
                 columns: table => new
                 {
                     CitaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PropietarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PacienteId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UsuarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Fecha = table.Column<DateTime>(type: "datetime", nullable: false),
@@ -237,8 +236,6 @@ namespace ProyectoFinal.Repositorio.Migrations
                     Sexo = table.Column<string>(type: "char(1)", nullable: false),
                     Especie = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: false),
                     Peso = table.Column<decimal>(type: "decimal(18,0)", nullable: false),
-                    Raza = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: false),
-                    Color = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: false),
                     Edad = table.Column<int>(type: "int", nullable: false),
                     Esterilizado = table.Column<bool>(type: "bit", nullable: false),
                     FechaCreacion = table.Column<DateTime>(type: "datetime", nullable: false),
@@ -465,11 +462,6 @@ namespace ProyectoFinal.Repositorio.Migrations
                 name: "IX_Cita_PacienteId",
                 table: "Cita",
                 column: "PacienteId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Cita_PropietarioId",
-                table: "Cita",
-                column: "PropietarioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cita_UsuarioCreacionId",

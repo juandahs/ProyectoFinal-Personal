@@ -15,8 +15,15 @@ namespace ProyectoFinal.Servidor
         public void Agregar(Paciente paciente)
         {
 
-            _contexto.Pacientes.Add(paciente);
-            _contexto.SaveChanges();
+            try
+            {
+                _contexto.Pacientes.Add(paciente);
+                _contexto.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw new Exception (e.Message);
+            }
         }
 
         public void Actualizar(Paciente paciente)

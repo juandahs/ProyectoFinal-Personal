@@ -104,9 +104,6 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.Property<Guid>("PacienteId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("PropietarioId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("UsuarioCreacionId")
                         .HasColumnType("uniqueidentifier");
 
@@ -119,8 +116,6 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.HasKey("CitaId");
 
                     b.HasIndex("PacienteId");
-
-                    b.HasIndex("PropietarioId");
 
                     b.HasIndex("UsuarioCreacionId");
 
@@ -469,11 +464,6 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Color")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("varchar");
-
                     b.Property<int>("Edad")
                         .HasColumnType("int");
 
@@ -501,11 +491,6 @@ namespace ProyectoFinal.Repositorio.Migrations
 
                     b.Property<Guid>("PropietarioId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Raza")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("varchar");
 
                     b.Property<string>("Sexo")
                         .IsRequired()

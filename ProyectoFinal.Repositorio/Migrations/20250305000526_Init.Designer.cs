@@ -12,7 +12,7 @@ using ProyectoFinal.Repositorio;
 namespace ProyectoFinal.Repositorio.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20250302214436_Init")]
+    [Migration("20250305000526_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -107,9 +107,6 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.Property<Guid>("PacienteId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("PropietarioId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("UsuarioCreacionId")
                         .HasColumnType("uniqueidentifier");
 
@@ -122,8 +119,6 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.HasKey("CitaId");
 
                     b.HasIndex("PacienteId");
-
-                    b.HasIndex("PropietarioId");
 
                     b.HasIndex("UsuarioCreacionId");
 
@@ -472,11 +467,6 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Color")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("varchar");
-
                     b.Property<int>("Edad")
                         .HasColumnType("int");
 
@@ -504,11 +494,6 @@ namespace ProyectoFinal.Repositorio.Migrations
 
                     b.Property<Guid>("PropietarioId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Raza")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("varchar");
 
                     b.Property<string>("Sexo")
                         .IsRequired()

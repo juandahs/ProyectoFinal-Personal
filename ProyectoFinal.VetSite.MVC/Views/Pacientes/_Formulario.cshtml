@@ -45,24 +45,10 @@
     <!-- Especie -->
     <div class="col-md-6 mb-3">
         <label asp-for="Especie" class="form-label">Especie*</label>
-        <input asp-for="Especie" class="form-control" required />
+        <input asp-for="Especie" class="form-control"  />
         <span asp-validation-for="Especie" class="text-danger"></span>
     </div>
-
-    <!-- Raza -->
-    <div class="col-md-6 mb-3">
-        <label asp-for="Raza" class="form-label">Raza</label>
-        <input asp-for="Raza" class="form-control" />
-        <span asp-validation-for="Raza" class="text-danger"></span>
-    </div>
-
-    <!-- Color -->
-    <div class="col-md-6 mb-3">
-        <label asp-for="Color" class="form-label">Color</label>
-        <input asp-for="Color" class="form-control" />
-        <span asp-validation-for="Color" class="text-danger"></span>
-    </div>
-
+  
     <!-- Peso -->
     <div class="col-md-6 mb-3">
         <label asp-for="Peso" class="form-label">Peso (kg)*</label>
