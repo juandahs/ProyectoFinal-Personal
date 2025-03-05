@@ -7,20 +7,13 @@ using System.Security.Claims;
 namespace ProyectoFinal.VetSite.MVC.Controllers
 {
     [Authorize]
-    public class UsuariosController : Controller
+    public class UsuariosController(UsuarioServicios usuarioServicios,
+                              TipoIdentificacionServicio tipoIdentificacionServicio,
+                              RolServicio rolServicio) : Controller
     {
-        private readonly UsuarioServicios _usuarioServicios;
-        private readonly TipoIdentificacionServicio _tipoIdentificacionServicio;
-        private readonly RolServicio _rolServicio;
-
-        public UsuariosController(UsuarioServicios usuarioServicios,
-                                  TipoIdentificacionServicio tipoIdentificacionServicio,
-                                  RolServicio rolServicio)
-        {
-            _usuarioServicios = usuarioServicios;
-            _tipoIdentificacionServicio = tipoIdentificacionServicio;
-            _rolServicio = rolServicio;
-        }
+        private readonly UsuarioServicios _usuarioServicios = usuarioServicios;
+        private readonly TipoIdentificacionServicio _tipoIdentificacionServicio = tipoIdentificacionServicio;
+        private readonly RolServicio _rolServicio = rolServicio;
 
         [HttpGet]
         public IActionResult Index()

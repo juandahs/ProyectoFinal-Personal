@@ -35,5 +35,9 @@ namespace ProyectoFinal.Servidor
                 _contexto.SaveChanges();
             }
         }
+
+        public bool Existe(DateTime FechaCreacion, Guid PacienteId, Guid TipoCirugiaId) => _contexto.Cirugias.AsNoTracking().Any(x => x.FechaCreacion == FechaCreacion && x.PacienteId == PacienteId && x.TipoCirugiaId ==TipoCirugiaId);
+
+        public int TotalCirugias() => _contexto.Cirugias.Count();
     }
 }
