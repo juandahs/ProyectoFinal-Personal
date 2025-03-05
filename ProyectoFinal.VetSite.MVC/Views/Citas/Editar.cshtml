@@ -1,15 +1,16 @@
-﻿@model ProyectoFinal.Entidades.Usuario
-
-@{
-    ViewBag.Title = "Editar Usuario";
+﻿@{
+    ViewBag.Title = "Editar crear";
 }
-
+<head>
+    <link rel="stylesheet" href="~/css/users.css" asp-append-version="true" />
+</head>
 
 <h1>@ViewBag.Title</h1>
 
 <form asp-action="Editar" method="post">
     <div class="card">
         <div class="card-body">
+            <!-- Aquí se incluye la vista parcial con el formulario -->
             <partial name="_Formulario" model="Model" />
         </div>
     </div>

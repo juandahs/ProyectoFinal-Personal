@@ -3,8 +3,10 @@
     width: 100%;
     background-color: rgba(0, 0, 0, 0.1);
     text-align: center;
-    padding: 5px; /* Menos espacio */
-    font-size: 0.8rem; /* Texto más pequeño */
-    line-height: 1.2; /* Reduce la altura de línea */
+    padding: 5px; 
+    font-size: 0.8rem; 
+    line-height: 1.2;
 }
+
+
 

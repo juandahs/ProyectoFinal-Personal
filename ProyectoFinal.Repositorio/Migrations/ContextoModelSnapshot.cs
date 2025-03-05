@@ -104,9 +104,6 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.Property<Guid>("PacienteId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("PropietarioId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("UsuarioCreacionId")
                         .HasColumnType("uniqueidentifier");
 
@@ -119,8 +116,6 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.HasKey("CitaId");
 
                     b.HasIndex("PacienteId");
-
-                    b.HasIndex("PropietarioId");
 
                     b.HasIndex("UsuarioCreacionId");
 
@@ -469,11 +464,6 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Color")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("varchar");
-
                     b.Property<int>("Edad")
                         .HasColumnType("int");
 
@@ -501,11 +491,6 @@ namespace ProyectoFinal.Repositorio.Migrations
 
                     b.Property<Guid>("PropietarioId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Raza")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("varchar");
 
                     b.Property<string>("Sexo")
                         .IsRequired()
@@ -535,7 +520,6 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Apellido")
-                        .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("varchar");
 
@@ -629,13 +613,14 @@ namespace ProyectoFinal.Repositorio.Migrations
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar");
 
                     b.Property<DateTime>("FechaCreacion")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<DateTime>("FechaModificacion")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<Guid>("UsuarioCreacionId")
                         .HasColumnType("uniqueidentifier");
@@ -644,6 +629,10 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("TipoCirugiaId");
+
+                    b.HasIndex("UsuarioCreacionId");
+
+                    b.HasIndex("UsuarioModificacionId");
 
                     b.ToTable("TipoCirugia", (string)null);
                 });
@@ -700,14 +689,24 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.Property<Guid>("UsuarioCreacionId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("UsuarioCreacionUsuarioId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("UsuarioModificacionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("UsuarioModificacionUsuarioId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("TipoIdentificacionId");
 
                     b.HasIndex("UsuarioCreacionId");
 
+                    b.HasIndex("UsuarioCreacionUsuarioId");
+
                     b.HasIndex("UsuarioModificacionId");
+
+                    b.HasIndex("UsuarioModificacionUsuarioId");
 
                     b.ToTable("TipoIdentificacion", (string)null);
                 });
@@ -1259,6 +1258,25 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.Navigation("UsuarioModificacion");
                 });
 
+            modelBuilder.Entity("ProyectoFinal.Entidades.TipoCirugia", b =>
+                {
+                    b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioCreacion")
+                        .WithMany()
+                        .HasForeignKey("UsuarioCreacionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioModificacion")
+                        .WithMany()
+                        .HasForeignKey("UsuarioModificacionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("UsuarioCreacion");
+
+                    b.Navigation("UsuarioModificacion");
+                });
+
             modelBuilder.Entity("ProyectoFinal.Entidades.TipoExamen", b =>
                 {
                     b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioCreacion")
@@ -1272,6 +1290,21 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .HasForeignKey("UsuarioModificacionId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("UsuarioCreacion");
+
+                    b.Navigation("UsuarioModificacion");
+                });
+
+            modelBuilder.Entity("ProyectoFinal.Entidades.TipoIdentificacion", b =>
+                {
+                    b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioCreacion")
+                        .WithMany()
+                        .HasForeignKey("UsuarioCreacionUsuarioId");
+
+                    b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioModificacion")
+                        .WithMany()
+                        .HasForeignKey("UsuarioModificacionUsuarioId");
 
                     b.Navigation("UsuarioCreacion");
 
@@ -1394,8 +1427,7 @@ namespace ProyectoFinal.Repositorio.Migrations
 
             modelBuilder.Entity("ProyectoFinal.Entidades.TipoExamen", b =>
                 {
-                    b.Navigation("Examenes")
-                        .IsRequired();
+                    b.Navigation("Examenes");
                 });
 
             modelBuilder.Entity("ProyectoFinal.Entidades.TipoIdentificacion", b =>

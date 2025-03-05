@@ -1,0 +1,77 @@
+﻿@using ProyectoFinal.Entidades
+@model ProyectoFinal.Entidades.Propietario
+
+<head>
+    <link rel="stylesheet" href="~/css/propietarios.css" asp-append-version="true" />
+</head>
+
+<div class="row">
+
+    @if (Model != null)
+    {
+        <input type="hidden" asp-for="PropietarioId" />
+        <input type="hidden" asp-for="UsuarioCreacionId" />
+        <input type="hidden" asp-for="FechaCreacion" />
+    }
+
+    <!-- Tipo de Identificación -->
+    <div class="col-md-6 mb-3">
+        <label asp-for="TipoIdentificacionId" class="form-label">Tipo de Identificación*</label>
+        <select asp-for="TipoIdentificacionId" class="form-select" required>
+            <option value="" disabled selected>Seleccione un tipo</option>
+            @foreach (var tipo in ViewData["TiposIdentificacion"] as IEnumerable<TipoIdentificacion>)
+            {
+                <option value="@tipo.TipoIdentificacionId">@tipo.Descripcion</option>
+            }
+        </select>
+        <span asp-validation-for="TipoIdentificacionId" class="text-danger"></span>
+    </div>
+
+    <!-- Número de Identificación -->
+    <div class="col-md-6 mb-3">
+        <label asp-for="NumeroIdentificacion" class="form-label">Número de Identificación*</label>
+        <input asp-for="NumeroIdentificacion" class="form-control" required />
+        <span asp-validation-for="NumeroIdentificacion" class="text-danger"></span>
+    </div>
+
+    <!-- Nombre -->
+    <div class="col-md-6 mb-3">
+        <label asp-for="Nombre" class="form-label">Nombre*</label>
+        <input asp-for="Nombre" class="form-control" required />
+        <span asp-validation-for="Nombre" class="text-danger"></span>
+    </div>
+
+    <!-- Apellido -->
+    <div class="col-md-6 mb-3">
+        <label asp-for="Apellido" class="form-label">Apellido</label>
+        <input asp-for="Apellido" class="form-control"/>
+        <span asp-validation-for="Apellido" class="text-danger"></span>
+    </div>
+
+    <!-- Teléfono -->
+    <div class="col-md-6 mb-3">
+        <label asp-for="Telefono" class="form-label">Teléfono</label>
+        <input asp-for="Telefono" class="form-control" />
+        <span asp-validation-for="Telefono" class="text-danger"></span>
+    </div>
+
+    <!-- Correo Electrónico -->
+    <div class="col-md-6 mb-3">
+        <label asp-for="CorreoElectronico" class="form-label">Correo Electrónico</label>
+        <input asp-for="CorreoElectronico" class="form-control" type="email" />
+        <span asp-validation-for="CorreoElectronico" class="text-danger"></span>
+    </div>
+
+    <!-- Dirección -->
+    <div class="col-md-12 mb-3">
+        <label asp-for="Direccion" class="form-label">Dirección</label>
+        <input asp-for="Direccion" class="form-control" />
+        <span asp-validation-for="Direccion" class="text-danger"></span>
+    </div>
+</div>
+
+<!-- Botón de Guardar -->
+<div class="mb-3">
+    <button type="submit" class="btn btn-success">Guardar</button>
+    <a href="@Url.Action("Index", "Propietarios")" class="btn btn-secondary">Cancelar</a>
+</div>

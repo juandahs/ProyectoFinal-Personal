@@ -8,15 +8,22 @@ namespace ProyectoFinal.Servidor
     {
         private readonly Contexto _contexto = contexto;
 
-        public IEnumerable<Paciente> ObtenerTodos() => _contexto.Pacientes.AsNoTracking();
+        public IEnumerable<Paciente> ObtenerTodos() => _contexto.Pacientes.Include(x => x.Propietario).AsNoTracking();
 
         public Paciente? ObtenerPorId(Guid id) => _contexto.Pacientes.AsNoTracking().FirstOrDefault(p => p.PacienteId == id);
 
         public void Agregar(Paciente paciente)
         {
 
-            _contexto.Pacientes.Add(paciente);
-            _contexto.SaveChanges();
+            try
+            {
+                _contexto.Pacientes.Add(paciente);
+                _contexto.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw new Exception (e.Message);
+            }
         }
 
         public void Actualizar(Paciente paciente)

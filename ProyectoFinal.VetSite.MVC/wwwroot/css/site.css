@@ -23,20 +23,6 @@ body {
     padding-top: 1rem; /* Ajusta si deseas espacio superior */
 }
 
-/* 
-   FOOTER STICKY:
-   flex-shrink: 0 impide que el footer se reduzca.
-   Ya no usamos position: fixed aquí.
-*/
-footer {
-    flex-shrink: 0;
-    background-color: rgba(0, 0, 0, 0.1); /* Color de fondo */
-    text-align: center;
-    padding: 10px;
-    font-size: 0.9rem;
-    border-top: 1px solid #ddd; /* Línea divisoria opcional */
-}
-
 /* ----- Sidebar fijo a la izquierda ----- */
 .sidebar {
     height: 100%;

@@ -7,7 +7,7 @@ namespace ProyectoFinal.Servidor
     public class TipoIdentificacionServicio(Contexto contexto)
     {
         private readonly Contexto _contexto = contexto;
-        public IEnumerable<TipoIdentificacion> ObtenerTodos()  => _contexto.TiposIdentificacion.AsNoTracking();
+        public IEnumerable<TipoIdentificacion> ObtenerTodos()  => _contexto.TiposIdentificacion.OrderBy(t => t.TipoIdentificacionId).AsNoTracking();
                 
     }
 }

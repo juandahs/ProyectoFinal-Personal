@@ -10,5 +10,8 @@
         public Guid UsuarioModificacionId { get; set; }
 
         public virtual ICollection<Usuario> Usuarios { get; set; } = [];
+
+        public virtual Usuario? UsuarioCreacion { get; set; }
+        public virtual Usuario? UsuarioModificacion { get; set; }
     }
 }
