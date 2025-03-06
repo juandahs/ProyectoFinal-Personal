@@ -8,27 +8,36 @@ namespace ProyectoFinal.Servidor
     public class CirugiaServicio(Contexto contexto)
     {
         private readonly Contexto _contexto = contexto;
-        public IEnumerable<Cirugia> ObtenerTodos() => _contexto.Cirugias.AsNoTracking();
+        public IEnumerable<Cirugia> ObtenerTodos() => _contexto.Cirugias.Include(x => x.Paciente).AsNoTracking();
 
-        public Cirugia? ObtenerPorId(Guid id) => _contexto.Cirugias.AsNoTracking().FirstOrDefault(p => p.CirugiaId == id);
+        public Cirugia? ObtenerPorId(Guid cirugiaId) => _contexto.Cirugias.AsNoTracking().FirstOrDefault(p => p.CirugiaId == cirugiaId);
 
         public void Agregar(Cirugia cirugia)
         {
-            _contexto.Cirugias.Add(cirugia);
-            _contexto.SaveChanges();
+            try
+            {
+                _contexto.Cirugias.Add(cirugia);
+                _contexto.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
         }
 
         public void Actualizar(Cirugia cirugia)
         {
-            _ = _contexto.Cirugias.AsNoTracking().FirstOrDefault(u => u.PacienteId == cirugia.CirugiaId) ?? throw new Exception("La cirugía no existe.");
+            _ = _contexto.Cirugias.AsNoTracking().FirstOrDefault(u => u.CirugiaId == cirugia.CirugiaId) ?? throw new Exception("La cirugía no existe.");
 
             _contexto.Cirugias.Update(cirugia);
             _contexto.SaveChanges();
         }
 
+
         public void Eliminar(Guid id)
         {
-            var cirugia = _contexto.Cirugias.AsNoTracking().FirstOrDefault(u => u.PacienteId == id);
+            var cirugia = _contexto.Cirugias.AsNoTracking().FirstOrDefault(u => u.CirugiaId == id);
             if (cirugia != null)
             {
                 _contexto.Cirugias.Remove(cirugia);

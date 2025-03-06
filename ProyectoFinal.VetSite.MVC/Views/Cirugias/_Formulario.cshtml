@@ -1,0 +1,88 @@
+﻿@using ProyectoFinal.Entidades
+@model ProyectoFinal.Entidades.Cirugia
+
+<head>
+    <link rel="stylesheet" href="~/css/cirugias.css" asp-append-version="true" />
+</head>
+
+<div class="container mt-4">
+
+    <form asp-action="Crear" method="post">
+        @Html.AntiForgeryToken()
+
+        <!-- Campo oculto para el UsuarioId -->
+        @if (Model != null)
+        {
+            <input type="hidden" asp-for="CirugiaId" />
+            <input type="hidden" asp-for="UsuarioCreacionId" />
+            <input type="hidden" asp-for="FechaCreacion"   />
+        }
+
+        <!-- Tipo de Cirugia -->
+        <div class="col-md-6 mb-3">
+            <label asp-for="TipoCirugiaId" class="form-label">Tipo Cirugía*</label>
+            <select asp-for="TipoCirugiaId" class="form-select select2" required>
+                <option value="" disabled selected>Seleccione un Tipo de Cirugia</option>
+                @foreach (var tipo in ViewData["TipoCirugias"] as IEnumerable<TipoCirugia>)
+                {
+                    <option value="@tipo.TipoCirugiaId">@tipo.Descripcion</option>
+                }
+            </select>
+            <span asp-validation-for="TipoCirugiaId" class="text-danger"></span>
+        </div>
+
+        <!-- Paciente Id -->
+        <div class="col-md-6 mb-3">
+            <label asp-for="PacienteId" class="form-label">Paciente*</label>
+            <select asp-for="PacienteId" class="form-select select2" required>
+                <option value="" disabled selected>Seleccione un paciente</option>
+                @foreach (var paciente in ViewData["Pacientes"] as IEnumerable<Paciente>)
+                {
+                    <option value="@paciente.PacienteId">@paciente.Nombre</option>
+                }
+            </select>
+            <span asp-validation-for="PacienteId" class="text-danger"></span>
+        </div>
+
+        <!-- Usuario Id -->
+        <div class="col-md-6 mb-3">
+            <label asp-for="UsuarioId" class="form-label">Usuario*</label>
+            <select asp-for="UsuarioId" class="form-select select2" required>
+                <option value="" disabled selected>Seleccione el paciente</option>
+                @foreach (var usuario in ViewData["Usuarios"] as IEnumerable<Usuario>)
+                {
+                    <option value="@usuario.UsuarioId">@($"{usuario.Nombre}")</option>
+                }
+            </select>
+            <span asp-validation-for="PacienteId" class="text-danger"></span>
+        </div>
+
+        
+        <!-- Descripción -->
+        <div class="mb-3">
+            <label asp-for="Descripcion" class="form-label">Descripción*</label>
+            <textarea asp-for="Descripcion" class="form-control" required></textarea>
+            <span asp-validation-for="Descripcion" class="text-danger"></span>
+        </div>
+
+        <!-- Preanestésico -->
+        <div class="mb-3">
+            <label asp-for="Preanestesico" class="form-label">Preanestésico</label>
+            <textarea asp-for="Preanestesico" class="form-control"></textarea>
+            <span asp-validation-for="Preanestesico" class="text-danger"></span>
+        </div>
+
+        <!-- Observaciones -->
+        <div class="mb-3">
+            <label asp-for="Observaciones" class="form-label">Observaciones</label>
+            <textarea asp-for="Observaciones" class="form-control"></textarea>
+            <span asp-validation-for="Observaciones" class="text-danger"></span>
+        </div>
+
+        <!-- Botones -->
+        <div class="mb-3">
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <a href="@Url.Action("Index", "Cirugias")" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>

@@ -3,22 +3,24 @@ using Microsoft.AspNetCore.Mvc;
 using ProyectoFinal.Entidades;
 using ProyectoFinal.Servidor;
 using System;
+using System.Security.Claims;
 
 namespace ProyectoFinal.VetSite.MVC.Controllers
 {
     [Authorize]
-    public class CirugiasController : Controller
-    {
-        private readonly CirugiaServicio _cirugiaServicio;
-        private readonly TipoCirugiaServicio _tipoCirugiaServicio;
-        private object _cirugiaServicios;
 
-        public CirugiasController(CirugiaServicio cirugiaServicio, 
-                                  TipoCirugiaServicio tipoCirugiaServicio)
-        {
-            _cirugiaServicio = cirugiaServicio;
-            _tipoCirugiaServicio = tipoCirugiaServicio;
-        }
+    public class CirugiasController (
+        CirugiaServicio cirugiaServicio
+      , TipoCirugiaServicio tipoCirugiaServicio
+      , PacienteServicio pacienteServicio
+      , UsuarioServicios usuarioServicios) : Controller
+    {
+        private readonly CirugiaServicio _cirugiaServicio = cirugiaServicio;
+        private readonly TipoCirugiaServicio _tipoCirugiaServicio = tipoCirugiaServicio;
+        private readonly PacienteServicio _pacienteServicio = pacienteServicio;
+        private readonly UsuarioServicios _usuarioServicios = usuarioServicios;
+
+
 
         // Obtener todas las cirugías
         [HttpGet]
@@ -26,7 +28,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         public IActionResult Index()
         {
             ViewBag.Title = "Gestión de Cirugías";
-            var cirugias = _cirugiaServicio.ObtenerTodos().ToList(); // ✅ Convertir a lista
+            var cirugias = _cirugiaServicio.ObtenerTodos().ToList(); 
             return View(cirugias);
         }
 
@@ -35,9 +37,13 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         [HttpGet]
         public IActionResult Crear()
         {
-            ViewData["TiposCirugia"] = _tipoCirugiaServicio.ObtenerTodos();
+            ViewData["TipoCirugias"] = _tipoCirugiaServicio.ObtenerTodos().ToList(); 
+            ViewData["Pacientes"] = _pacienteServicio.ObtenerTodos().ToList();
+            ViewData["Usuarios"] = _usuarioServicios.ObtenerTodos().ToList();
+
             return View();
         }
+
 
         // Crear una cirugía
         [HttpPost]
@@ -46,80 +52,89 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         {
             if (!ModelState.IsValid)
             {
-                TempData["MensajeError"] = "Los datos de la cirugía son inválidos.";
-                return RedirectToAction("Crear");
+                TempData["MensajeError"] = "El registro de la cirugia no es válido. Revíselo y trate nuevamente.";
+                return RedirectToAction("Index");
             }
-
             try
             {
-                //Validacion de si ya existe
+                var usuarioId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
-                if (_cirugiaServicio.Existe(cirugia.FechaCreacion, cirugia.PacienteId, cirugia.TipoCirugiaId))
-                {
-                    TempData["MensajeError"] = "Ya existe una cirugía registrada con estos datos.";
-                    return RedirectToAction("Crear");
-                }
+                cirugia.FechaCreacion = DateTime.Now;
+                cirugia.FechaModificacion = DateTime.Now;
+                cirugia.UsuarioCreacionId = Guid.Parse(usuarioId!);
+                cirugia.UsuarioModificacionId = Guid.Parse(usuarioId!);
 
-                //Si no existe, registra la cirugía
                 _cirugiaServicio.Agregar(cirugia);
-                TempData["MensajeExito"] = "Cirugía registrada exitosamente.";
+                TempData["MensajeExito"] = "Cirugia creado exitosamente.";
             }
             catch (Exception e)
             {
-                TempData["MensajeError"] = $"Error al registrar la cirugía: {e.Message}";
+                TempData["MensajeError"] = $"Ocurrió el siguiente error tratando de Registrar la cirugía: {e.Message}";
+                return RedirectToAction("Index");
             }
 
-            return RedirectToAction("Index");   
+            return RedirectToAction("Index");
         }
-        
-    
-        //Eliminar
 
+
+        //Eliminar
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult Eliminar(Guid id)
         {
-            if (_cirugiaServicio.TotalCirugias() == 1)
+            try
             {
-                TempData["MensajeError"] = "No se puede eliminar la cirugia ya que debe existir mínimo un usuario en el sistema.";
+                _cirugiaServicio.Eliminar(id);
+                TempData["MensajeExito"] = "La cirugia ha sido eliminada exitosamente.";
+            }
+            catch (Exception e)
+            {
+                TempData["MensajeError"] = $"Ocurrió un error eliminando la cirugia: {e.Message}";
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        //Editar
+
+        [HttpGet]
+        public IActionResult Editar(Guid id)
+        {
+
+            ViewData["TipoCirugias"] = _tipoCirugiaServicio.ObtenerTodos();
+            ViewData["Pacientes"] = _pacienteServicio.ObtenerTodos();
+            ViewData["Usuarios"] = _usuarioServicios.ObtenerTodos();
+            return View(_cirugiaServicio.ObtenerPorId(id));
+        }
+
+        [HttpPost]
+        public IActionResult Editar(Cirugia cirugia)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                TempData["MensajeError"] = "No se estableció un modelo válido.";
                 return RedirectToAction("Index");
             }
 
             try
             {
-                _cirugiaServicio.Eliminar(id);
-                TempData["MensajeExito"] = "Cirugía eliminada exitosamente.";
-            }
-            catch (Exception e)
-            {
-                TempData["MensajeError"] = $"Error al eliminar la cirugía: {e.Message}";
-            }
+                var usuarioModificacionId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
-            return RedirectToAction("Index");
-        }
+                cirugia.UsuarioModificacionId = Guid.Parse(usuarioModificacionId!);
+                cirugia.FechaModificacion = DateTime.Now;
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Editar (Cirugia cirugia)
-        {
-            if (!ModelState.IsValid)
-            {
-                TempData["MensajeError"] = "Los datos son inválidos.";
-                return RedirectToAction("Edit", new { id = cirugia.CirugiaId });
-            }
-
-            try
-            {
                 _cirugiaServicio.Actualizar(cirugia);
-                TempData["MensajeExito"] = "Cirugía actualizada correctamente.";
+                TempData["MensajeExito"] = "La cirugia ha sido actualizada exitosamente.";
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                TempData["MensajeError"] = $"Error al actualizar la cirugía: {e.Message}";
+                TempData["MensajeError"] = $"Ocurrió el siguiente error: {ex.Message}";
+                return RedirectToAction("Index");
             }
 
             return RedirectToAction("Index");
         }
+
 
     }
 }
