@@ -1,4 +1,4 @@
-﻿@model List<ProyectoFinal.Entidades.Vacuna>
+﻿@model IEnumerable<ProyectoFinal.Entidades.Vacuna>
 
 
 
@@ -32,7 +32,7 @@
             @if (Model == null || !Model.Any())
             {
                 <tr>
-                    <td colspan="5" class="text-center">No hay vacunas registrados.</td>
+                    <td colspan="5" class="text-center">No hay vacunas registradas.</td>
                 </tr>
             }
             else

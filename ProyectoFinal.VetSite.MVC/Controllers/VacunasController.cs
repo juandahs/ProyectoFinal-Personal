@@ -23,25 +23,26 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         public IActionResult Index()
         {
             ViewBag.Title = "Gestion de Vacunas";
-            var vacunas = _vacunaServicio.ObtenerTodos().ToList();
+            var vacunas = _vacunaServicio.ObtenerTodos();
             return View(vacunas);
         }
 
-        [HttpGet] //Obtener los datos necesario de las relaciones
+        [HttpGet]
         public IActionResult Crear()
         {
-            ViewData["Pacientes"] = _pacienteServicio.ObtenerTodos();
+
             ViewData["TipoVacunas"] = _tipoVacunaServicio.ObtenerTodos();
+            ViewData["Pacientes"] = _pacienteServicio.ObtenerTodos();
             ViewData["Usuarios"] = _usuarioServicios.ObtenerTodos();
             return View();
         }
 
-        [HttpPost]  //INSERTAR UNA VACUNA
+        [HttpPost]
         public IActionResult Crear(Vacuna vacuna)
         {
             if (!ModelState.IsValid)
             {
-                TempData["MensajeError"] = "El registro de la vacuna no es válida. Revísela y trate nuevamente.";
+                TempData["MensajeError"] = "El registro de la vacuna no es válida. Valide toda la información y trate nuevamente.";
                 return RedirectToAction("Index");
             }
             try

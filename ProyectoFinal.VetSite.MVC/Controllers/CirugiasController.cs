@@ -2,13 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using ProyectoFinal.Entidades;
 using ProyectoFinal.Servidor;
-using System;
 using System.Security.Claims;
 
 namespace ProyectoFinal.VetSite.MVC.Controllers
 {
     [Authorize]
-
     public class CirugiasController (
         CirugiaServicio cirugiaServicio
       , TipoCirugiaServicio tipoCirugiaServicio
@@ -20,39 +18,39 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         private readonly PacienteServicio _pacienteServicio = pacienteServicio;
         private readonly UsuarioServicios _usuarioServicios = usuarioServicios;
 
-
-
-        // Obtener todas las cirugías
         [HttpGet]
-
         public IActionResult Index()
         {
             ViewBag.Title = "Gestión de Cirugías";
-            var cirugias = _cirugiaServicio.ObtenerTodos().ToList(); 
+            var cirugias = _cirugiaServicio.ObtenerTodos(); 
             return View(cirugias);
         }
 
-
-        // Vista para crear una nueva cirugía
         [HttpGet]
         public IActionResult Crear()
         {
-            ViewData["TipoCirugias"] = _tipoCirugiaServicio.ObtenerTodos().ToList(); 
-            ViewData["Pacientes"] = _pacienteServicio.ObtenerTodos().ToList();
-            ViewData["Usuarios"] = _usuarioServicios.ObtenerTodos().ToList();
+            IEnumerable<TipoCirugia> tipoCirugias = _tipoCirugiaServicio.ObtenerTodos();
+            if (!tipoCirugias.Any()) 
+            {
+                TempData["MensajeError"] = "Para crear una cirugía debe existir por lo menos un tipo de cirugía en el sistema.";
+                return RedirectToAction("Index");
+            }
+
+            ViewData["TipoCirugias"] = tipoCirugias;
+            ViewData["Pacientes"] = _pacienteServicio.ObtenerTodos();
+            ViewData["Usuarios"] = _usuarioServicios.ObtenerTodos();
 
             return View();
         }
 
-
-        // Crear una cirugía
         [HttpPost]
+        //TODO: revisar si hay que colocarlo o no y colocarlo en los que sea necesario
         [ValidateAntiForgeryToken]
         public IActionResult Crear(Cirugia cirugia)
         {
             if (!ModelState.IsValid)
             {
-                TempData["MensajeError"] = "El registro de la cirugia no es válido. Revíselo y trate nuevamente.";
+                TempData["MensajeError"] = "El registro de la cirugia no es válido. Valide toda la información y trate nuevamente.";
                 return RedirectToAction("Index");
             }
             try
@@ -77,7 +75,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         }
 
 
-        //Eliminar
+        
         [HttpPost]
         public IActionResult Eliminar(Guid id)
         {
@@ -93,8 +91,6 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
 
             return RedirectToAction("Index");
         }
-
-        //Editar
 
         [HttpGet]
         public IActionResult Editar(Guid id)

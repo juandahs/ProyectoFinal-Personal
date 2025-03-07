@@ -27,8 +27,7 @@ namespace ProyectoFinal.Servidor
         }
 
         public void Eliminar(Guid usuarioId)
-        {
-            
+        {            
             var usuario = _contexto.Usuarios.AsNoTracking().FirstOrDefault(u => u.UsuarioId == usuarioId) ?? throw new Exception("El usuario no existe.");
 
             _contexto.Usuarios.Remove(usuario);

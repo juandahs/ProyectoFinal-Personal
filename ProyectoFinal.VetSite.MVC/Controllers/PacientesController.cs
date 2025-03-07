@@ -24,7 +24,16 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         [HttpGet]
         public IActionResult Crear()
         {
+            IEnumerable<Propietario> propietarios = _propietarioServicio.ObtenerTodos();
+            
+            if (!propietarios.Any()) 
+            {
+                TempData["MensajeError"] = "Para crear un paciente debe existir por lo menos un propietario creado en el sistema.";
+                return RedirectToAction("Index");
+            }
+
             ViewData["Propietarios"] = _propietarioServicio.ObtenerTodos();
+            
             return View();
         }
 

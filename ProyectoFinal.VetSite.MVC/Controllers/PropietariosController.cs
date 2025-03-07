@@ -36,7 +36,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         {
             if (!ModelState.IsValid)
             {
-                TempData["MensajeError"] = "La información del propietario no es válida. Revísela y trate nuevamente.";
+                TempData["MensajeError"] = "La información del propietario no es válida. Valide toda la información y trate nuevamente.";
                 return RedirectToAction("Index");
             }
 

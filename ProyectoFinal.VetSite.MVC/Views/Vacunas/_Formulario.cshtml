@@ -1,10 +1,6 @@
 ﻿@using ProyectoFinal.Entidades
 @model ProyectoFinal.Entidades.Vacuna
 
-<head>
-    <link rel="stylesheet" href="~/css/users.css" asp-append-version="true" />
-</head>
-
 <div class="row">
 
     <!-- Campo oculto para el UsuarioId -->
@@ -20,7 +16,7 @@
         <label asp-for="PacienteId" class="form-label">Paciente*</label>
         <select asp-for="PacienteId" class="form-select select2" required>
             <option value="" disabled selected>Seleccione el paciente</option>
-            @foreach (var paciente in ViewData["Pacientes"] as IEnumerable<Paciente>)
+            @foreach (var paciente in (ViewData["Pacientes"] as IEnumerable<Paciente>)!)
             {
                 <option value="@paciente.PacienteId">@($"{paciente.Nombre} {paciente.Sexo} - {paciente.Especie}")</option>
             }
@@ -32,7 +28,7 @@
     <label asp-for="UsuarioId" class="form-label">Usuario*</label>
     <select asp-for="UsuarioId" class="form-select select2" required>
         <option value="" disabled selected>Seleccione el paciente</option>
-        @foreach (var usuario in ViewData["Usuarios"] as IEnumerable<Usuario>)
+        @foreach (var usuario in (ViewData["Usuarios"] as IEnumerable<Usuario>)!)
         {
             <option value="@usuario.UsuarioId">@($"{usuario.Nombre}")</option>
         }
@@ -45,7 +41,7 @@
         <label asp-for="TipoVacunaId" class="form-label">Tipo de Vacuna*</label>
         <select asp-for="TipoVacunaId" class="form-select select2" required>
             <option value="" disabled selected>Seleccione el tipo de vacuna</option>
-            @foreach (var tipo in ViewData["TipoVacunas"] as IEnumerable<TipoVacuna>)
+            @foreach (var tipo in (ViewData["TipoVacunas"] as IEnumerable<TipoVacuna>)!)
             {
                 <option value="@tipo.TipoVacunaId">@($"{tipo.Descripcion}")</option>
             }

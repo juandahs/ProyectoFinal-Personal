@@ -1,10 +1,6 @@
 ﻿@using ProyectoFinal.Entidades
 @model ProyectoFinal.Entidades.Propietario
 
-<head>
-    <link rel="stylesheet" href="~/css/propietarios.css" asp-append-version="true" />
-</head>
-
 <div class="row">
 
     @if (Model != null)
@@ -19,7 +15,7 @@
         <label asp-for="TipoIdentificacionId" class="form-label">Tipo de Identificación*</label>
         <select asp-for="TipoIdentificacionId" class="form-select" required>
             <option value="" disabled selected>Seleccione un tipo</option>
-            @foreach (var tipo in ViewData["TiposIdentificacion"] as IEnumerable<TipoIdentificacion>)
+            @foreach (var tipo in (ViewData["TiposIdentificacion"] as IEnumerable<TipoIdentificacion>)!)
             {
                 <option value="@tipo.TipoIdentificacionId">@tipo.Descripcion</option>
             }
