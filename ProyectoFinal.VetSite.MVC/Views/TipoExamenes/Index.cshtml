@@ -1,0 +1,63 @@
+﻿@model IEnumerable<ProyectoFinal.Entidades.TipoExamen>
+
+<head>
+    <link rel="stylesheet" href="~/css/users.css" asp-append-version="true" />
+</head>
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1>@ViewBag.Title</h1>
+        <a href="/TipoExamenes/Crear" class="btn btn-success">
+            <i class="fas fa-plus me-2"></i>Agregar Tipo de Examen
+        </a>
+    </div>
+
+    <table id="tipoexamenTable" class="table">
+        <thead>
+            <tr>
+                
+                <th>Descripcion</th>
+                <th class="text-center">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model == null || !Model.Any())
+            {
+                <tr>
+                    <td colspan="5" class="text-center">No hay vacunas registradas.</td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var tipoExamen in Model)
+                {
+                    <tr>
+                        <td>@tipoExamen.Descripcion</td>
+                        <td class="text-center">
+                          <!--  <form asp-action="Editar" method="get" class="d-inline">
+                                <input type="hidden" name="id" value="@tipoExamen.TipoExamenId" />
+                                <button type="submit" class="btn btn-primary me-2">
+                                    <i class="fas fa-edit"></i> Editar
+                                </button>
+                            </form> -->
+                            <form asp-action="Eliminar" method="post" class="d-inline">
+                                <input type="hidden" name="id" value="@tipoExamen.TipoExamenId" />
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar este tipo de examen?');">
+                                    <i class="fas fa-trash"></i> Eliminar
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+
+    <!-- DataTables JS para Bootstrap 5 -->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+   
+}
