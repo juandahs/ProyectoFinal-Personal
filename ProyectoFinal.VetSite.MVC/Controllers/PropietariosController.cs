@@ -32,6 +32,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Crear(Propietario propietario)
         {
             if (!ModelState.IsValid)
@@ -63,16 +64,21 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             return RedirectToAction("Index");
         }
 
-
         [HttpGet]
         public IActionResult Editar(Guid id)
         {
-            
+            if (id == Guid.Empty)
+            {
+                TempData["MensajeError"] = "No se estableció un identificador de propietario válido.";
+                return RedirectToAction("Index");
+            }
+
             ViewData["TiposIdentificacion"] = _tipoIdentificacionServicio.ObtenerTodos();
             return View(_propietarioServicio.ObtenerPorId(id));
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Editar(Propietario propietario)
         {
 

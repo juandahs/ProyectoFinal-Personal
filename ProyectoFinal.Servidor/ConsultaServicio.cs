@@ -14,8 +14,15 @@ namespace ProyectoFinal.Servidor
 
         public void Agregar(Consulta consulta)
         {
-            _contexto.Consultas.Add(consulta);
-            _contexto.SaveChanges();
+            try
+            {
+                _contexto.Consultas.Add(consulta);
+                _contexto.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(message: $"message: {e.Message} inner: {e.InnerException}");
+            }
         }
 
         public void Actualizar(Consulta consulta)

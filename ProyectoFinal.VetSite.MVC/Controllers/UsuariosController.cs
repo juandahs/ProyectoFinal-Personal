@@ -32,6 +32,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Crear(Usuario usuario)
         {
             if (!ModelState.IsValid)
@@ -91,6 +92,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Editar(Usuario usuario)
         {
             if (usuario == null)
@@ -121,6 +123,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Eliminar(Guid id)
         {
             if (_usuarioServicios.TotalUsuarios() == 1)

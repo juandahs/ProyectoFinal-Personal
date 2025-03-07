@@ -15,8 +15,16 @@ namespace ProyectoFinal.Servidor
 
         public void Insertar(Cita cita)
         {
-            _contexto.Citas.Add(cita);
-            _contexto.SaveChanges();
+            try
+            {
+                _contexto.Citas.Add(cita);
+                _contexto.SaveChanges();
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(message: $"message: {e.Message} inner: {e.InnerException}");
+            }
         }
 
         public void Actualizar(Cita cita)

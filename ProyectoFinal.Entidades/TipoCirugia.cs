@@ -3,7 +3,6 @@
     public class TipoCirugia
     {
         public Guid TipoCirugiaId { get; set; }
-
         public string Descripcion { get; set; } = string.Empty;
         public DateTime FechaCreacion { get; set; }
         public DateTime FechaModificacion { get; set; }

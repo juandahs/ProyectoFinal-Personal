@@ -465,8 +465,7 @@ namespace ProyectoFinal.Repositorio
 
                 t.Property(b => b.Observaciones)
                     .HasColumnType("varchar")
-                    .HasMaxLength(256)
-                    .IsRequired();
+                    .HasMaxLength(256);
 
                 t.Property(b => b.FechaCreacion)
                     .HasColumnType("datetime")

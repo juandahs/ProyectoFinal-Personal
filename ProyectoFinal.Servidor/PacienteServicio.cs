@@ -22,7 +22,7 @@ namespace ProyectoFinal.Servidor
             }
             catch (Exception e)
             {
-                throw new Exception (e.Message);
+                throw new Exception(message: $"message: {e.Message} inner: {e.InnerException}");
             }
         }
 

@@ -8,9 +8,9 @@ namespace ProyectoFinal.Servidor
     public class CirugiaServicio(Contexto contexto)
     {
         private readonly Contexto _contexto = contexto;
-        public IEnumerable<Cirugia> ObtenerTodos() => _contexto.Cirugias.Include(x => x.Paciente).AsNoTracking();
+        public IEnumerable<Cirugia> ObtenerTodos() => _contexto.Cirugias.Include(x => x.Paciente).Include(x=> x.TipoCirugia).AsNoTracking();
 
-        public Cirugia? ObtenerPorId(Guid cirugiaId) => _contexto.Cirugias.AsNoTracking().FirstOrDefault(p => p.CirugiaId == cirugiaId);
+        public Cirugia? ObtenerPorId(Guid cirugiaId) => _contexto.Cirugias.Include(x=> x.Paciente).Include(x=> x.TipoCirugia).AsNoTracking().FirstOrDefault(p => p.CirugiaId == cirugiaId);
 
         public void Agregar(Cirugia cirugia)
         {
@@ -19,10 +19,9 @@ namespace ProyectoFinal.Servidor
                 _contexto.Cirugias.Add(cirugia);
                 _contexto.SaveChanges();
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-
-                throw new Exception(ex.Message);
+                throw new Exception(message: $"message: {e.Message} inner: {e.InnerException}");
             }
         }
 
