@@ -36,15 +36,21 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
                 return RedirectToAction("Index");
             }
 
+            IEnumerable<Paciente> pacientes = _pacienteServicio.ObtenerTodos();
+            if (!pacientes.Any())
+            {
+                TempData["MensajeError"] = "Para asignar una cirugía a un paciente debe existir por lo menos un paciente en el sistema.";
+                return RedirectToAction("Index");
+            }
+
             ViewData["TipoCirugias"] = tipoCirugias;
-            ViewData["Pacientes"] = _pacienteServicio.ObtenerTodos();
+            ViewData["Pacientes"] = pacientes;
             ViewData["Usuarios"] = _usuarioServicios.ObtenerTodos();
 
             return View();
         }
 
         [HttpPost]
-        //TODO: revisar si hay que colocarlo o no y colocarlo en los que sea necesario
         [ValidateAntiForgeryToken]
         public IActionResult Crear(Cirugia cirugia)
         {
@@ -74,27 +80,14 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             return RedirectToAction("Index");
         }
 
-
-        
-        [HttpPost]
-        public IActionResult Eliminar(Guid id)
-        {
-            try
-            {
-                _cirugiaServicio.Eliminar(id);
-                TempData["MensajeExito"] = "La cirugia ha sido eliminada exitosamente.";
-            }
-            catch (Exception e)
-            {
-                TempData["MensajeError"] = $"Ocurrió un error eliminando la cirugia: {e.Message}";
-            }
-
-            return RedirectToAction("Index");
-        }
-
         [HttpGet]
         public IActionResult Editar(Guid id)
         {
+            if (id == Guid.Empty)
+            {
+                TempData["MensajeError"] = "No se estableció un identificador de cirugia válido.";
+                return RedirectToAction("Index");
+            } 
 
             ViewData["TipoCirugias"] = _tipoCirugiaServicio.ObtenerTodos();
             ViewData["Pacientes"] = _pacienteServicio.ObtenerTodos();
@@ -103,6 +96,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Editar(Cirugia cirugia)
         {
 
@@ -131,6 +125,22 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Eliminar(Guid id)
+        {
+            try
+            {
+                _cirugiaServicio.Eliminar(id);
+                TempData["MensajeExito"] = "La cirugia ha sido eliminada exitosamente.";
+            }
+            catch (Exception e)
+            {
+                TempData["MensajeError"] = $"Ocurrió un error eliminando la cirugia: {e.Message}";
+            }
+
+            return RedirectToAction("Index");
+        }
 
     }
 }

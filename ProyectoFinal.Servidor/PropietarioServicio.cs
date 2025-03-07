@@ -20,10 +20,9 @@ namespace ProyectoFinal.Servidor
                 _contexto.Propietarios.Add(propietario);
                 _contexto.SaveChanges();
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-
-                throw new Exception(ex.Message);
+                throw new Exception(message: $"message: {e.Message} inner: {e.InnerException}");
             }
         }
 

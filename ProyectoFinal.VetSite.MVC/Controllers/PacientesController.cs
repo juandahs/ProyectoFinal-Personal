@@ -38,6 +38,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Crear(Paciente paciente)
         {
             if (!ModelState.IsValid)
@@ -68,8 +69,51 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        public IActionResult Editar(Guid id)
+        {
+            if (id == Guid.Empty)
+            {
+                TempData["MensajeError"] = "No se estableció un identificador de pacientte válido.";
+                return RedirectToAction("Index");
+            }
+
+            return View(_pacienteServicio.ObtenerPorId(id));
+        }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Editar(Paciente paciente)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                TempData["MensajeError"] = "No se estableció un modelo válido.";
+                return RedirectToAction("Index");
+            }
+
+            try
+            {
+                var usuarioModificacionId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+                paciente.UsuarioModificacionId = Guid.Parse(usuarioModificacionId!);
+                paciente.FechaModificacion = DateTime.Now;
+
+                _pacienteServicio.Actualizar(paciente);
+                TempData["MensajeExito"] = "El paciente ha sido actualizado exitosamente.";
+            }
+            catch (Exception ex)
+            {
+                TempData["MensajeError"] = $"Ocurrió el siguiente error: {ex.Message}";
+                return RedirectToAction("Index");
+            }
+
+            return RedirectToAction("Index");
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Eliminar(Guid id)
         {   
 

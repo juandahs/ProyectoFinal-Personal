@@ -6,7 +6,7 @@ using System.Security.Claims;
 
 namespace ProyectoFinal.VetSite.MVC.Controllers
 {
-    [Authorize] //se puede si esta logiado
+    [Authorize]
     public class VacunasController(
            VacunaServicio vacunaServicio
          , TipoVacunaServicio tipoVacunaServicio
@@ -38,6 +38,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Crear(Vacuna vacuna)
         {
             if (!ModelState.IsValid)
@@ -66,34 +67,24 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
-        public IActionResult Eliminar(Guid id)
-        {
-            try
-            {
-                _vacunaServicio.Eliminar(id);
-                TempData["MensajeExito"] = "El propietario ha sido eliminado exitosamente.";
-            }
-            catch (Exception e)
-            {
-                TempData["MensajeError"] = $"Ocurrió un error eliminando el propietario: {e.Message}";
-            }
-
-            return RedirectToAction("Index");
-        }
-
-
         [HttpGet]
         public IActionResult Editar(Guid id)
         {
+            if (id == Guid.Empty)
+            {
+                TempData["MensajeError"] = "No se estableció un identificador de usuario.";
+                return RedirectToAction("Index");
+            }
 
             ViewData["TipoVacunas"] = _tipoVacunaServicio.ObtenerTodos();
             ViewData["Pacientes"] = _pacienteServicio.ObtenerTodos();
             ViewData["Usuarios"] = _usuarioServicios.ObtenerTodos();
+
             return View(_vacunaServicio.ObtenerPorId(id));
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Editar(Vacuna vacuna)
         {
 
@@ -121,6 +112,24 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Eliminar(Guid id)
+        {
+            try
+            {
+                _vacunaServicio.Eliminar(id);
+                TempData["MensajeExito"] = "El propietario ha sido eliminado exitosamente.";
+            }
+            catch (Exception e)
+            {
+                TempData["MensajeError"] = $"Ocurrió un error eliminando el propietario: {e.Message}";
+            }
+
+            return RedirectToAction("Index");
+        }
+
 
     }
 }

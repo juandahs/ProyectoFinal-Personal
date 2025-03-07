@@ -53,7 +53,7 @@ namespace ProyectoFinal.Repositorio.Migrations
                     UsuarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Descripcion = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false),
                     Preanestesico = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false),
-                    Observaciones = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false),
+                    Observaciones = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
                     FechaCreacion = table.Column<DateTime>(type: "datetime", nullable: false),
                     FechaModificacion = table.Column<DateTime>(type: "datetime", nullable: false),
                     UsuarioCreacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -454,6 +454,11 @@ namespace ProyectoFinal.Repositorio.Migrations
                 column: "UsuarioCreacionId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Cirugia_UsuarioId",
+                table: "Cirugia",
+                column: "UsuarioId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Cirugia_UsuarioModificacionId",
                 table: "Cirugia",
                 column: "UsuarioModificacionId");
@@ -779,6 +784,14 @@ namespace ProyectoFinal.Repositorio.Migrations
                 principalTable: "Usuario",
                 principalColumn: "UsuarioId",
                 onDelete: ReferentialAction.Restrict);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Cirugia_Usuario_UsuarioId",
+                table: "Cirugia",
+                column: "UsuarioId",
+                principalTable: "Usuario",
+                principalColumn: "UsuarioId",
+                onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Cirugia_Usuario_UsuarioModificacionId",

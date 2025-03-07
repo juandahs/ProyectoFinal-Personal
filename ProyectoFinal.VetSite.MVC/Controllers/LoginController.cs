@@ -14,6 +14,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         public IActionResult Index() => View();
 
         [HttpPost]
+
         public async Task<IActionResult> Login(string correoElectronico, string clave)
         {
             var usuario = _usuarioServicios.ObtenerPorCorreoElectronico(correoElectronico);

@@ -40,7 +40,6 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .HasColumnType("datetime");
 
                     b.Property<string>("Observaciones")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("varchar");
 
@@ -71,6 +70,8 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.HasIndex("TipoCirugiaId");
 
                     b.HasIndex("UsuarioCreacionId");
+
+                    b.HasIndex("UsuarioId");
 
                     b.HasIndex("UsuarioModificacionId");
 
@@ -933,6 +934,12 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("ProyectoFinal.Entidades.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioModificacion")
                         .WithMany()
                         .HasForeignKey("UsuarioModificacionId")
@@ -942,6 +949,8 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.Navigation("Paciente");
 
                     b.Navigation("TipoCirugia");
+
+                    b.Navigation("Usuario");
 
                     b.Navigation("UsuarioCreacion");
 

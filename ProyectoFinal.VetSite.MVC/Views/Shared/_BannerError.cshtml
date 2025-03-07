@@ -1,6 +1,4 @@
-﻿<title>@ViewBag.Title - VetSite</title>
-
-@if (TempData["MensajeError"] != null)
+﻿<@if (TempData["MensajeError"] != null)
 {
     <div class="alert alert-danger" role="alert">
         @TempData["MensajeError"]

@@ -6,8 +6,8 @@
         public Guid TipoCirugiaId { get; set; } 
         public Guid PacienteId { get; set; }                
         public Guid UsuarioId { get; set; }
-        public string? Descripcion { get; set; }
-        public string? Preanestesico { get; set; }
+        public string Descripcion { get; set; } = string.Empty;
+        public string Preanestesico { get; set; } = string.Empty;
         public string? Observaciones {  get; set; }
         public DateTime FechaCreacion { get; set; }
         public DateTime FechaModificacion { get; set; }
