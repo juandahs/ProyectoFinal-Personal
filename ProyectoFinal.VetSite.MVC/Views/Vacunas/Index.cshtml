@@ -1,0 +1,104 @@
+﻿@model List<ProyectoFinal.Entidades.Vacuna>
+
+<title>@ViewBag.Title - VetSite</title>
+
+@if (TempData["MensajeError"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["MensajeError"]
+    </div>
+}
+@if (TempData["MensajeExito"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["MensajeExito"]
+    </div>
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/users.css" asp-append-version="true" />
+</head>
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1>@ViewBag.Title</h1>
+        <a href="/Usuarios/Crear" class="btn btn-success">
+            <i class="fas fa-plus me-2"></i>Agregar Vacuna
+        </a>
+    </div>
+
+    <table id="vacunasTable" class="table">
+        <thead>
+            <tr>
+                <th>Paciente</th>
+                <th>Usuario</th>
+                <th>Tipo Vacuna</th>
+                <th>Laboratorio</th>
+                <th>Lote</th>
+                <th>FechaAplicacion</th>
+                <th>FehcaProximaAplicacion</th>
+                <th>Observaciones</th>
+                <th class="text-center">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model == null || !Model.Any())
+            {
+                <tr>
+                    <td colspan="5" class="text-center">No hay vacunas registrados.</td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var vacuna in Model)
+                {
+                    <tr>
+                        <td>@vacuna.PacienteId</td>
+                        <td>@vacuna.UsuarioId</td>
+                        <td>@vacuna.TipoVacunaId</td>
+                        <td>@vacuna.Laboratorio</td>
+                        <td>@vacuna.Lote</td>
+                        <td>@vacuna.FechaAplicacion</td>
+                        <td>@vacuna.FechaProximaAplicacion</td>
+                        <td>@vacuna.Observaciones</td>
+                        <td class="text-center">
+                            <form asp-action="Editar" method="get" class="d-inline">
+                                <input type="hidden" name="id" value="@vacuna.VacunaId" />
+                                <button type="submit" class="btn btn-primary me-2">
+                                    <i class="fas fa-edit"></i> Editar
+                                </button>
+                            </form>
+                            <form asp-action="Eliminar" method="post" class="d-inline">
+                                <input type="hidden" name="id" value="@vacuna.VacunaId" />
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar este usuario?');">
+                                    <i class="fas fa-trash"></i> Eliminar
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+
+    <!-- DataTables JS para Bootstrap 5 -->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#vacunasTable').DataTable({
+                language: {
+                    search: "Buscar:",
+                    lengthMenu: "Mostrar _MENU_ registros por página",
+                    zeroRecords: "No se encontraron registros",
+                    info: "Mostrando página _PAGE_ de _PAGES_",
+                    infoEmpty: "No hay registros disponibles",
+                    infoFiltered: "(filtrado de _MAX_ registros totales)"
+                }
+            });
+        });
+    </script>
+}
