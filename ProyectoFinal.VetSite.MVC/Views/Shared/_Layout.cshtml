@@ -46,6 +46,8 @@
         </nav>
     </header>
 
+    
+
     <!-- Sidebar fijo -->
     <div id="sidebar" class="sidebar">
         <a href="/Usuarios">Usuarios</a>
@@ -56,8 +58,11 @@
         <!-- Agrega más enlaces según sea necesario -->
     </div>
 
+
     <!-- Contenedor principal (flex: 1) -->
     <div class="container">
+        <partial name="_BannerError" />
+
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
