@@ -43,7 +43,7 @@ namespace ProyectoFinal.Servidor
             var context = scope.ServiceProvider.GetRequiredService<Contexto>();
             await context.Database.MigrateAsync();
 
-            if (!await context.TiposIdentificacion.AnyAsync())
+            if (!await context.TipoIdentificaciones.AnyAsync())
             {
                 var sqlDatosPath = Path.Combine(AppContext.BaseDirectory, "AppData\\Datos.sql");
                 var sqlDatos = await File.ReadAllTextAsync(sqlDatosPath);

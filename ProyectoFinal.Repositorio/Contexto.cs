@@ -19,7 +19,7 @@ namespace ProyectoFinal.Repositorio
         public DbSet<TipoCirugia> TipoCirugias { get; set; }
         public DbSet<TipoExamen> TipoExamenes { get; set; }
         public DbSet<Examen> Examenes { get; set; }
-        public DbSet<TipoIdentificacion> TiposIdentificacion { get; set; }
+        public DbSet<TipoIdentificacion> TipoIdentificaciones { get; set; }
         public DbSet<Vacuna> Vacunas { get; set; }
 
         public DbSet<FormulaMedica> FormulasMedicas { get; set; }
@@ -122,6 +122,7 @@ namespace ProyectoFinal.Repositorio
             {
                 t.Property(b => b.TipoIdentificacionId).HasColumnType("uniqueidentifier").IsRequired();
                 t.Property(b => b.Descripcion).HasColumnType("varchar").HasMaxLength(32).IsRequired();
+                t.Property(b => b.Posicion).HasColumnType("integer").IsRequired();
                 t.Property(b => b.FechaCreacion).HasColumnType("datetime").IsRequired();
                 t.Property(b => b.FechaModificacion).HasColumnType("datetime").IsRequired();
                 t.Property(b => b.UsuarioCreacionId).HasColumnType("uniqueidentifier").IsRequired();

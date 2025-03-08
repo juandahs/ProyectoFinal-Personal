@@ -8,32 +8,35 @@ DECLARE @NewTipoIdentificacionId UNIQUEIDENTIFIER;
 
 -- Insertar múltiples registros en TipoIdentificacion
 SET @NewTipoIdentificacionId = NEWID();
-INSERT INTO TipoIdentificacion (TipoIdentificacionId, Descripcion, FechaCreacion, FechaModificacion, UsuarioCreacionId, UsuarioModificacionId) 
-VALUES (@NewTipoIdentificacionId, 'Cedula de ciudadania', GETDATE(), GETDATE(), @NewUsuarioId, @NewUsuarioId);
+INSERT INTO TipoIdentificacion (TipoIdentificacionId, Posicion, Descripcion, FechaCreacion, FechaModificacion, UsuarioCreacionId, UsuarioModificacionId) 
+VALUES (@NewTipoIdentificacionId, 1, 'Cedula de ciudadania', GETDATE(), GETDATE(), @NewUsuarioId, @NewUsuarioId);
+
 
 SET @NewTipoIdentificacionId = NEWID();
-INSERT INTO TipoIdentificacion (TipoIdentificacionID, Descripcion, FechaCreacion, FechaModificacion, UsuarioCreacionId, UsuarioModificacionId) 
-VALUES (@NewTipoIdentificacionId, 'Tarjeta de identidad', GETDATE(), GETDATE(), @NewUsuarioId, @NewUsuarioId);
+INSERT INTO TipoIdentificacion (TipoIdentificacionId, Posicion, Descripcion, FechaCreacion, FechaModificacion, UsuarioCreacionId, UsuarioModificacionId) 
+VALUES (@NewTipoIdentificacionId, 2, 'NIT', GETDATE(), GETDATE(), @NewUsuarioId, @NewUsuarioId);
+
 
 SET @NewTipoIdentificacionId = NEWID();
-INSERT INTO TipoIdentificacion (TipoIdentificacionId, Descripcion, FechaCreacion, FechaModificacion, UsuarioCreacionId, UsuarioModificacionId) 
-VALUES (@NewTipoIdentificacionId, 'Cedula de extranjeria', GETDATE(), GETDATE(), @NewUsuarioId, @NewUsuarioId);
+INSERT INTO TipoIdentificacion (TipoIdentificacionId, Posicion, Descripcion, FechaCreacion, FechaModificacion, UsuarioCreacionId, UsuarioModificacionId) 
+VALUES (@NewTipoIdentificacionId, 3, 'Cedula de extranjeria', GETDATE(), GETDATE(), @NewUsuarioId, @NewUsuarioId);
 
 SET @NewTipoIdentificacionId = NEWID();
-INSERT INTO TipoIdentificacion (TipoIdentificacionId, Descripcion, FechaCreacion, FechaModificacion, UsuarioCreacionId, UsuarioModificacionId) 
-VALUES (@NewTipoIdentificacionId, 'Pasaporte', GETDATE(), GETDATE(), @NewUsuarioId, @NewUsuarioId);
+INSERT INTO TipoIdentificacion (TipoIdentificacionId, Posicion, Descripcion, FechaCreacion, FechaModificacion, UsuarioCreacionId, UsuarioModificacionId) 
+VALUES (@NewTipoIdentificacionId, 4, 'Pasaporte', GETDATE(), GETDATE(), @NewUsuarioId, @NewUsuarioId);
 
 SET @NewTipoIdentificacionId = NEWID();
-INSERT INTO TipoIdentificacion (TipoIdentificacionId, Descripcion, FechaCreacion, FechaModificacion, UsuarioCreacionId, UsuarioModificacionId) 
-VALUES (@NewTipoIdentificacionId, 'Registro civil', GETDATE(), GETDATE(), @NewUsuarioId, @NewUsuarioId);
+INSERT INTO TipoIdentificacion (TipoIdentificacionId, Posicion, Descripcion, FechaCreacion, FechaModificacion, UsuarioCreacionId, UsuarioModificacionId) 
+VALUES (@NewTipoIdentificacionId, 5, 'Registro civil', GETDATE(), GETDATE(), @NewUsuarioId, @NewUsuarioId);
 
 SET @NewTipoIdentificacionId = NEWID();
-INSERT INTO TipoIdentificacion (TipoIdentificacionId, Descripcion, FechaCreacion, FechaModificacion, UsuarioCreacionId, UsuarioModificacionId) 
-VALUES (@NewTipoIdentificacionId, 'NIT', GETDATE(), GETDATE(), @NewUsuarioId, @NewUsuarioId);
+INSERT INTO TipoIdentificacion (TipoIdentificacionID, Posicion, Descripcion, FechaCreacion, FechaModificacion, UsuarioCreacionId, UsuarioModificacionId) 
+VALUES (@NewTipoIdentificacionId, 6, 'Tarjeta de identidad', GETDATE(), GETDATE(), @NewUsuarioId, @NewUsuarioId);
+
 
 SET @NewTipoIdentificacionId = NEWID();
-INSERT INTO TipoIdentificacion (TipoIdentificacionId, Descripcion, FechaCreacion, FechaModificacion, UsuarioCreacionId, UsuarioModificacionId) 
-VALUES (@NewTipoIdentificacionId, 'Otro', GETDATE(), GETDATE(), @NewUsuarioId, @NewUsuarioId);
+INSERT INTO TipoIdentificacion (TipoIdentificacionId, Posicion, Descripcion, FechaCreacion, FechaModificacion, UsuarioCreacionId, UsuarioModificacionId) 
+VALUES (@NewTipoIdentificacionId, 7, 'Otro', GETDATE(), GETDATE(), @NewUsuarioId, @NewUsuarioId);
 
 -- Insertar Rol
 DECLARE @RolId UNIQUEIDENTIFIER;

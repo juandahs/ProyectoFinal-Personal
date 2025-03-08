@@ -307,6 +307,7 @@ namespace ProyectoFinal.Repositorio.Migrations
                 columns: table => new
                 {
                     TipoIdentificacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Posicion = table.Column<int>(type: "integer", nullable: false),
                     Descripcion = table.Column<string>(type: "varchar(32)", maxLength: 32, nullable: false),
                     FechaCreacion = table.Column<DateTime>(type: "datetime", nullable: false),
                     FechaModificacion = table.Column<DateTime>(type: "datetime", nullable: false),

@@ -687,6 +687,9 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.Property<DateTime>("FechaModificacion")
                         .HasColumnType("datetime");
 
+                    b.Property<int>("Posicion")
+                        .HasColumnType("integer");
+
                     b.Property<Guid>("UsuarioCreacionId")
                         .HasColumnType("uniqueidentifier");
 

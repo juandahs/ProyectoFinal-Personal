@@ -12,7 +12,7 @@ using ProyectoFinal.Repositorio;
 namespace ProyectoFinal.Repositorio.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20250307211608_Init")]
+    [Migration("20250308231246_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -689,6 +689,9 @@ namespace ProyectoFinal.Repositorio.Migrations
 
                     b.Property<DateTime>("FechaModificacion")
                         .HasColumnType("datetime");
+
+                    b.Property<int>("Posicion")
+                        .HasColumnType("integer");
 
                     b.Property<Guid>("UsuarioCreacionId")
                         .HasColumnType("uniqueidentifier");
