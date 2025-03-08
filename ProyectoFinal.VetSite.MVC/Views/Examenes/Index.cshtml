@@ -18,7 +18,6 @@
         <thead>
             <tr>
                 <th>Paciente</th>
-				<!--<th>Usuario</th>-->
 				<th>Tipo Examen</th>
                 <th>Fecha</th>
                 <th>Descripcion</th>
@@ -31,7 +30,7 @@
             @if (Model == null || !Model.Any())
             {
                 <tr>
-                    <td colspan="5" class="text-center">No hay vacunas registradas.</td>
+                    <td colspan="5" class="text-center">No hay examenes registradas.</td>
                 </tr>
             }
             else
@@ -40,7 +39,6 @@
                 {
                     <tr>
                         <td>@Examen.PacienteId</td>
-						<!-- <td>@Examen.UsuarioId</td> -->
 						<td>@Examen.TipoExamenId</td>
                         <td>@Examen.Fecha</td>
                         <td>@Examen.Descripcion</td>
