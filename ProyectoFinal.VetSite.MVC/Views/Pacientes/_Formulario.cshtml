@@ -11,17 +11,16 @@
 
     }
 
-    <div class="col-md-6 mb-3">
-        <label asp-for="PropietarioId" class="form-label">Propietario*</label>
-        <select asp-for="PropietarioId" class="form-select select2" required>
-            <option value="" disabled selected>Seleccione un propietario</option>
-            @foreach (var propietario in (ViewData["Propietarios"] as IEnumerable<Propietario>)!)
-            {
-                <option value="@propietario.PropietarioId">@($"{propietario.Nombre} {propietario.Apellido} - {propietario.NumeroIdentificacion}")</option>
-            }
-        </select>
-        <span asp-validation-for="PropietarioId" class="text-danger"></span>
-    </div>
+    <select asp-for="PropietarioId" class="form-select select2" required>
+        <option value="" disabled>Seleccione un propietario</option>
+        @foreach (var propietario in (ViewData["Propietarios"] as IEnumerable<Propietario>)!)
+        {
+            <option value="@propietario.PropietarioId" selected="@(Model != null && Model.PropietarioId == propietario.PropietarioId ? "selected" : null)">
+                @($"{propietario.Nombre} {propietario.Apellido} - {propietario.NumeroIdentificacion}")
+            </option>
+        }
+    </select>
+
 
     <!-- Nombre -->
     <div class="col-md-6 mb-3">

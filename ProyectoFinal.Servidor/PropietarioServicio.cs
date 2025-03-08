@@ -43,5 +43,8 @@ namespace ProyectoFinal.Servidor
                 _contexto.SaveChanges();
             }
         }
+
+
+        public bool Existe(string identifcacion) => _contexto.Propietarios.AsNoTracking().Any(x => x.NumeroIdentificacion== identifcacion);
     }
 }

@@ -10,7 +10,7 @@ namespace ProyectoFinal.Servidor
 
         public IEnumerable<Paciente> ObtenerTodos() => _contexto.Pacientes.Include(x => x.Propietario).AsNoTracking();
 
-        public Paciente? ObtenerPorId(Guid id) => _contexto.Pacientes.AsNoTracking().FirstOrDefault(p => p.PacienteId == id);
+        public Paciente? ObtenerPorId(Guid id) => _contexto.Pacientes.Include(x => x.Propietario).AsNoTracking().FirstOrDefault(p => p.PacienteId == id);
 
         public void Agregar(Paciente paciente)
         {

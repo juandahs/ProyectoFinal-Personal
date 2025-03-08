@@ -74,12 +74,23 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         {
             if (id == Guid.Empty)
             {
-                TempData["MensajeError"] = "No se estableció un identificador de pacientte válido.";
+                TempData["MensajeError"] = "No se estableció un identificador de paciente válido.";
                 return RedirectToAction("Index");
             }
 
-            return View(_pacienteServicio.ObtenerPorId(id));
+            var paciente = _pacienteServicio.ObtenerPorId(id);
+            if (paciente == null)
+            {
+                TempData["MensajeError"] = "El paciente no fue encontrado.";
+                return RedirectToAction("Index");
+            }
+
+            // Obtener lista de propietarios y enviarla a la vista
+            ViewData["Propietarios"] = _propietarioServicio.ObtenerTodos();
+
+            return View(paciente);
         }
+
 
         [HttpPost]
         

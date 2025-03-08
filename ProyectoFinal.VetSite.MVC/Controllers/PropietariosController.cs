@@ -41,6 +41,12 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
                 return RedirectToAction("Index");
             }
 
+            if (_propietarioServicio.Existe(propietario.NumeroIdentificacion))
+            {
+                TempData["MensajeError"] = "El propietario ya existe.";
+                return RedirectToAction("Index");
+            }
+
             try
             {
 
