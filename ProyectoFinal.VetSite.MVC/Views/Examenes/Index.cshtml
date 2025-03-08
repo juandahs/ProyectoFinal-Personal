@@ -17,7 +17,6 @@
     <table id="examenessTable" class="table">
         <thead>
             <tr>
-                <th>Paciente</th>
 				<th>Tipo Examen</th>
                 <th>Fecha</th>
                 <th>Descripcion</th>
@@ -38,7 +37,6 @@
                 @foreach (var Examen in Model)
                 {
                     <tr>
-                        <td>@Examen.PacienteId</td>
 						<td>@Examen.TipoExamenId</td>
                         <td>@Examen.Fecha</td>
                         <td>@Examen.Descripcion</td>
