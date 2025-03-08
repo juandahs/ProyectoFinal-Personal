@@ -27,7 +27,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public IActionResult Crear(TipoCirugia tipoCirugia)
         {
             if (!ModelState.IsValid)
@@ -69,7 +69,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public IActionResult Editar(TipoCirugia tipoCirugia)
         {
             if (!ModelState.IsValid)
@@ -98,7 +98,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public IActionResult Eliminar(Guid id)
         {
             try

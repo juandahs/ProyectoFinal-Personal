@@ -38,7 +38,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public IActionResult Crear(Paciente paciente)
         {
             if (!ModelState.IsValid)
@@ -82,7 +82,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public IActionResult Editar(Paciente paciente)
         {
 
@@ -113,7 +113,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
 
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public IActionResult Eliminar(Guid id)
         {   
 

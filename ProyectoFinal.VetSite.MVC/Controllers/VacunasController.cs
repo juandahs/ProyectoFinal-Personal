@@ -38,7 +38,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public IActionResult Crear(Vacuna vacuna)
         {
             if (!ModelState.IsValid)
@@ -84,7 +84,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public IActionResult Editar(Vacuna vacuna)
         {
 
@@ -114,7 +114,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public IActionResult Eliminar(Guid id)
         {
             try
