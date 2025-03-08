@@ -1,0 +1,89 @@
+﻿@model IEnumerable<ProyectoFinal.Entidades.Examen>
+
+
+
+<head>
+    <link rel="stylesheet" href="~/css/users.css" asp-append-version="true" />
+</head>
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1>@ViewBag.Title</h1>
+        <a href="/Examenes/Crear" class="btn btn-success">
+            <i class="fas fa-plus me-2"></i>Agregar Examen
+        </a>
+    </div>
+
+    <table id="examenessTable" class="table">
+        <thead>
+            <tr>
+                <th>Paciente</th>
+				<!--<th>Usuario</th>-->
+				<th>Tipo Examen</th>
+                <th>Fecha</th>
+                <th>Descripcion</th>
+                <th>Resulatdo</th>
+                <th>Observaciones</th>
+                <th class="text-center">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model == null || !Model.Any())
+            {
+                <tr>
+                    <td colspan="5" class="text-center">No hay vacunas registradas.</td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var Examen in Model)
+                {
+                    <tr>
+                        <td>@Examen.PacienteId</td>
+						<!-- <td>@Examen.UsuarioId</td> -->
+						<td>@Examen.TipoExamenId</td>
+                        <td>@Examen.Fecha</td>
+                        <td>@Examen.Descripcion</td>
+                        <td>@Examen.Resultado</td>
+                        <td>@Examen.Observaciones</td>
+                        <td class="text-center">
+                            <form asp-action="Editar" method="get" class="d-inline">
+                                <input type="hidden" name="id" value="@Examen.ExamenId" />
+                                <button type="submit" class="btn btn-primary me-2">
+                                    <i class="fas fa-edit"></i> Editar
+                                </button>
+                            </form>
+                            <form asp-action="Eliminar" method="post" class="d-inline">
+                                <input type="hidden" name="id" value="@Examen.ExamenId" />
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar este examen?');">
+                                    <i class="fas fa-trash"></i> Eliminar
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+
+    <!-- DataTables JS para Bootstrap 5 -->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#examenesTable').DataTable({
+                language: {
+                    search: "Buscar:",
+                    lengthMenu: "Mostrar _MENU_ registros por página",
+                    zeroRecords: "No se encontraron registros",
+                    info: "Mostrando página _PAGE_ de _PAGES_",
+                    infoEmpty: "No hay registros disponibles",
+                    infoFiltered: "(filtrado de _MAX_ registros totales)"
+                }
+            });
+        });
+    </script>
+}

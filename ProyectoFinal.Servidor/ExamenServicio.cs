@@ -31,12 +31,15 @@ namespace ProyectoFinal.Servidor
             _contexto.SaveChanges();
         }
 
-        public void Eliminar(Guid examenId)
+      
+        public void Eliminar(Guid id)
         {
-            Examen examen = _contexto.Examenes.AsNoTracking().FirstOrDefault(u => u.ExamenId == examenId) ?? throw new Exception("El Examen no existe.");
-
+            var examen = _contexto.Examenes.AsNoTracking().FirstOrDefault(u => u.ExamenId == id);
             if (examen != null)
+            {
                 _contexto.Examenes.Remove(examen);
+                _contexto.SaveChanges();
+            }
         }
     }
 }

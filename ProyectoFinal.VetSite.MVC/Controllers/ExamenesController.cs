@@ -1,37 +1,36 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProyectoFinal.Entidades;
 using ProyectoFinal.Servidor;
-using System.Security.Claims;
 
 namespace ProyectoFinal.VetSite.MVC.Controllers
 {
     [Authorize]
-    public class VacunasController(
-           VacunaServicio vacunaServicio
-         , TipoVacunaServicio tipoVacunaServicio
+    public class ExamenesController(
+           ExamenServicio examenServicio
+         , TipoExamenServicio tipoExamenServicio
          , PacienteServicio pacienteServicio
          , UsuarioServicios usuarioServicios) : Controller
     {
         private readonly PacienteServicio _pacienteServicio = pacienteServicio;
-        private readonly VacunaServicio _vacunaServicio = vacunaServicio;
-        private readonly TipoVacunaServicio _tipoVacunaServicio = tipoVacunaServicio;
+        private readonly ExamenServicio _examenServicio = examenServicio;
+        private readonly TipoExamenServicio _tipoExamenServicio = tipoExamenServicio;
         private readonly UsuarioServicios _usuarioServicios = usuarioServicios;
 
 
         [HttpGet]
         public IActionResult Index()
         {
-            ViewBag.Title = "Gestion de Vacunas";
-            var vacunas = _vacunaServicio.ObtenerTodos();
-            return View(vacunas);
+            ViewBag.Title = "Gestion de pacientes.";
+            return View(_examenServicio.ObtenerTodos());
         }
 
         [HttpGet]
         public IActionResult Crear()
         {
-
-            ViewData["TipoVacunas"] = _tipoVacunaServicio.ObtenerTodos();
+            ViewData["TipoExamenes"] = _tipoExamenServicio.ObtenerTodos();
             ViewData["Pacientes"] = _pacienteServicio.ObtenerTodos();
             ViewData["Usuarios"] = _usuarioServicios.ObtenerTodos();
             return View();
@@ -39,28 +38,30 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Crear(Vacuna vacuna)
+        public IActionResult Crear(Examen examen)
         {
             if (!ModelState.IsValid)
             {
-                TempData["MensajeError"] = "El registro de la vacuna no es válida. Valide toda la información y trate nuevamente.";
+                TempData["MensajeError"] = "La información del examen no es válida. Revísela y trate nuevamente.";
                 return RedirectToAction("Index");
             }
+
             try
             {
+
                 var usuarioId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
-                vacuna.FechaCreacion = DateTime.Now;
-                vacuna.FechaModificacion = DateTime.Now;
-                vacuna.UsuarioCreacionId = Guid.Parse(usuarioId!);
-                vacuna.UsuarioModificacionId = Guid.Parse(usuarioId!);
+                examen.FechaCreacion = DateTime.Now;
+                examen.FechaModificacion = DateTime.Now;
+                examen.UsuarioCreacionId = Guid.Parse(usuarioId!);
+                examen.UsuarioModificacionId = Guid.Parse(usuarioId!);
 
-                _vacunaServicio.Agregar(vacuna);
-                TempData["MensajeExito"] = "Vacuna creado exitosamente.";
+                _examenServicio.Agregar(examen);
+                TempData["MensajeExito"] = "Examen creado exitosamente.";
             }
             catch (Exception e)
             {
-                TempData["MensajeError"] = $"Ocurrió el siguiente error tratando de Registrar la vacuna: {e.Message}";
+                TempData["MensajeError"] = $"Ocurrió el siguiente error tratando de crear el examen: {e.Message}";
                 return RedirectToAction("Index");
             }
 
@@ -76,16 +77,16 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewData["TipoVacunas"] = _tipoVacunaServicio.ObtenerTodos();
+            ViewData["TipoExamenes"] = _tipoExamenServicio.ObtenerTodos();
             ViewData["Pacientes"] = _pacienteServicio.ObtenerTodos();
             ViewData["Usuarios"] = _usuarioServicios.ObtenerTodos();
 
-            return View(_vacunaServicio.ObtenerPorId(id));
+            return View(_examenServicio.ObtenerPorId(id));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Editar(Vacuna vacuna)
+        public IActionResult Editar(Examen examen)
         {
 
             if (!ModelState.IsValid)
@@ -98,11 +99,11 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             {
                 var usuarioModificacionId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
-                vacuna.UsuarioModificacionId = Guid.Parse(usuarioModificacionId!);
-                vacuna.FechaModificacion = DateTime.Now;
+                examen.UsuarioModificacionId = Guid.Parse(usuarioModificacionId!);
+                examen.FechaModificacion = DateTime.Now;
 
-                _vacunaServicio.Actualizar(vacuna);
-                TempData["MensajeExito"] = "El vacuna ha sido actualizado exitosamente.";
+                _examenServicio.Actualizar(examen);
+                TempData["MensajeExito"] = "El examen ha sido actualizado exitosamente.";
             }
             catch (Exception ex)
             {
@@ -119,17 +120,16 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         {
             try
             {
-                _vacunaServicio.Eliminar(id);
-                TempData["MensajeExito"] = "El propietario ha sido eliminado exitosamente.";
+                _examenServicio.Eliminar(id);
+                TempData["MensajeExito"] = "El examen ha sido eliminado exitosamente.";
             }
             catch (Exception e)
             {
-                TempData["MensajeError"] = $"Ocurrió un error eliminando la vacuna: {e.Message}";
+                TempData["MensajeError"] = $"Ocurrió un error eliminando el examen: {e.Message}";
             }
 
             return RedirectToAction("Index");
         }
-
 
     }
 }
