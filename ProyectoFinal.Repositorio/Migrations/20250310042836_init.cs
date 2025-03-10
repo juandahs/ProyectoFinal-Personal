@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ProyectoFinal.Repositorio.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -25,22 +25,6 @@ namespace ProyectoFinal.Repositorio.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Rol", x => x.RolId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TipoVacuna",
-                columns: table => new
-                {
-                    TipoVacunaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Descripcion = table.Column<string>(type: "varchar(265)", maxLength: 265, nullable: false),
-                    FechaCreacion = table.Column<DateTime>(type: "datetime", nullable: false),
-                    FechaModificacion = table.Column<DateTime>(type: "datetime", nullable: false),
-                    UsuarioCreacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UsuarioModificacionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TipoVacuna", x => x.TipoVacunaId);
                 });
 
             migrationBuilder.CreateTable(
@@ -393,7 +377,7 @@ namespace ProyectoFinal.Repositorio.Migrations
                     VacunaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PacienteId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UsuarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TipoVacunaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    NombreVacuna = table.Column<string>(type: "varchar(32)", maxLength: 32, nullable: true),
                     Laboratorio = table.Column<string>(type: "varchar(32)", maxLength: 32, nullable: true),
                     Lote = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: true),
                     FechaAplicacion = table.Column<DateTime>(type: "datetime", nullable: false),
@@ -413,12 +397,6 @@ namespace ProyectoFinal.Repositorio.Migrations
                         principalTable: "Pacientes",
                         principalColumn: "PacienteId",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Vacuna_TipoVacuna_TipoVacunaId",
-                        column: x => x.TipoVacunaId,
-                        principalTable: "TipoVacuna",
-                        principalColumn: "TipoVacunaId",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Vacuna_Usuario_UsuarioCreacionId",
                         column: x => x.UsuarioCreacionId,
@@ -701,16 +679,6 @@ namespace ProyectoFinal.Repositorio.Migrations
                 column: "UsuarioModificacionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TipoVacuna_UsuarioCreacionId",
-                table: "TipoVacuna",
-                column: "UsuarioCreacionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TipoVacuna_UsuarioModificacionId",
-                table: "TipoVacuna",
-                column: "UsuarioModificacionId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Usuario_CorreoElectronico",
                 table: "Usuario",
                 column: "CorreoElectronico",
@@ -740,12 +708,6 @@ namespace ProyectoFinal.Repositorio.Migrations
                 name: "IX_Vacuna_PacienteId",
                 table: "Vacuna",
                 column: "PacienteId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Vacuna_TipoVacunaId",
-                table: "Vacuna",
-                column: "TipoVacunaId",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Vacuna_UsuarioCreacionId",
@@ -1170,9 +1132,6 @@ namespace ProyectoFinal.Repositorio.Migrations
 
             migrationBuilder.DropTable(
                 name: "TipoImagenDiagnostica");
-
-            migrationBuilder.DropTable(
-                name: "TipoVacuna");
 
             migrationBuilder.DropTable(
                 name: "Pacientes");

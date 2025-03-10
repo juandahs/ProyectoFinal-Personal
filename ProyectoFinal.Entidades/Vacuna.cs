@@ -5,7 +5,7 @@
         public Guid VacunaId { get; set; }
         public Guid PacienteId { get; set; }
         public Guid UsuarioId { get; set; }
-        public Guid TipoVacunaId { get; set; }
+        public string? NombreVacuna { get; set; }
 
         public string? Laboratorio { get; set; }
         public string? Lote { get; set; }
@@ -23,6 +23,5 @@
         public virtual Usuario? UsuarioModificacion { get; set; }
         public virtual Usuario? Usuario { get; set; }
         public virtual Paciente? Paciente { get; set; }
-        public virtual TipoVacuna? TipoVacuna { get; set; }
     }
 }

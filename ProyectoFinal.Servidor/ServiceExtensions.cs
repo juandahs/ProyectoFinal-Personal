@@ -27,7 +27,6 @@ namespace ProyectoFinal.Servidor
             services.AddScoped<RolServicio>();
             services.AddScoped<TipoExamenServicio>();
             services.AddScoped<ExamenServicio>();
-            services.AddScoped<TipoVacunaServicio>();
             services.AddScoped<VacunaServicio>();
             services.AddScoped<CirugiaServicio>();
             services.AddScoped<TipoCirugiaServicio>();

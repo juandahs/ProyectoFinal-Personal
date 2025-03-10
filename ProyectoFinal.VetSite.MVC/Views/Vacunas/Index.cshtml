@@ -18,12 +18,12 @@
         <thead>
             <tr>
                 <th>Paciente</th>
-                <th>Usuario</th>
-                <th>Tipo Vacuna</th>
+				<!--  <th>Usuario</th>-->
+                <th>Nombre Vacuna</th>
                 <th>Laboratorio</th>
                 <th>Lote</th>
                 <th>FechaAplicacion</th>
-                <th>FehcaProximaAplicacion</th>
+                <th>ProximaAplicacion</th>
                 <th>Observaciones</th>
                 <th class="text-center">Acciones</th>
             </tr>
@@ -40,9 +40,9 @@
                 @foreach (var vacuna in Model)
                 {
                     <tr>
-                        <td>@vacuna.PacienteId</td>
-                        <td>@vacuna.UsuarioId</td>
-                        <td>@vacuna.TipoVacunaId</td>
+                        <td>@vacuna.Paciente.Nombre</td>
+						<!-- <td>@vacuna.UsuarioId</td>-->
+						<td>@vacuna.NombreVacuna</td>
                         <td>@vacuna.Laboratorio</td>
                         <td>@vacuna.Lote</td>
                         <td>@vacuna.FechaAplicacion</td>

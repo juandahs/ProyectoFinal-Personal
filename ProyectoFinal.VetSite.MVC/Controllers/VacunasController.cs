@@ -9,13 +9,11 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
     [Authorize]
     public class VacunasController(
            VacunaServicio vacunaServicio
-         , TipoVacunaServicio tipoVacunaServicio
          , PacienteServicio pacienteServicio
          , UsuarioServicios usuarioServicios) : Controller
     {
         private readonly PacienteServicio _pacienteServicio = pacienteServicio;
         private readonly VacunaServicio _vacunaServicio = vacunaServicio;
-        private readonly TipoVacunaServicio _tipoVacunaServicio = tipoVacunaServicio;
         private readonly UsuarioServicios _usuarioServicios = usuarioServicios;
 
 
@@ -31,7 +29,6 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         public IActionResult Crear()
         {
 
-            ViewData["TipoVacunas"] = _tipoVacunaServicio.ObtenerTodos();
             ViewData["Pacientes"] = _pacienteServicio.ObtenerTodos();
             ViewData["Usuarios"] = _usuarioServicios.ObtenerTodos();
             return View();
@@ -76,7 +73,6 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewData["TipoVacunas"] = _tipoVacunaServicio.ObtenerTodos();
             ViewData["Pacientes"] = _pacienteServicio.ObtenerTodos();
             ViewData["Usuarios"] = _usuarioServicios.ObtenerTodos();
 

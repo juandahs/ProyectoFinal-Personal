@@ -12,8 +12,8 @@ using ProyectoFinal.Repositorio;
 namespace ProyectoFinal.Repositorio.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20250308231246_Init")]
-    partial class Init
+    [Migration("20250310042836_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -750,38 +750,6 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.ToTable("TipoImagenDiagnostica", (string)null);
                 });
 
-            modelBuilder.Entity("ProyectoFinal.Entidades.TipoVacuna", b =>
-                {
-                    b.Property<Guid>("TipoVacunaId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Descripcion")
-                        .IsRequired()
-                        .HasMaxLength(265)
-                        .HasColumnType("varchar");
-
-                    b.Property<DateTime>("FechaCreacion")
-                        .HasColumnType("datetime");
-
-                    b.Property<DateTime>("FechaModificacion")
-                        .HasColumnType("datetime");
-
-                    b.Property<Guid>("UsuarioCreacionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UsuarioModificacionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("TipoVacunaId");
-
-                    b.HasIndex("UsuarioCreacionId");
-
-                    b.HasIndex("UsuarioModificacionId");
-
-                    b.ToTable("TipoVacuna", (string)null);
-                });
-
             modelBuilder.Entity("ProyectoFinal.Entidades.Usuario", b =>
                 {
                     b.Property<Guid>("UsuarioId")
@@ -885,14 +853,15 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .HasMaxLength(64)
                         .HasColumnType("varchar");
 
+                    b.Property<string>("NombreVacuna")
+                        .HasMaxLength(32)
+                        .HasColumnType("varchar");
+
                     b.Property<string>("Observaciones")
                         .HasMaxLength(256)
                         .HasColumnType("varchar");
 
                     b.Property<Guid>("PacienteId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("TipoVacunaId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("UsuarioCreacionId")
@@ -907,9 +876,6 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.HasKey("VacunaId");
 
                     b.HasIndex("PacienteId");
-
-                    b.HasIndex("TipoVacunaId")
-                        .IsUnique();
 
                     b.HasIndex("UsuarioCreacionId");
 
@@ -1372,12 +1338,6 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ProyectoFinal.Entidades.TipoVacuna", "TipoVacuna")
-                        .WithOne("Vacuna")
-                        .HasForeignKey("ProyectoFinal.Entidades.Vacuna", "TipoVacunaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("ProyectoFinal.Entidades.Usuario", "UsuarioCreacion")
                         .WithMany()
                         .HasForeignKey("UsuarioCreacionId")
@@ -1397,8 +1357,6 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .IsRequired();
 
                     b.Navigation("Paciente");
-
-                    b.Navigation("TipoVacuna");
 
                     b.Navigation("Usuario");
 
@@ -1453,12 +1411,6 @@ namespace ProyectoFinal.Repositorio.Migrations
             modelBuilder.Entity("ProyectoFinal.Entidades.TipoImagenDiagnostica", b =>
                 {
                     b.Navigation("ImagenesDiagnosticas");
-                });
-
-            modelBuilder.Entity("ProyectoFinal.Entidades.TipoVacuna", b =>
-                {
-                    b.Navigation("Vacuna")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

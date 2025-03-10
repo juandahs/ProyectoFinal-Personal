@@ -15,7 +15,6 @@ namespace ProyectoFinal.Repositorio
         public DbSet<Propietario> Propietarios { get; set; }
         public DbSet<Paciente> Pacientes { get; set; }
         public DbSet<Desparasitacion> Desparasitaciones { get; set; }        
-        public DbSet<TipoVacuna> TipoVacunas { get; set; }
         public DbSet<TipoCirugia> TipoCirugias { get; set; }
         public DbSet<TipoExamen> TipoExamenes { get; set; }
         public DbSet<Examen> Examenes { get; set; }
@@ -40,7 +39,6 @@ namespace ProyectoFinal.Repositorio
             modelBuilder.Entity<Examen>().ToTable("Examen");
             modelBuilder.Entity<TipoCirugia>().ToTable("TipoCirugia");
             modelBuilder.Entity<TipoExamen>().ToTable("TipoExamen");
-            modelBuilder.Entity<TipoVacuna>().ToTable("TipoVacuna");
             modelBuilder.Entity<Vacuna>().ToTable("Vacuna");
             modelBuilder.Entity<TipoImagenDiagnostica>().ToTable("TipoImagenDiagnostica");
             modelBuilder.Entity<ImagenDiagnostica>().ToTable("ImagenDiagnostica");
@@ -634,22 +632,6 @@ namespace ProyectoFinal.Repositorio
 
             });
             
-            // ******************************************************************
-            // Se define Tabla de TipoVacuna
-            // ******************************************************************
-            modelBuilder.Entity<TipoVacuna>(t =>
-            {
-                t.Property(b => b.TipoVacunaId).HasColumnType("uniqueidentifier").IsRequired();
-                t.Property(b => b.Descripcion).HasColumnType("varchar").HasMaxLength(265).IsRequired();
-                t.Property(b => b.FechaCreacion).HasColumnType("datetime").IsRequired();
-                t.Property(b => b.FechaModificacion).HasColumnType("datetime").IsRequired();
-                t.Property(b => b.UsuarioCreacionId).HasColumnType("uniqueidentifier").IsRequired();
-                t.Property(b => b.UsuarioModificacionId).HasColumnType("uniqueidentifier").IsRequired();
-
-                t.HasIndex(b => b.UsuarioCreacionId);
-                t.HasIndex(b => b.UsuarioModificacionId);
-
-            });
             // *****************************************************************
             // Se define Tabla de Vacuna
             // *****************************************************************
@@ -658,8 +640,8 @@ namespace ProyectoFinal.Repositorio
                 t.Property(b => b.VacunaId).HasColumnType("uniqueidentifier").IsRequired();
                 t.Property(b => b.PacienteId).HasColumnType("uniqueidentifier").IsRequired();
                 t.Property(b => b.UsuarioId).HasColumnType("uniqueidentifier").IsRequired();
-                t.Property(b => b.TipoVacunaId).HasColumnType("uniqueidentifier").IsRequired();
 
+                t.Property(b => b.NombreVacuna).HasColumnType("varchar").HasMaxLength(32);
                 t.Property(b => b.Laboratorio).HasColumnType("varchar").HasMaxLength(32);
                 t.Property(b => b.Lote).HasColumnType("varchar").HasMaxLength(64);
                 t.Property(b => b.FechaAplicacion).HasColumnType("datetime").IsRequired();
@@ -688,11 +670,6 @@ namespace ProyectoFinal.Repositorio
                     .OnDelete(DeleteBehavior.Restrict);
 
 
-                //relacion uno a muchos de TipoVacuna
-                t.HasOne(p => p.TipoVacuna)
-                    .WithOne(p => p.Vacuna)
-                    .HasForeignKey<Vacuna>(p => p.TipoVacunaId)
-                    .IsRequired();
                 //relacion con paciente (un pciente puede tener varias vacuna) de uno a muchos
                 t.HasOne(c => c.Paciente)
                   .WithMany(p => p.Vacunas)
