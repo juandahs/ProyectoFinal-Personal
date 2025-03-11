@@ -21,7 +21,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            ViewBag.Title = "Gestión de Cirugías";
+            ViewBag.Title = "Gestión de cirugías";
             var cirugias = _cirugiaServicio.ObtenerTodos(); 
             return View(cirugias);
         }

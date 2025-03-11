@@ -23,7 +23,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            ViewBag.Title = "Gestion de examenes.";
+            ViewBag.Title = "Gestion de examenes";
             return View(_examenServicio.ObtenerTodos());
         }
 

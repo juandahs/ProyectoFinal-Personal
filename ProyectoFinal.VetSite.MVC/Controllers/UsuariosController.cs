@@ -18,7 +18,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            ViewBag.Title = "Gestion de Usuarios";
+            ViewBag.Title = "Gestion de usuarios";
             var usuarios = _usuarioServicios.ObtenerTodos();
             return View(usuarios);
         }

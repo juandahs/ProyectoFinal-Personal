@@ -20,7 +20,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            ViewBag.Title = "Gestion de TipoExamen";
+            ViewBag.Title = "Gestion de tipos de examenes";
             var tipoExamenes = _tipoExamenServicio.ObtenerTodos().ToList();
             return View(tipoExamenes);
         }

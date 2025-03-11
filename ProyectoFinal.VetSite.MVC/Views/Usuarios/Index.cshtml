@@ -16,6 +16,7 @@
     <table id="usuariosTable" class="table">
         <thead>
             <tr>
+                <th>Identificación</th>
                 <th>Nombre</th>
                 <th>Apellido</th>
                 <th>Teléfono</th>
@@ -36,6 +37,7 @@
                 @foreach (var usuario in Model)
                 {
                     <tr>
+                        <td>@usuario.NumeroIdentificacion</td>
                         <td>@usuario.Nombre</td>
                         <td>@usuario.Apellido</td>
                         <td>@usuario.Telefono</td>
@@ -76,7 +78,12 @@
                     zeroRecords: "No se encontraron registros",
                     info: "Mostrando página _PAGE_ de _PAGES_",
                     infoEmpty: "No hay registros disponibles",
-                    infoFiltered: "(filtrado de _MAX_ registros totales)"
+                    infoFiltered: "(filtrado de _MAX_ registros totales)",
+                    paginate: {
+                        previous: "<",
+                        next: ">"
+                    }
+
                 }
             });
         });

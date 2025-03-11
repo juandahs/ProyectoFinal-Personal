@@ -20,7 +20,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            ViewBag.Title = "Gestion de Vacunas";
+            ViewBag.Title = "Gestion de vacunas";
             var vacunas = _vacunaServicio.ObtenerTodos();
             return View(vacunas);
         }

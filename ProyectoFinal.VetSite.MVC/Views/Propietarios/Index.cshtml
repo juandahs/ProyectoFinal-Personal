@@ -17,6 +17,7 @@
     <table id="propietariosTable" class="table">
         <thead>
             <tr>
+                <th>Identificación</th>
                 <th>Nombre</th>
                 <th>Apellido</th>
                 <th>Teléfono</th>
@@ -36,6 +37,7 @@
                 @foreach (var propietario in Model)
                 {
                     <tr>
+                        <td>@propietario.NumeroIdentificacion</td>
                         <td>@propietario.Nombre</td>
                         <td>@propietario.Apellido</td>
                         <td>@propietario.Telefono</td>
@@ -76,7 +78,7 @@
                     info: "Mostrando página _PAGE_ de _PAGES_",
                     infoEmpty: "No hay registros disponibles",
                     infoFiltered: "(filtrado de _MAX_ registros totales)",
-                      paginate: {
+                    paginate: {
                         previous: "<",
                         next: ">"
                     }

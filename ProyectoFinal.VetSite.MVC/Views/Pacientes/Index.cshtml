@@ -18,6 +18,8 @@
             <tr>
                 <th>Nombre</th>
                 <th>Edad</th>
+                <th>Sexo</th>
+                <th>Especie</th>
                 <th>Propietario</th>
                 <th class="text-center">Acciones</th>
             </tr>
@@ -36,6 +38,8 @@
                     <tr>
                         <td>@paciente.Nombre</td>
                         <td>@paciente.Edad</td>
+                        <td>@(paciente.Sexo == 'M' ? "Macho" : "Hembra" )</td>
+                        <td>@paciente.Especie</td>
                         <td>@paciente.Propietario.Nombre</td>
                         <td class="text-center">
                             <form asp-action="Editar" method="get" class="d-inline">
@@ -72,7 +76,12 @@
                     zeroRecords: "No se encontraron registros",
                     info: "Mostrando página _PAGE_ de _PAGES_",
                     infoEmpty: "No hay registros disponibles",
-                    infoFiltered: "(filtrado de _MAX_ registros totales)"
+                    infoFiltered: "(filtrado de _MAX_ registros totales)",
+                    paginate: {
+                        previous: "<",
+                        next: ">"
+                    }
+
                 }
             });
         });

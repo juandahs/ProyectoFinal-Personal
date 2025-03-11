@@ -14,9 +14,9 @@
     <table id="tipoCirugiasTabla" class="table">
         <thead>
             <tr>
-                <th>Descipcion</th>
+                <th>Descripción</th>
                 <th>Usuario creación</th>
-                <th>Fecha creacion</th>
+                <th>Fecha creación</th>
                 <th>Usuario modificación</th>
                 <th>Fecha modificación</th>                
                 <th class="text-center">Acciones</th>
@@ -75,7 +75,12 @@
                     zeroRecords: "No se encontraron registros",
                     info: "Mostrando página _PAGE_ de _PAGES_",
                     infoEmpty: "No hay registros disponibles",
-                    infoFiltered: "(filtrado de _MAX_ registros totales)"
+                    infoFiltered: "(filtrado de _MAX_ registros totales)",
+                    paginate: {
+                        previous: "<",
+                        next: ">"
+                    }
+
                 }
             });
         });

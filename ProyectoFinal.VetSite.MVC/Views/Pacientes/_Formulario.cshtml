@@ -2,25 +2,41 @@
 @model ProyectoFinal.Entidades.Paciente
 
 <div class="row">
-    
+
     @if (Model != null)
     {
         <input type="hidden" asp-for="PacienteId" />
         <input type="hidden" asp-for="UsuarioCreacionId" />
         <input type="hidden" asp-for="FechaCreacion" />
 
+        <select asp-for="PropietarioId" class="form-select select2" required>
+            <option value="" disabled>Seleccione un propietario</option>
+            @foreach (var propietario in (ViewData["Propietarios"] as IEnumerable<Propietario>)!)
+            {
+                <option value="@Model.PropietarioId" selected="@(Model != null && Model.PropietarioId == propietario.PropietarioId ? "selected" : null)">
+                    @($"{propietario.Nombre} {propietario.Apellido} - {propietario.NumeroIdentificacion}")
+                </option>
+            }
+        </select>
+
+    }
+    else
+    {
+        
+            <label asp-for="PropietarioId" class="form-label">Propietario*</label>
+            <select asp-for="PropietarioId" class="form-select select2" required>
+                <option value="" disabled selected>Seleccione un propietario</option>
+                @foreach (var propietario in ViewData["Propietarios"] as IEnumerable<Propietario>)
+                {
+                    <option value="@propietario.PropietarioId">@($"{propietario.Nombre} {propietario.Apellido} - {propietario.NumeroIdentificacion}")</option>
+                }
+            </select>
+            <span asp-validation-for="PropietarioId" class="text-danger"></span>
+        
+
     }
 
-    <select asp-for="PropietarioId" class="form-select select2" required>
-        <option value="" disabled>Seleccione un propietario</option>
-        @foreach (var propietario in (ViewData["Propietarios"] as IEnumerable<Propietario>)!)
-        {
-            <option value="@propietario.PropietarioId" selected="@(Model != null && Model.PropietarioId == propietario.PropietarioId ? "selected" : null)">
-                @($"{propietario.Nombre} {propietario.Apellido} - {propietario.NumeroIdentificacion}")
-            </option>
-        }
-    </select>
-
+    
 
     <!-- Nombre -->
     <div class="col-md-6 mb-3">
