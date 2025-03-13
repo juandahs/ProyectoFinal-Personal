@@ -91,8 +91,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             }
         }
 
-        [HttpPost]
-        
+        [HttpPost]        
         public IActionResult Editar(Usuario usuario)
         {
             if (usuario == null)
@@ -122,8 +121,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
-        
+        [HttpPost]        
         public IActionResult Eliminar(Guid id)
         {
             if (_usuarioServicios.TotalUsuarios() == 1)
@@ -145,5 +143,39 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        public IActionResult CambiarClave(Guid usuarioId, string claveActual, string nuevaClave, string nuevaClaveConfirmar)
+        {
+            if (Guid.Empty == usuarioId || string.IsNullOrWhiteSpace(claveActual) ||
+                string.IsNullOrWhiteSpace(nuevaClave) || string.IsNullOrWhiteSpace(nuevaClaveConfirmar))
+            {
+                TempData["MensajeError"] = "Todos los campos son obligatorios.";
+                return RedirectToAction("Editar", new { id = usuarioId });
+            }
+
+            if (nuevaClave != nuevaClaveConfirmar)
+            {
+                TempData["MensajeError"] = "Las contraseñas no coinciden.";
+                return RedirectToAction("Editar", new { id = usuarioId });
+            }
+
+            var usuario = _usuarioServicios.ObtenerPorId(usuarioId);
+            if (usuario == null)
+            {
+                TempData["MensajeError"] = "Usuario no encontrado.";
+                return RedirectToAction("Editar", new { id = usuarioId });
+            }
+            
+            if (_usuarioServicios.EsValido(usuarioId, claveActual)) 
+            {
+                TempData["MensajeError"] = "La contraseña actual es incorrecta.";
+                return RedirectToAction("Editar", new { id = usuarioId });
+            }
+
+            _usuarioServicios.ActualizarClave(usuarioId, nuevaClave);          
+
+            TempData["MensajeExito"] = "Contraseña cambiada correctamente.";
+            return RedirectToAction("Editar", new { id = usuarioId });
+        }
     }
 }

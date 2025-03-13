@@ -4,7 +4,6 @@
     ViewBag.Title = "Editar un usuario";
 }
 
-
 <h1>@ViewBag.Title</h1>
 
 <form asp-action="Editar" method="post">
@@ -14,3 +13,6 @@
         </div>
     </div>
 </form>
+
+
+<partial name="_CambiarClave" model="Model" />

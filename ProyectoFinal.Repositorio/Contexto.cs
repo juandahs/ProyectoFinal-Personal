@@ -1102,5 +1102,17 @@ namespace ProyectoFinal.Repositorio
              );
         }
 
+
+        public async Task UsuarioActualizarClave(Guid usuarioId, string claveNueva)
+        {
+            var usuarioIdParameter = new SqlParameter("@usuarioId", usuarioId);
+            var claveNuevaParameter = new SqlParameter("@claveNueva", claveNueva);
+
+            await Database.ExecuteSqlRawAsync(
+              "EXEC uspUsuarioClaveActualizar @usuarioId, @claveNueva",
+              usuarioIdParameter,claveNuevaParameter
+           );
+        }
+
     }
 }

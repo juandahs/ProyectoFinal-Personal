@@ -34,10 +34,11 @@ namespace ProyectoFinal.Servidor
             _contexto.SaveChanges();
         }
 
-
         public bool Existe(string correoElectronico)  => _contexto.Usuarios.AsNoTracking().Any(x => x.CorreoElectronico == correoElectronico);
 
         public int TotalUsuarios() => _contexto.Usuarios.Count();
+
+        public void ActualizarClave(Guid usuarioId, string nuevaClave) => _contexto.UsuarioActualizarClave(usuarioId, nuevaClave).GetAwaiter().GetResult();
        
     }
 }
