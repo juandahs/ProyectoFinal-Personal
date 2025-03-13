@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using ProyectoFinal.Entidades;
 using ProyectoFinal.Repositorio;
 
@@ -39,6 +40,22 @@ namespace ProyectoFinal.Servidor
         public int TotalUsuarios() => _contexto.Usuarios.Count();
 
         public void ActualizarClave(Guid usuarioId, string nuevaClave) => _contexto.UsuarioActualizarClave(usuarioId, nuevaClave).GetAwaiter().GetResult();
-       
+
+        public void EnvioCorreo()
+        {
+            // esto es pata cargar la configuración desde appsettings
+            var configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            EnvioCorreoServicio servicioCorreo = new EnvioCorreoServicio(configuration);
+
+            string EmailDestino = "friyitas@gmail.com";
+            string Asunto = "Buenos días";
+            string Mensaje = "<b>Holi holi</b>";
+
+            servicioCorreo.EnviarCorreo(EmailDestino, Asunto, Mensaje);
+        }
+
     }
 }
