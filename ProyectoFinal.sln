@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProyectoFinal.Servidor", "P
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProyectoFinal.VetSite.MVC", "ProyectoFinal.VetSite.MVC\ProyectoFinal.VetSite.MVC.csproj", "{12EF77EC-2D51-481B-A7EF-5BCADFD95D8A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CorreoElectronico", "CorreoElectronico\CorreoElectronico.csproj", "{8AFCD03B-F99D-41C8-AE79-D1F76118820D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{12EF77EC-2D51-481B-A7EF-5BCADFD95D8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12EF77EC-2D51-481B-A7EF-5BCADFD95D8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12EF77EC-2D51-481B-A7EF-5BCADFD95D8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AFCD03B-F99D-41C8-AE79-D1F76118820D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AFCD03B-F99D-41C8-AE79-D1F76118820D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AFCD03B-F99D-41C8-AE79-D1F76118820D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AFCD03B-F99D-41C8-AE79-D1F76118820D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,6 +54,7 @@ Global
 		{3E4B8798-51CB-4AA0-B808-42D9EF9CE5B7} = {E1BD3C1B-D7F0-4BE5-BBCC-43C722C85EA5}
 		{9243BF4D-9642-414E-B3B4-010B4D555FCA} = {E1BD3C1B-D7F0-4BE5-BBCC-43C722C85EA5}
 		{12EF77EC-2D51-481B-A7EF-5BCADFD95D8A} = {893F8D01-86B6-4B3E-8F97-7334FEB0091E}
+		{8AFCD03B-F99D-41C8-AE79-D1F76118820D} = {125F78C0-A117-4E43-8BCE-41A34759B691}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8EE7F128-A1BF-4183-BC54-F9717F9947D9}
