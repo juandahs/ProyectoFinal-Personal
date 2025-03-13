@@ -55,14 +55,15 @@
             <input asp-for="Clave" class="form-control" type="password" required />
             <span asp-validation-for="Clave" class="text-danger"></span>
         </div>
-    } 
+    }
 
     <!-- Teléfono -->
-    <div class="mb-3">
-        <label for="telefonoInput" class="form-label">Teléfono</label>
-        <input type="text" id="telefonoInput" name="Telefono" class="form-control" required
-               pattern="\d*" inputmode="numeric" maxlength="15" />
+    <div class="col-md-6 mb-3">
+        <label asp-for="Telefono" class="form-label">Teléfono</label>
+        <input asp-for="Telefono" id="telefonoInput" class="form-control" />
+        <span asp-validation-for="Telefono" class="text-danger"></span>
     </div>
+
 
     <!-- Tarjeta Profesional-->
     <div class="col-md-6 mb-3">
@@ -88,5 +89,8 @@
     <a href="@Url.Action("Index", "Usuarios")" class="btn btn-secondary">Cancelar</a>
 </div>
 
-<!-- Fondo oscuro para opacar -->
-<div id="modalOverlay" class="modal-overlay"></div>
+<script>
+    document.getElementById("telefonoInput").addEventListener("input", function () {
+        this.value = this.value.replace(/\D/g, "");
+    });
+</script>
