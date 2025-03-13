@@ -58,10 +58,10 @@
     } 
 
     <!-- Teléfono -->
-    <div class="col-md-6 mb-3">
-        <label asp-for="Telefono" class="form-label">Teléfono</label>
-        <input asp-for="Telefono" class="form-control" />
-        <span asp-validation-for="Telefono" class="text-danger"></span>
+    <div class="mb-3">
+        <label for="telefonoInput" class="form-label">Teléfono</label>
+        <input type="text" id="telefonoInput" name="Telefono" class="form-control" required
+               pattern="\d*" inputmode="numeric" maxlength="15" />
     </div>
 
     <!-- Tarjeta Profesional-->

@@ -49,6 +49,11 @@
                                         <i class="fas fa-edit"></i>
                                     </button>
                                 </form>
+
+                                <button type="button" class="btn btn-warning cambiar-clave-btn"
+                                        data-usuario-id="@usuario.UsuarioId">
+                                    <i class="fas fa-key"></i>
+                                </button>
                                 <form asp-action="Eliminar" method="post">
                                     <input type="hidden" name="id" value="@usuario.UsuarioId" />
                                     <button type="submit" class="btn btn-danger"
@@ -56,10 +61,6 @@
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </form>
-                                <button type="button" class="btn btn-warning cambiar-clave-btn"
-                                        data-usuario-id="@usuario.UsuarioId">
-                                    <i class="fas fa-key"></i>
-                                </button>
                             </div>
                         </td>
                     </tr>
@@ -77,10 +78,45 @@
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
     <script>
-
         document.addEventListener("DOMContentLoaded", function () {
+            // Agregar evento a todos los botones de "Cambiar Contraseña"
             document.querySelectorAll(".cambiar-clave-btn").forEach(button => {
                 button.addEventListener("click", function () {
                     let usuarioId = this.getAttribute("data-usuario-id");
                     document.getElementById('usuarioIdModal').value = usuarioId;
+
+                    // Mostrar el modal
                     const modal = new bootstrap.Modal(document.getElementById('cambiarClaveModal'));
+                    modal.show();
+                });
+            });
+
+
+            document.getElementById("cerrarModalBtn").addEventListener("click", function () {
+                const modal = bootstrap.Modal.getInstance(document.getElementById('cambiarClaveModal'));
+                modal.hide();
+            });
+
+
+            $(document).ready(function () {
+                $('#usuariosTable').DataTable({
+                    language: {
+                        search: "Buscar:",
+                        lengthMenu: "Mostrar _MENU_ registros por página",
+                        zeroRecords: "No se encontraron registros",
+                        info: "Mostrando página _PAGE_ de _PAGES_",
+                        infoEmpty: "No hay registros disponibles",
+                        infoFiltered: "(filtrado de _MAX_ registros totales)",
+                        paginate: {
+                            previous: "<",
+                            next: ">"
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+}
+
+

@@ -1,13 +1,12 @@
 ﻿<!-- Fondo oscuro para opacar -->
 <div id="modalOverlay" class="modal-overlay"></div>
 
-
 <div class="modal fade" id="cambiarClaveModal" tabindex="-1" aria-labelledby="cambiarClaveModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="cambiarClaveModalLabel">Cambiar clave</h5>
-                <button type="button" class="btn-close" onclick="cerrarModalCambiarClave()" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form id="cambiarClaveForm" asp-action="CambiarClave" method="post">
@@ -26,7 +25,7 @@
                         <input type="password" name="nuevaClaveConfirmar" class="form-control" required />
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" onclick="cerrarModalCambiarClave()">Cerrar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                         <button type="submit" class="btn btn-primary">Guardar</button>
                     </div>
                 </form>
