@@ -8,5 +8,10 @@ Encuesta proyecto de investigación => https://docs.google.com/forms/d/1JfxX-jQG
 
 Planear de tareas => https://vetsite.atlassian.net/jira/core/projects/VET/list
 
-Correo ProtonMail Usuario: SoporteVetsite@proton.me Contrasena: SoporteVetSite2025
+Correo Gmail Usuario: notificacionesvetsite@gmail.com Contrasena: Notificaciones.VetSite2025
+Contraseña para usar en el proyecto: rsym dlmk fafz gthz
+
+Para cambiar la contraseña, iniciamos sesión en Gmail, le damos click en administrar tuc uenta de google,
+luego en Seguridad y Buscamos Contraseñas de aplicacion y le damos un nombre a nuestra contraseña.
+https://youtu.be/TvOfrZnaunQ?si=1k50qUvxdgfK5sZI
 
