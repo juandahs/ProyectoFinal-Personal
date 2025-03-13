@@ -21,13 +21,13 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
 
             if (usuario == null)
             {
-                ModelState.AddModelError(string.Empty, "LoginResource.ErrorUsuarioClave");
+                ModelState.AddModelError(string.Empty, "usuario no encontrado");
                 return View("Index");
             }
 
             if (!_usuarioServicios.EsValido(usuario.UsuarioId, clave))
             {
-                ModelState.AddModelError(string.Empty, "Usuario no encontrado");
+                ModelState.AddModelError(string.Empty, "La información del usuario no es valida.");
                 return View("Index");
             }
 

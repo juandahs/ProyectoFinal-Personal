@@ -753,10 +753,6 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Apellido")
-                        .HasMaxLength(128)
-                        .HasColumnType("varchar");
-
                     b.Property<string>("Clave")
                         .IsRequired()
                         .HasMaxLength(32)

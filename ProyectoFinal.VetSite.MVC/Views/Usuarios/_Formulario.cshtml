@@ -7,7 +7,6 @@
 
 <div class="row">
 
-    <!-- Campo oculto para el UsuarioId -->
     @if (Model != null)
     {
         <input type="hidden" asp-for="UsuarioId" />
@@ -15,7 +14,7 @@
 
     <!-- Tipo de Identificación -->
     <div class="col-md-6 mb-3">
-        <label asp-for="TipoIdentificacionId" class="form-label">Tipo de Identificación</label>
+        <label asp-for="TipoIdentificacionId" class="form-label">Tipo de identificación</label>
         <select asp-for="TipoIdentificacionId" class="form-select" required>
             <option value="" disabled selected>Seleccione un tipo</option>
             @foreach (var tipo in (ViewData["TiposIdentificacion"] as IEnumerable<TipoIdentificacion>)!)
@@ -28,24 +27,35 @@
 
     <!-- Número de Identificación -->
     <div class="col-md-6 mb-3">
-        <label asp-for="NumeroIdentificacion" class="form-label">Número de Identificación *</label>
+        <label asp-for="NumeroIdentificacion" class="form-label">Número de identificación *</label>
         <input asp-for="NumeroIdentificacion" class="form-control" required />
         <span asp-validation-for="NumeroIdentificacion" class="text-danger"></span>
     </div>
 
     <!-- Nombre -->
     <div class="col-md-6 mb-3">
-        <label asp-for="Nombre" class="form-label">Nombre*</label>
+        <label asp-for="Nombre" class="form-label">Nombre *</label>
         <input asp-for="Nombre" class="form-control" required />
         <span asp-validation-for="Nombre" class="text-danger"></span>
     </div>
 
-    <!-- Apellido -->
+
+    <!-- Correo Electrónico -->
     <div class="col-md-6 mb-3">
-        <label asp-for="Apellido" class="form-label">Apellido</label>
-        <input asp-for="Apellido" class="form-control" />
-        <span asp-validation-for="Apellido" class="text-danger"></span>
+        <label asp-for="CorreoElectronico" class="form-label">Correo Electrónico *</label>
+        <input asp-for="CorreoElectronico" class="form-control" type="email" required />
+        <span asp-validation-for="CorreoElectronico" class="text-danger"></span>
     </div>
+
+    @if (Model == null)
+    {
+        <!-- Clave -->
+        <div class="col-md-6 mb-3">
+            <label asp-for="Clave" class="form-label">Clave *</label>
+            <input asp-for="Clave" class="form-control" type="password" required />
+            <span asp-validation-for="Clave" class="text-danger"></span>
+        </div>
+    } 
 
     <!-- Teléfono -->
     <div class="col-md-6 mb-3">
@@ -54,50 +64,22 @@
         <span asp-validation-for="Telefono" class="text-danger"></span>
     </div>
 
-    <!-- Correo Electrónico -->
+    <!-- Tarjeta Profesional-->
     <div class="col-md-6 mb-3">
-        <label asp-for="CorreoElectronico" class="form-label">Correo Electrónico*</label>
-        <input asp-for="CorreoElectronico" class="form-control" type="email" required />
-        <span asp-validation-for="CorreoElectronico" class="text-danger"></span>
-    </div>
-
-    <!-- Tarjeta Profesional (Opcional) -->
-    <div class="col-md-6 mb-3">
-        <label asp-for="TarjetaProfesional" class="form-label">Tarjeta Profesional</label>
+        <label asp-for="TarjetaProfesional" class="form-label">Tarjeta profesional</label>
         <input asp-for="TarjetaProfesional" class="form-control" />
         <span asp-validation-for="TarjetaProfesional" class="text-danger"></span>
     </div>
 
-    <!-- Rol -->
-    <div class="col-md-6 mb-3">
-        <label asp-for="RolId" class="form-label">Rol*</label>
-        <select asp-for="RolId" class="form-select" required>
-            <option value="" disabled selected>Seleccione un rol</option>
-            @foreach (var rol in ViewData["Roles"] as IEnumerable<Rol>)
-            {
-                <option value="@rol.RolId">@rol.Descripcion</option>
-            }
-        </select>
-        <span asp-validation-for="RolId" class="text-danger"></span>
-    </div>
-
-    @if (Model == null)
-    {
-        <!-- Clave -->
-        <div class="col-md-6 mb-3">
-            <label asp-for="Clave" class="form-label">Clave</label>
-            <input asp-for="Clave" class="form-control" type="password" required />
-            <span asp-validation-for="Clave" class="text-danger"></span>
-        </div>
-    }else{
-
-        <!-- Botón para abrir el modal de Cambiar Contraseña -->
-        <div class="col-12 mb-3">
-            <button type="button" class="btn btn-warning" onclick="abrirModalCambiarClave()">
-                Cambiar Contraseña
-            </button>
-        </div>
+    <!-- Asignación automática del primer rol -->
+    @{
+        var roles = ViewData["Roles"] as IEnumerable<Rol>;
+        if (roles != null && roles.Any())
+        {
+            <input type="hidden" asp-for="RolId" value="@roles.First().RolId" />
+        }
     }
+
 </div>
 
 <!-- Botón de Guardar -->
@@ -108,27 +90,3 @@
 
 <!-- Fondo oscuro para opacar -->
 <div id="modalOverlay" class="modal-overlay"></div>
-
-
-@if(Model != null)
-{
-    <script>
-        function abrirModalCambiarClave() {
-            const modal = document.getElementById('cambiarClaveModal');
-            const overlay = document.getElementById('modalOverlay');
-            modal.style.display = 'block';
-            modal.classList.add('show');
-            overlay.style.display = 'block'; // Mostrar fondo oscuro
-        }
-
-        function cerrarModalCambiarClave() {
-            const modal = document.getElementById('cambiarClaveModal');
-            const overlay = document.getElementById('modalOverlay');
-            modal.style.display = 'none';
-            modal.classList.remove('show');
-            overlay.style.display = 'none'; // Ocultar fondo oscuro
-        }
-    </script>
-
-
-}

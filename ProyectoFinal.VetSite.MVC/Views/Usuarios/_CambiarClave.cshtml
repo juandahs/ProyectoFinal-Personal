@@ -1,54 +1,36 @@
 ﻿<!-- Fondo oscuro para opacar -->
 <div id="modalOverlay" class="modal-overlay"></div>
 
-@model ProyectoFinal.Entidades.Usuario
 
-<form asp-action="CambiarClave" method="post">
-    <input type="hidden" name="usuarioId" value="@Model.UsuarioId" />
+<div class="modal fade" id="cambiarClaveModal" tabindex="-1" aria-labelledby="cambiarClaveModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cambiarClaveModalLabel">Cambiar clave</h5>
+                <button type="button" class="btn-close" onclick="cerrarModalCambiarClave()" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="cambiarClaveForm" asp-action="CambiarClave" method="post">
+                    <input type="hidden" id="usuarioIdModal" name="usuarioId" />
 
-    <div class="modal" id="cambiarClaveModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Cambiar Contraseña</h5>
-                    <button type="button" class="btn-close" onclick="cerrarModalCambiarClave()" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
                     <div class="mb-3">
-                        <label for="claveActual" class="form-label">Contraseña Actual</label>
+                        <label for="claveActual" class="form-label">Clave actual</label>
                         <input type="password" name="claveActual" class="form-control" required />
                     </div>
                     <div class="mb-3">
-                        <label for="nuevaClave" class="form-label">Nueva Contraseña</label>
+                        <label for="nuevaClave" class="form-label">Nueva clave</label>
                         <input type="password" name="nuevaClave" class="form-control" required />
                     </div>
                     <div class="mb-3">
-                        <label for="nuevaClaveConfirmar" class="form-label">Repetir Nueva Contraseña</label>
+                        <label for="nuevaClaveConfirmar" class="form-label">Confirma la nueva clave</label>
                         <input type="password" name="nuevaClaveConfirmar" class="form-control" required />
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="cerrarModalCambiarClave()">Cerrar</button>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="cerrarModalCambiarClave()">Cerrar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-</form>
-
-
-<script>
-    function abrirModalCambiarClave() {
-        document.getElementById('cambiarClaveModal').style.display = 'block';
-        document.getElementById('cambiarClaveModal').classList.add('show');
-        document.getElementById('modalOverlay').style.display = 'block';
-    }
-
-    function cerrarModalCambiarClave() {
-        document.getElementById('cambiarClaveModal').style.display = 'none';
-        document.getElementById('cambiarClaveModal').classList.remove('show');
-        document.getElementById('modalOverlay').style.display = 'none'; 
-    }
-
-
-</script>
+</div>

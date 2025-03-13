@@ -12,8 +12,8 @@ using ProyectoFinal.Repositorio;
 namespace ProyectoFinal.Repositorio.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20250310042836_init")]
-    partial class init
+    [Migration("20250313195026_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -755,10 +755,6 @@ namespace ProyectoFinal.Repositorio.Migrations
                     b.Property<Guid>("UsuarioId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Apellido")
-                        .HasMaxLength(128)
-                        .HasColumnType("varchar");
 
                     b.Property<string>("Clave")
                         .IsRequired()

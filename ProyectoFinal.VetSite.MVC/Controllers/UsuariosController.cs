@@ -43,9 +43,9 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
 
             try
             {
-                if (_usuarioServicios.Existe(usuario.CorreoElectronico))
+                if (_usuarioServicios.Existe(usuario.CorreoElectronico, usuario.NumeroIdentificacion))
                 {
-                    TempData["MensajeError"] = "Ya existe un usuario con el correo electrónico indicado.";
+                    TempData["MensajeError"] = "Ya existe un usuario con el correo electrónico o el número de identificación indicado.";
                     return RedirectToAction("Index");
                 }
 
@@ -150,32 +150,32 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
                 string.IsNullOrWhiteSpace(nuevaClave) || string.IsNullOrWhiteSpace(nuevaClaveConfirmar))
             {
                 TempData["MensajeError"] = "Todos los campos son obligatorios.";
-                return RedirectToAction("Editar", new { id = usuarioId });
+                return RedirectToAction("Index");
             }
 
             if (nuevaClave != nuevaClaveConfirmar)
             {
                 TempData["MensajeError"] = "Las contraseñas no coinciden.";
-                return RedirectToAction("Editar", new { id = usuarioId });
+                return RedirectToAction("Index");
             }
 
             var usuario = _usuarioServicios.ObtenerPorId(usuarioId);
             if (usuario == null)
             {
                 TempData["MensajeError"] = "Usuario no encontrado.";
-                return RedirectToAction("Editar", new { id = usuarioId });
+                return RedirectToAction("Index");
             }
             
             if (_usuarioServicios.EsValido(usuarioId, claveActual)) 
             {
                 TempData["MensajeError"] = "La contraseña actual es incorrecta.";
-                return RedirectToAction("Editar", new { id = usuarioId });
+                return RedirectToAction("Index");
             }
 
             _usuarioServicios.ActualizarClave(usuarioId, nuevaClave);          
 
             TempData["MensajeExito"] = "Contraseña cambiada correctamente.";
-            return RedirectToAction("Editar", new { id = usuarioId });
+            return RedirectToAction("Index");
         }
     }
 }

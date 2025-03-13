@@ -7,9 +7,8 @@
         public Guid RolId { get; set; }
         public string NumeroIdentificacion { get; set; } = string.Empty;
         public string Nombre { get; set;} = string.Empty;
-        public string? Apellido { get; set;}
-        public string? Telefono { get; set; } = string.Empty;
         public string CorreoElectronico { get; set; } = string.Empty;
+        public string? Telefono { get; set; } = string.Empty;
         public string? TarjetaProfesional { get; set; }
         public string Clave { get; set;} = string.Empty;
         public string Salt{ get; set; } = string.Empty;

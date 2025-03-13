@@ -35,7 +35,7 @@ namespace ProyectoFinal.Servidor
             _contexto.SaveChanges();
         }
 
-        public bool Existe(string correoElectronico)  => _contexto.Usuarios.AsNoTracking().Any(x => x.CorreoElectronico == correoElectronico);
+        public bool Existe(string correoElectronico, string numeroIdentificacion)  => _contexto.Usuarios.AsNoTracking().Any(x => x.CorreoElectronico == correoElectronico || x.NumeroIdentificacion == numeroIdentificacion);
 
         public int TotalUsuarios() => _contexto.Usuarios.Count();
 

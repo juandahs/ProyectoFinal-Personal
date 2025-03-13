@@ -6,7 +6,6 @@ namespace ProyectoFinal.Repositorio
 {
     public class Contexto(DbContextOptions<Contexto> options) : DbContext(options)
     {
-        public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Rol> Roles { get; set; }
         public DbSet<Cita> Citas { get; set; }
        
@@ -26,6 +25,8 @@ namespace ProyectoFinal.Repositorio
         public DbSet<FormulaMedicaMedicamento> FormulaMedicaMedicamentos { get; set; }
         public DbSet<TipoImagenDiagnostica> TipoImagenesDiagnosticas { get; set; }
         public DbSet<ImagenDiagnostica> ImagenesDiagnosticas { get; set; }
+
+        public DbSet<Usuario> Usuarios { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -69,7 +70,6 @@ namespace ProyectoFinal.Repositorio
                     .IsRequired();
 
                 t.Property(b => b.CorreoElectronico).HasColumnType("varchar").HasMaxLength(128).IsRequired();
-                t.Property(b => b.Apellido).HasColumnType("varchar").HasMaxLength(128);
                 t.Property(b => b.Telefono).HasColumnType("varchar").HasMaxLength(16);
                 t.Property(b => b.TarjetaProfesional).HasColumnType("varchar").HasMaxLength(64);
                 t.Property(b => b.Clave).HasColumnType("varchar").HasMaxLength(32).IsRequired();
@@ -1050,20 +1050,18 @@ namespace ProyectoFinal.Repositorio
             var rolIdParameter = new SqlParameter("@rolID", usuario.RolId);
             var numeroIdentificacionParameter = new SqlParameter("@numeroIdentificacion", usuario.NumeroIdentificacion);
             var nombreParameter = new SqlParameter("@nombre", usuario.Nombre);
-            var apellidoParameter = new SqlParameter("@apellido", usuario.Apellido);
             var telefonoParameter = new SqlParameter("@telefono", usuario.Telefono);
             var correoElectronicoParameter = new SqlParameter("@correoElectronico", usuario.CorreoElectronico);
             var tarjetaProfesionalParameter = new SqlParameter("@tarjetaProfesional", usuario.TarjetaProfesional ?? (object)DBNull.Value);
             var fechaModificacionParameter = new SqlParameter("@fechaModificacion", DateTime.Now);
             var usuarioModificacionIdParameter = new SqlParameter("@usuarioModificacionId", usuarioActualizacionId);
 
-            await Database.ExecuteSqlRawAsync("EXEC uspUsuarioActualizar @usuarioId, @tipoIdentificacionId, @rolId, @numeroIdentificacion, @nombre, @apellido, @telefono, @correoElectronico, @tarjetaProfesional, @fechaModificacion, @usuarioModificacionId"
+            await Database.ExecuteSqlRawAsync("EXEC uspUsuarioActualizar @usuarioId, @tipoIdentificacionId, @rolId, @numeroIdentificacion, @nombre, @telefono, @correoElectronico, @tarjetaProfesional, @fechaModificacion, @usuarioModificacionId"
                 , usuarioIdParameter
                 , tipoIdentificacionIdParameter
                 , rolIdParameter
                 , numeroIdentificacionParameter
                 , nombreParameter
-                , apellidoParameter
                 , telefonoParameter
                 , correoElectronicoParameter
                 , tarjetaProfesionalParameter
@@ -1077,7 +1075,6 @@ namespace ProyectoFinal.Repositorio
             var rolIdParameter = new SqlParameter("@rolID", usuario.RolId);
             var numeroIdentificacionParameter = new SqlParameter("@numeroIdentificacion", usuario.NumeroIdentificacion);
             var nombreParameter = new SqlParameter("@nombre", usuario.Nombre );
-            var apellidoParameter = new SqlParameter("@apellido", usuario.Apellido ?? (object)DBNull.Value);
             var telefonoParameter = new SqlParameter("@telefono", usuario.Telefono ?? (object)DBNull.Value);
             var correoElectronicoParameter = new SqlParameter("@correoElectronico", usuario.CorreoElectronico);
             var tarjetaProfesionalParameter = new SqlParameter("@tarjetaProfesional", usuario.TarjetaProfesional ?? (object)DBNull.Value);
@@ -1086,12 +1083,11 @@ namespace ProyectoFinal.Repositorio
             var usuarioCreacionIdParameter = new SqlParameter("@usuarioCreacionID", usuarioCreacionId);
 
             await Database.ExecuteSqlRawAsync(
-                "EXEC uspUsuarioInsertar @tipoIdentificacionId, @RolID, @NumeroIdentificacion, @Nombre, @Apellido, @Telefono, @CorreoElectronico, @TarjetaProfesional, @Clave, @FechaCreacion, @UsuarioCreacionID",
+                "EXEC uspUsuarioInsertar @tipoIdentificacionId, @RolID, @NumeroIdentificacion, @Nombre, @Telefono, @CorreoElectronico, @TarjetaProfesional, @Clave, @FechaCreacion, @UsuarioCreacionID",
                 tipoIdentificacionIdParameter,
                 rolIdParameter,
                 numeroIdentificacionParameter,
                 nombreParameter,
-                apellidoParameter,
                 telefonoParameter,
                 correoElectronicoParameter,
                 tarjetaProfesionalParameter,
