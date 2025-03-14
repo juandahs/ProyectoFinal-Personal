@@ -44,13 +44,6 @@
         <span asp-validation-for="Apellido" class="text-danger"></span>
     </div>
 
-    <!-- Teléfono -->
-    <div class="col-md-6 mb-3">
-        <label asp-for="Telefono" class="form-label">Teléfono</label>
-        <input asp-for="Telefono" class="form-control" />
-        <span asp-validation-for="Telefono" class="text-danger"></span>
-    </div>
-
     <!-- Correo Electrónico -->
     <div class="col-md-6 mb-3">
         <label asp-for="CorreoElectronico" class="form-label">Correo Electrónico</label>
@@ -58,6 +51,15 @@
         <span asp-validation-for="CorreoElectronico" class="text-danger"></span>
     </div>
 
+
+    <!-- Teléfono -->
+    <div class="col-md-6 mb-3">
+        <label asp-for="Telefono" class="form-label">Teléfono</label>
+        <input asp-for="Telefono" id="telefonoInput"  class="form-control" />
+        <span asp-validation-for="Telefono" class="text-danger"></span>
+    </div>
+
+  
     <!-- Dirección -->
     <div class="col-md-12 mb-3">
         <label asp-for="Direccion" class="form-label">Dirección</label>
@@ -71,3 +73,10 @@
     <button type="submit" class="btn btn-success">Guardar</button>
     <a href="@Url.Action("Index", "Propietarios")" class="btn btn-secondary">Cancelar</a>
 </div>
+
+
+<script>
+    document.getElementById("telefonoInput").addEventListener("input", function () {
+        this.value = this.value.replace(/\D/g, "");
+    });
+</script>

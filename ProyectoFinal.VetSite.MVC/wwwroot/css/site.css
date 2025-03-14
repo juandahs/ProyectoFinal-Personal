@@ -1,35 +1,35 @@
-/* ----- Reset básico ----- */
+/* Asegura que el contenido se expanda */
 html, body {
+    height: 100%;
     margin: 0;
     padding: 0;
-    height: 100%; /* Necesario para Flexbox en body */
-}
-
-/* 
-   Convertimos body en un contenedor flex con orientación en columna.
-   Esto nos permite el “sticky footer” sin position:fixed.
-*/
-body {
     display: flex;
     flex-direction: column;
 }
 
-/* 
-   El contenedor principal crecerá para ocupar el espacio disponible,
-   empujando el footer hacia abajo si el contenido es grande.
-*/
-.container {
-    flex: 1 0 auto; /* Crece y se ajusta según el contenido */
-    padding-top: 1rem; /* Ajusta si deseas espacio superior */
+/* Contenedor principal que abarca todo el espacio disponible */
+.page-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-left: 250px; /* <-- Ajustamos el espacio para que no se monte encima */
+    transition: margin-left 0.3s ease-in-out;
 }
 
+/* El contenido debe crecer y empujar el footer hacia abajo */
+.main-content {
+    flex: 1;
+}
+
+
 /* ----- Sidebar fijo a la izquierda ----- */
+/* Sidebar oculto por defecto */
 .sidebar {
     height: 100%;
     width: 250px;
     position: fixed;
     top: 0;
-    left: -250px;
+    left: -250px; /* oculto */
     background-color: #333;
     color: white;
     overflow-x: hidden;
@@ -37,28 +37,51 @@ body {
     padding-top: 60px;
 }
 
-/* Links dentro del sidebar */
-.sidebar a {
-    padding: 10px 15px;
-    text-decoration: none;
+    .sidebar a {
+        padding: 10px 15px;
+        text-decoration: none;
+        font-size: 14px;
+        color: white !important; /* Forzamos que sean blancos */
+        display: block;
+        transition: background-color 0.3s ease;
+    }
+
+        .sidebar a:hover {
+            background-color: #575757;
+        }
+
+    /* Sidebar visible cuando tiene la clase .open */
+    .sidebar.open {
+        left: 0;
+    }
+
+/* Ajuste del contenido cuando el sidebar está abierto */
+.page-container {
+    margin-left: 0;
+    transition: margin-left 0.3s ease-in-out;
+}
+
+/* Cuando el sidebar está abierto, movemos el contenido */
+.sidebar.open + .page-container {
+    margin-left: 250px;
+}
+
+
+/* ----- Navbar ----- */
+.navbar {
+    margin-bottom: 0;
+    padding-bottom: 0.5rem;
+}
+
+.navbar-brand {
     font-size: 18px;
-    color: white;
-    display: block;
-    transition: 0.3s;
-}
-
-.sidebar a:hover {
-    background-color: #575757;
-}
-
-/* Cuando está abierto, movemos la sidebar a la izquierda */
-.sidebar.open-sidebar {
-    left: 0;
+    font-weight: bold;
+    margin: 0;
 }
 
 /* ----- Botón menú hamburguesa ----- */
 .menu-button {
-    font-size: 24px;
+    font-size: 20px;
     cursor: pointer;
     background: none;
     border: none;
@@ -66,15 +89,8 @@ body {
     transition: transform 0.3s ease;
 }
 
-/* ----- Título en navbar ----- */
-.navbar-brand {
-    font-size: 20px;
-    font-weight: bold;
-    margin: 0;
-}
-
 /* ----- Contenedor de navegación ----- */
-#nav-container {
+#nav-container, .main-content, .page-container {
     transition: margin-left 0.3s ease-in-out;
 }
 
@@ -82,7 +98,7 @@ body {
 .logout-button {
     background-color: transparent;
     border: none;
-    font-size: 20px;
+    font-size: 14px;
     color: #333;
     display: flex;
     align-items: center;
@@ -91,36 +107,31 @@ body {
     margin-right: 15px;
 }
 
-.logout-button:hover {
-    color: #00AAFF;
-}
+    .logout-button:hover {
+        color: #00AAFF;
+    }
 
 /* ----- Estilos para Alertas ----- */
 .alert {
-    padding: 1rem;               /* Espaciado interno */
-    margin: 1rem 0;              /* Margen vertical */
+    padding: 0.8rem;
+    margin: 1rem 0;
     border: 1px solid transparent;
-    border-radius: 0.25rem;      /* Bordes redondeados */
-    text-align: center;          /* Centrado del texto */
-    font-size: 1rem;             /* Tamaño de fuente */
+    border-radius: 0.25rem;
+    text-align: center;
+    font-size: 0.9rem;
 }
 
-/* Alerta de éxito */
 .alert-success {
-    color: #155724;              /* Texto en verde oscuro */
-    background-color: #d4edda;   /* Fondo verde claro */
-    border-color: #c3e6cb;       /* Borde verde */
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
 }
 
-/* Alerta de error (o alerta danger) */
 .alert-danger {
-    color: #721c24;              /* Texto en rojo oscuro */
-    background-color: #f8d7da;   /* Fondo rojo claro */
-    border-color: #f5c6cb;       /* Borde rojo */
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
 }
-
-
-
 
 /* ----- Estilo de las tablas ----- */
 .table {
@@ -137,36 +148,21 @@ body {
 
     .table th, .table td {
         text-align: left;
-        padding: 12px;
+        padding: 10px;
     }
 
-    .table tbody tr {
-        transition: background-color 0.2s ease-in-out;
+    .table tbody tr:hover {
+        background-color: #f1f1f1;
     }
-
-        .table tbody tr:hover {
-            background-color: #f1f1f1;
-        }
-
 
 /* ----- Botones del CRUD ----- */
 .btn {
-    padding: 8px 12px;
-    font-size: 14px;
-    border-radius: 5px;
+    padding: 6px 10px;
+    font-size: 13px;
+    border-radius: 4px;
     text-align: center;
     text-decoration: none;
 }
-
-.btn-info {
-    background-color: #17a2b8;
-    color: white;
-    border: none;
-}
-
-    .btn-info:hover {
-        background-color: #138496;
-    }
 
 .btn-primary {
     background-color: #00AAFF;
@@ -188,14 +184,8 @@ body {
         background-color: #b21f2d;
     }
 
-/* ----- Contenedor Principal ----- */
-.container {
-    margin-top: 40px;
-    max-width: 1200px;
-}
-
 h1 {
-    font-size: 28px;
+    font-size: 24px;
     font-weight: bold;
     margin-bottom: 20px;
     color: #333;
@@ -207,8 +197,8 @@ h1 {
     background-color: #28a745;
     color: white;
     border: none;
-    padding: 10px 15px;
-    font-size: 16px;
+    padding: 8px 12px;
+    font-size: 14px;
 }
 
     .btn-success:hover {

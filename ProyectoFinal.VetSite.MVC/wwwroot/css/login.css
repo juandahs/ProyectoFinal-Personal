@@ -1,20 +1,44 @@
-﻿html, body {
-    height: 100%; /* Altura completa para html y body */
-    margin: 0; /* Sin márgenes */
+﻿/* ----- Ajustes generales ----- */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Evita desplazamiento horizontal */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f8f9fa; /* Color de fondo */
+    font-family: inherit; /* Mantiene la fuente global */
 }
 
+/* ----- Contenedor principal ----- */
 .container {
-    height: 100vh; /* Altura completa de la ventana */
-    display: flex; /* Usar flexbox para centrar el contenido */
-    flex-direction: column; /* Disponer el contenido en columna */
-    justify-content: center; /* Centrar verticalmente */
-    position: relative; /* Permite posicionar el footer de forma fija */
+    flex-grow: 1; /* Permite que el contenido se expanda */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
 }
 
-
-
+/* ----- Tarjeta de Login ----- */
 .card {
-    max-width: 400px; /* Ancho máximo de la tarjeta */
-    margin: auto; /* Centrar la tarjeta */
-    border-radius: 15px; /* Bordes redondeados */
+    width: 100%;
+    max-width: 400px;
+    border-radius: 15px;
+    padding: 20px;
+}
+
+/* ----- Footer ----- */
+.footer {
+    width: 100%; /* Ocupar todo el ancho */
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 10px 0; /* Espaciado superior e inferior */
+    font-size: 0.8rem;
+    position: absolute;
+    bottom: 0;
+    left: 0;
 }
