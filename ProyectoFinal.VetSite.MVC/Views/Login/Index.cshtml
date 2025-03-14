@@ -2,7 +2,9 @@
     Layout = null;
 }
 
+<!-- Bootstrap y Bootstrap Icons -->
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
 
 <div class="container">
@@ -25,7 +27,7 @@
 
                 <form asp-action="Login" method="post">
                     <div class="mb-3">
-                        <label for="nombre" class="form-label">Correo electrónico</label>
+                        <label for="correoElectronico" class="form-label">Correo electrónico</label>
                         <div class="input-group">
                             <span class="input-group-text bg-light">
                                 <i class="bi bi-person-fill"></i>
@@ -55,5 +57,3 @@
     <partial name="_Footer"></partial>
 
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
