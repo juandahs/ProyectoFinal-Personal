@@ -4,22 +4,22 @@ using Microsoft.Extensions.Configuration;
 
 namespace ProyectoFinal.Servidor
 {
-    public class EnvioCorreoServicio
+    public class CorreoServicio
     {
         private readonly string _emailOrigen;
         private readonly string _contrasena;
 
-        public EnvioCorreoServicio(IConfiguration configuration)
+        public CorreoServicio(IConfiguration configuration)
         {
             _emailOrigen = configuration["EmailSettings:EmailOrigen"];
             _contrasena = configuration["EmailSettings:Contrasena"];
         }
 
-        public void EnviarCorreo(string EmailDestino, string Asunto, string Mensaje)
+        public void EnviarCorreo(string emailDestino, string asunto, string mensaje)
         {
             try
             {
-                MailMessage mailMessage = new MailMessage(_emailOrigen, EmailDestino, Asunto, Mensaje)
+                MailMessage mailMessage = new MailMessage(_emailOrigen, emailDestino, asunto, mensaje)
                 {
                     IsBodyHtml = true
                 };

@@ -32,6 +32,7 @@ namespace ProyectoFinal.Servidor
             services.AddScoped<TipoCirugiaServicio>();
             services.AddScoped<ImagenDiagnosticaServicio>();
             services.AddScoped<TipoImagenDiagnosticaServicio>();
+            services.AddScoped<CorreoServicio>();
 
 
         }

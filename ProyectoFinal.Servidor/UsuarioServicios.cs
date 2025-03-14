@@ -48,13 +48,13 @@ namespace ProyectoFinal.Servidor
                 .AddJsonFile("appsettings.json")
                 .Build();
 
-            EnvioCorreoServicio servicioCorreo = new EnvioCorreoServicio(configuration);
+            CorreoServicio servicioCorreo = new CorreoServicio(configuration);
 
-            string EmailDestino = "friyitas@gmail.com";
-            string Asunto = "Buenos días";
-            string Mensaje = "<b>Holi holi</b>";
+            string emailDestino = "friyitas@gmail.com";
+            string asunto = "Buenos días";
+            string mensaje = "<b>Holi holi</b>";
 
-            servicioCorreo.EnviarCorreo(EmailDestino, Asunto, Mensaje);
+            servicioCorreo.EnviarCorreo(emailDestino, asunto, mensaje);
         }
 
     }
