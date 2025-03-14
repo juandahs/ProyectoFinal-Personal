@@ -13,7 +13,7 @@
 
     <!-- Paciente  -->
     <div class="col-md-6 mb-3">
-        <label asp-for="PacienteId" class="form-label">Paciente*</label>
+        <label asp-for="PacienteId" class="form-label">Paciente *</label>
         <select asp-for="PacienteId" class="form-select select2" required>
             <option value="" disabled selected>Seleccione el paciente</option>
             @foreach (var paciente in (ViewData["Pacientes"] as IEnumerable<Paciente>)!)
@@ -25,7 +25,7 @@
     </div>
 
     <div class="col-md-6 mb-3">
-    <label asp-for="UsuarioId" class="form-label">Usuario*</label>
+    <label asp-for="UsuarioId" class="form-label">Usuario *</label>
     <select asp-for="UsuarioId" class="form-select select2" required>
         <option value="" disabled selected>Seleccione el paciente</option>
         @foreach (var usuario in (ViewData["Usuarios"] as IEnumerable<Usuario>)!)
@@ -38,14 +38,14 @@
 
     <!-- Nombre -->
     <div class="col-md-6 mb-3">
-        <label asp-for="NombreVacuna" class="form-label">Nombre*</label>
+        <label asp-for="NombreVacuna" class="form-label">Nombre *</label>
         <input asp-for="NombreVacuna" class="form-control" required />
         <span asp-validation-for="NombreVacuna" class="text-danger"></span>
     </div>
 
     <!-- LABORATORIO -->
     <div class="col-md-6 mb-3">
-        <label asp-for="Laboratorio" class="form-label">Laboratorio*</label>
+        <label asp-for="Laboratorio" class="form-label">Laboratorio *</label>
         <input asp-for="Laboratorio" class="form-control" required />
         <span asp-validation-for="Laboratorio" class="text-danger"></span>
     </div>
@@ -53,21 +53,21 @@
 
     <!-- LOTE -->
     <div class="col-md-6 mb-3">
-        <label asp-for="Lote" class="form-label">Lote*</label>
+        <label asp-for="Lote" class="form-label">Lote *</label>
         <input asp-for="Lote" class="form-control" required />
         <span asp-validation-for="Lote" class="text-danger"></span>
     </div>
 
     <!-- Fecha de Aplicación -->
     <div class="col-md-6 mb-3">
-        <label asp-for="FechaAplicacion" class="form-label">Fecha de Aplicación</label>
+        <label asp-for="FechaAplicacion" class="form-label">Fecha de Aplicación *</label>
         <input asp-for="FechaAplicacion" class="form-control" type="date" />
         <span asp-validation-for="FechaAplicacion" class="text-danger"></span>
     </div>
 
     <!-- Fecha de ProximaAplicación -->
     <div class="col-md-6 mb-3">
-        <label asp-for="FechaProximaAplicacion" class="form-label">Fecha de la Proxima Aplicación</label>
+        <label asp-for="FechaProximaAplicacion" class="form-label">Fecha de la Proxima Aplicación *</label>
         <input asp-for="FechaProximaAplicacion" class="form-control" type="date" />
         <span asp-validation-for="FechaProximaAplicacion" class="text-danger"></span>
     </div>
@@ -76,7 +76,7 @@
     <!-- Observaciones -->
     <div class="col-md-6 mb-3">
         <label asp-for="Observaciones" class="form-label">Observaciones*</label>
-        <input asp-for="Observaciones" class="form-control" required />
+        <input asp-for="Observaciones" class="form-control" />
         <span asp-validation-for="Observaciones" class="text-danger"></span>
     </div>
 

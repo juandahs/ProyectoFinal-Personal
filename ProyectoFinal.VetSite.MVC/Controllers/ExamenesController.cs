@@ -30,8 +30,25 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         [HttpGet]
         public IActionResult Crear()
         {
-            ViewData["TipoExamenes"] = _tipoExamenServicio.ObtenerTodos();
-            ViewData["Pacientes"] = _pacienteServicio.ObtenerTodos();
+
+            IEnumerable<TipoExamen> tiposExamen = _tipoExamenServicio.ObtenerTodos();
+
+            if (!tiposExamen.Any())
+            {
+                TempData["MensajeError"] = "Para asignar un examen aún paciente debe existir por lo menos un tipo de examen en el sistema.";
+                return RedirectToAction("Index");
+            }
+
+            IEnumerable<Paciente> pacientes = _pacienteServicio.ObtenerTodos();
+            if (!pacientes.Any())
+            {
+                TempData["MensajeError"] = "Para asignar un examen a un paciente debe existir por lo menos un paciente en el sistema.";
+                return RedirectToAction("Index");
+            }
+
+
+            ViewData["TipoExamenes"] = tiposExamen;
+            ViewData["Pacientes"] = pacientes;
             ViewData["Usuarios"] = _usuarioServicios.ObtenerTodos();
             return View();
         }

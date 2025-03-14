@@ -42,6 +42,5 @@ namespace ProyectoFinal.Servidor
                 _contexto.SaveChanges();
             }
         }
-
     }
 }

@@ -1,27 +1,21 @@
 ﻿@model IEnumerable<ProyectoFinal.Entidades.Examen>
 
-
-
-<head>
-    <link rel="stylesheet" href="~/css/users.css" asp-append-version="true" />
-</head>
-
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1>@ViewBag.Title</h1>
         <a href="/Examenes/Crear" class="btn btn-success">
-            <i class="fas fa-plus me-2"></i>Agregar Examen
+            <i class="fas fa-plus me-2"></i>Agregar un examen
         </a>
     </div>
 
     <table id="examenessTable" class="table">
         <thead>
             <tr>
-				<th>Tipo Examen</th>
-                <th>Fecha</th>
-                <th>Descripcion</th>
-                <th>Resulatdo</th>
-                <th>Observaciones</th>
+				<th>Tipo</th>
+                <th>Descripción</th>
+                <th>Fecha de realización</th>
+                <th>Usuario quien aplíca</th>
+
                 <th class="text-center">Acciones</th>
             </tr>
         </thead>
@@ -37,11 +31,10 @@
                 @foreach (var Examen in Model)
                 {
                     <tr>
-						<td>@Examen.TipoExamenId</td>
-                        <td>@Examen.Fecha</td>
+						<td>@Examen.TipoExamen!.Descripcion</td>
                         <td>@Examen.Descripcion</td>
-                        <td>@Examen.Resultado</td>
-                        <td>@Examen.Observaciones</td>
+                        <td>@Examen.Fecha.ToString("dd/MM/yyyy")</td>
+                        <td>@Examen.Usuario!.Nombre</td>
                         <td class="text-center">
                             <form asp-action="Editar" method="get" class="d-inline">
                                 <input type="hidden" name="id" value="@Examen.ExamenId" />

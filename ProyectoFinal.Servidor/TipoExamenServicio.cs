@@ -7,7 +7,7 @@ namespace ProyectoFinal.Servidor
     public class TipoExamenServicio(Contexto contexto)
     {
         private readonly Contexto _contexto = contexto;
-        public IEnumerable<TipoExamen> ObtenerTodos() => _contexto.TipoExamenes.AsNoTracking();
+        public IEnumerable<TipoExamen> ObtenerTodos() => _contexto.TipoExamenes.Include(x => x.UsuarioCreacion).Include(x => x.UsuarioModificacion).AsNoTracking();
 
         public TipoExamen? ObtenerPorId(Guid tipoExamenId) => _contexto.TipoExamenes.AsNoTracking().FirstOrDefault(p => p.TipoExamenId == tipoExamenId);
 
@@ -35,6 +35,12 @@ namespace ProyectoFinal.Servidor
             }
         }
 
+        public void Actualizar(TipoExamen tipoExamen)
+        {
+            _ = _contexto.TipoExamenes.AsNoTracking().FirstOrDefault(u => u.TipoExamenId== tipoExamen.TipoExamenId) ?? throw new Exception("El tipo de examen no existe.");
 
+            _contexto.TipoExamenes.Update(tipoExamen);
+            _contexto.SaveChanges();
+        }
     }
 }

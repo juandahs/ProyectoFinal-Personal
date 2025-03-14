@@ -1,16 +1,10 @@
 ﻿@model IEnumerable<ProyectoFinal.Entidades.Vacuna>
 
-
-
-<head>
-    <link rel="stylesheet" href="~/css/users.css" asp-append-version="true" />
-</head>
-
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1>@ViewBag.Title</h1>
         <a href="/Vacunas/Crear" class="btn btn-success">
-            <i class="fas fa-plus me-2"></i>Agregar Vacuna
+            <i class="fas fa-plus me-2"></i>Agregar una vacuna
         </a>
     </div>
 
@@ -18,13 +12,9 @@
         <thead>
             <tr>
                 <th>Paciente</th>
-				<!--  <th>Usuario</th>-->
-                <th>Nombre Vacuna</th>
-                <th>Laboratorio</th>
-                <th>Lote</th>
-                <th>FechaAplicacion</th>
-                <th>ProximaAplicacion</th>
-                <th>Observaciones</th>
+				<th>Nombre</th>
+                <th>Fecha aplicación</th>
+                <th>Próxima aplicación</th>
                 <th class="text-center">Acciones</th>
             </tr>
         </thead>
@@ -40,25 +30,21 @@
                 @foreach (var vacuna in Model)
                 {
                     <tr>
-                        <td>@vacuna.Paciente.Nombre</td>
-						<!-- <td>@vacuna.UsuarioId</td>-->
+                        <td>@vacuna.Paciente!.Nombre</td>
 						<td>@vacuna.NombreVacuna</td>
-                        <td>@vacuna.Laboratorio</td>
-                        <td>@vacuna.Lote</td>
-                        <td>@vacuna.FechaAplicacion</td>
-                        <td>@vacuna.FechaProximaAplicacion</td>
-                        <td>@vacuna.Observaciones</td>
+                        <td>@vacuna.FechaAplicacion.ToShortDateString()</td>
+                        <td>@vacuna.FechaProximaAplicacion.ToShortDateString()</td>
                         <td class="text-center">
                             <form asp-action="Editar" method="get" class="d-inline">
                                 <input type="hidden" name="id" value="@vacuna.VacunaId" />
                                 <button type="submit" class="btn btn-primary me-2">
-                                    <i class="fas fa-edit"></i> Editar
+                                    <i class="fas fa-edit"></i>
                                 </button>
                             </form>
                             <form asp-action="Eliminar" method="post" class="d-inline">
                                 <input type="hidden" name="id" value="@vacuna.VacunaId" />
                                 <button type="submit" class="btn btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar este usuario?');">
-                                    <i class="fas fa-trash"></i> Eliminar
+                                    <i class="fas fa-trash"></i>
                                 </button>
                             </form>
                         </td>

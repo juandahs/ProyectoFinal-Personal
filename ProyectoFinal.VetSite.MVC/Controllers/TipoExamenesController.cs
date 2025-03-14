@@ -25,19 +25,19 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             return View(tipoExamenes);
         }
 
-        [HttpGet] //Obtener los datos necesario de las relaciones
+        [HttpGet] 
         public IActionResult Crear()
         {
             ViewData["Usuarios"] = _usuarioServicios.ObtenerTodos();
             return View();
         }
-        //INSERTAR TIPODEVACUNA
+        
         [HttpPost]
         public IActionResult Crear(TipoExamen tipoExamen)
         {
             if (!ModelState.IsValid)
             {
-                TempData["MensajeError"] = "El registro de la Tipo Examen no es válida. Valide toda la información y trate nuevamente.";
+                TempData["MensajeError"] = "El registro de la Tipo de examen no es válida. Valide toda la información y trate nuevamente.";
                 return RedirectToAction("Index");
             }
             try
@@ -61,6 +61,45 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        public IActionResult Editar(Guid id)
+        {
+            var tipoExamen = _tipoExamenServicio.ObtenerPorId(id);
+            if (tipoExamen == null)
+            {
+                TempData["MensajeError"] = "El tipo de examen no fue encontrado.";
+                return RedirectToAction("Index");
+            }
+            return View(tipoExamen);
+        }
+
+        [HttpPost]
+        public IActionResult Editar(TipoExamen tipoExamen)
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData["MensajeError"] = "No se estableció un modelo válido.";
+                return RedirectToAction("Index");
+            }
+
+            try
+            {
+                var usuarioModificacionId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+                tipoExamen.UsuarioModificacionId = Guid.Parse(usuarioModificacionId!);
+                tipoExamen.FechaModificacion = DateTime.Now;
+
+                _tipoExamenServicio.Actualizar(tipoExamen);
+                TempData["MensajeExito"] = "El tipo de examen ha sido actualizado exitosamente.";
+            }
+            catch (Exception ex)
+            {
+                TempData["MensajeError"] = $"Ocurrió un error: {ex.Message}";
+                return RedirectToAction("Index");
+            }
+
+            return RedirectToAction("Index");
+        }
 
         [HttpPost]
         public IActionResult Eliminar(Guid id)

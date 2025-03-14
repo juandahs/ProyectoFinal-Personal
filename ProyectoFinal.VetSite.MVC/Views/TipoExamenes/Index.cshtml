@@ -1,14 +1,10 @@
 ﻿@model IEnumerable<ProyectoFinal.Entidades.TipoExamen>
 
-<head>
-    <link rel="stylesheet" href="~/css/users.css" asp-append-version="true" />
-</head>
-
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1>@ViewBag.Title</h1>
         <a href="/TipoExamenes/Crear" class="btn btn-success">
-            <i class="fas fa-plus me-2"></i>Agregar Tipo de Examen
+            <i class="fas fa-plus me-2"></i>Agregar un tipo de examen
         </a>
     </div>
 
@@ -17,6 +13,10 @@
             <tr>
                 
                 <th>Descripcion</th>
+                <th>Usuario creación</th>
+                <th>Fecha creación</th>
+                <th>Usuario modificación</th>
+                <th>Fecha modificación</th>
                 <th class="text-center">Acciones</th>
             </tr>
         </thead>
@@ -33,17 +33,21 @@
                 {
                     <tr>
                         <td>@tipoExamen.Descripcion</td>
+                        <td>@tipoExamen.UsuarioCreacion!.Nombre</td>
+                        <td>@tipoExamen.FechaCreacion.ToShortDateString()</td>
+                        <td>@tipoExamen.UsuarioModificacion!.Nombre</td>
+                        <td>@tipoExamen.FechaModificacion.ToShortDateString()</td>
                         <td class="text-center">
-                          <!--  <form asp-action="Editar" method="get" class="d-inline">
+                          <form asp-action="Editar" method="get" class="d-inline">
                                 <input type="hidden" name="id" value="@tipoExamen.TipoExamenId" />
                                 <button type="submit" class="btn btn-primary me-2">
-                                    <i class="fas fa-edit"></i> Editar
+                                    <i class="fas fa-edit"></i>
                                 </button>
-                            </form> -->
+                          </form>
                             <form asp-action="Eliminar" method="post" class="d-inline">
                                 <input type="hidden" name="id" value="@tipoExamen.TipoExamenId" />
                                 <button type="submit" class="btn btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar este tipo de examen?');">
-                                    <i class="fas fa-trash"></i> Eliminar
+                                    <i class="fas fa-trash"></i>
                                 </button>
                             </form>
                         </td>

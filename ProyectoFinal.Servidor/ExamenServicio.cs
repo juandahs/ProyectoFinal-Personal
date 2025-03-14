@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ProyectoFinal.Entidades;
 using ProyectoFinal.Repositorio;
 
@@ -13,7 +8,7 @@ namespace ProyectoFinal.Servidor
     {
         private readonly Contexto _contexto = contexto;
 
-        public IEnumerable<Examen> ObtenerTodos() => _contexto.Examenes.AsNoTracking();
+        public IEnumerable<Examen> ObtenerTodos() => _contexto.Examenes.Include(x =>x.TipoExamen).Include(x => x.Usuario).AsNoTracking();
 
         public Examen? ObtenerPorId(Guid ExamenId) => _contexto.Examenes.AsNoTracking().FirstOrDefault(x => x.ExamenId == ExamenId);
 
@@ -25,13 +20,12 @@ namespace ProyectoFinal.Servidor
 
         public void Actualizar(Examen examen)
         {
-            _ = _contexto.Examenes.AsNoTracking().FirstOrDefault(u => u.ExamenId == examen.ExamenId) ?? throw new Exception("El Examen no existe.");
+            _ = _contexto.Examenes.AsNoTracking().FirstOrDefault(u => u.ExamenId == examen.ExamenId) ?? throw new Exception("El examen no existe.");
 
             _contexto.Examenes.Update(examen);
             _contexto.SaveChanges();
         }
 
-      
         public void Eliminar(Guid id)
         {
             var examen = _contexto.Examenes.AsNoTracking().FirstOrDefault(u => u.ExamenId == id);

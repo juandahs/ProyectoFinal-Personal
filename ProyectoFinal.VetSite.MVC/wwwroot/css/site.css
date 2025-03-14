@@ -26,10 +26,10 @@ html, body {
 /* Sidebar oculto por defecto */
 .sidebar {
     height: 100%;
-    width: 250px;
+    width: 200px;
     position: fixed;
     top: 0;
-    left: -250px; /* oculto */
+    left: -200px; /* oculto */
     background-color: #333;
     color: white;
     overflow-x: hidden;
@@ -63,7 +63,7 @@ html, body {
 
 /* Cuando el sidebar está abierto, movemos el contenido */
 .sidebar.open + .page-container {
-    margin-left: 250px;
+    margin-left: 200px;
 }
 
 
@@ -139,6 +139,8 @@ html, body {
     border-collapse: collapse;
     background-color: #fff;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+    table-layout: fixed; /* Ancho fijo para las columnas */
 }
 
     .table thead {
@@ -149,6 +151,10 @@ html, body {
     .table th, .table td {
         text-align: left;
         padding: 10px;
+        white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+        overflow: hidden; /* Oculta el texto que no cabe */
+        text-overflow: ellipsis; /* Muestra "..." cuando el texto es muy largo */
+        max-width: 150px; /* Ajusta este valor según el tamaño deseado */
     }
 
     .table tbody tr:hover {
@@ -185,7 +191,7 @@ html, body {
     }
 
 h1 {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: bold;
     margin-bottom: 20px;
     color: #333;

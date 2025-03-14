@@ -50,8 +50,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             return View();
         }
 
-        [HttpPost]
-        
+        [HttpPost]        
         public IActionResult Crear(Cirugia cirugia)
         {
             if (!ModelState.IsValid)
@@ -95,8 +94,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             return View(_cirugiaServicio.ObtenerPorId(id));
         }
 
-        [HttpPost]
-        
+        [HttpPost]        
         public IActionResult Editar(Cirugia cirugia)
         {
 
