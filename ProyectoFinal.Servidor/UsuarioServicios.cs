@@ -41,21 +41,7 @@ namespace ProyectoFinal.Servidor
 
         public void ActualizarClave(Guid usuarioId, string nuevaClave) => _contexto.UsuarioActualizarClave(usuarioId, nuevaClave).GetAwaiter().GetResult();
 
-        public void EnvioCorreo()
-        {
-            // esto es pata cargar la configuración desde appsettings
-            var configuration = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
-                .Build();
-
-            CorreoServicio servicioCorreo = new CorreoServicio(configuration);
-
-            string emailDestino = "friyitas@gmail.com";
-            string asunto = "Buenos días";
-            string mensaje = "<b>Holi holi</b>";
-
-            servicioCorreo.EnviarCorreo(emailDestino, asunto, mensaje);
-        }
+       
 
     }
 }

@@ -10,7 +10,8 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
     [Authorize]
     public class PropietariosController( PropietarioServicio propietarioServicio
             , TipoIdentificacionServicio tipoIdentificacionServicio
-            , UsuarioServicios usuarioServicios): Controller
+            , UsuarioServicios usuarioServicios
+            , CorreoServicio correoServicio): Controller
     {
         private readonly PropietarioServicio _propietarioServicio = propietarioServicio;
         private readonly TipoIdentificacionServicio _tipoIdentificacionServicio = tipoIdentificacionServicio;
