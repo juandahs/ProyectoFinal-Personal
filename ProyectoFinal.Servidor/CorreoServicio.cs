@@ -12,8 +12,8 @@ namespace ProyectoFinal.Servidor
 
         public string plantilla = """ 
 
-            <!DOCTYPE html>
-      <html lang="en" xmlns="http://www.w3.org/1999/xhtml" >
+         <!DOCTYPE html>
+      <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
       <head>
           <meta charset="UTF-8">
           <title>Confirmación de Cita - Clínica Veterinaria</title>
@@ -24,6 +24,7 @@ namespace ProyectoFinal.Servidor
                   margin: 0;
                   padding: 0;
                   text-align: center;
+                  color: black;
               }
 
               .container {
@@ -34,11 +35,14 @@ namespace ProyectoFinal.Servidor
                   border-radius: 8px;
                   overflow: hidden;
                   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+                  color: black;
+                  text-align: center;
               }
 
               .header {
-                  background-color: #007ea7;
+                  background-color: #00171f;
                   padding: 20px;
+                  color: white;
               }
 
                   .header img {
@@ -47,29 +51,38 @@ namespace ProyectoFinal.Servidor
 
               .content {
                   padding: 20px;
-                  text-align: left;
+                  font-size: 15px;
               }
 
                   .content h2 {
                       color: #007ea7;
                   }
 
-              .footer {
-                  background-color: #f8f8f8;
-                  padding: 15px;
-                  font-size: 14px;
-                  color: #555;
+              .details-table {
+                  width: 90%;
+                  margin: auto;
+                  border-collapse: collapse;
+                  color: black;
+                  text-align: center; /* Centra el texto en la tabla */
               }
 
-              .button {
-                  display: inline-block;
-                  padding: 10px 20px;
-                  margin-top: 20px;
-                  background-color: #007ea7;
-                  color: #ffffff;
-                  text-decoration: none;
-                  border-radius: 5px;
-                  font-weight: bold;
+                  .details-table td {
+                      padding: 12px; /* Más espacio para mayor legibilidad */
+                      border-bottom: 1px solid #ddd;
+                      color: black;
+                  }
+
+                      .details-table td:first-child {
+                          font-weight: bold;
+                          width: 40%;
+                      }
+
+              .footer {
+                  background-color: #f8f8f8;
+                  padding: 7px;
+                  font-size: 10px;
+                  color: #555;
+                  height: 60px;
               }
           </style>
       </head>
@@ -80,21 +93,37 @@ namespace ProyectoFinal.Servidor
               </div>
               <div class="content">
                   <h2>¡Tu cita está programada!</h2>
-                  <p><strong>Propietario:</strong> {NombrePropietario}</p>
-                  <p><strong>Mascota:</strong> {NombreMascota}</p>
-                  <p><strong>Servicio:</strong> {Servicio}</p>
-                  <p><strong>Fecha:</strong> {Fecha}</p>
-                  <p><strong>Hora:</strong> {Hora}</p>
-                  <a href="{URLConfirmacion}" class="button">Confirmar Cita</a>
+                  <table class="details-table">
+                      <tr>
+                          <td>Propietario:</td>
+                          <td>{0}</td>
+                      </tr>
+                      <tr>
+                          <td>Mascota:</td>
+                          <td>{1}</td>
+                      </tr>
+                      <tr>
+                          <td>Servicio:</td>
+                          <td>{2}</td>
+                      </tr>
+                      <tr>
+                          <td>Fecha:</td>
+                          <td>{3}</td>
+                      </tr>
+                      <tr>
+                          <td>Hora:</td>
+                          <td>{4}</td>
+                      </tr>
+                  </table>
               </div>
               <div class="footer">
-                  <p>Gracias por confiar en nuestra clínica veterinaria.</p>
-                  <p>Para mayor información contactanos @notofic.</p>
+                  <p>Gracias por confiar en nuestra clínica veterinaria.<br />
+                  Para mayor información, contáctanos: notificacionesvetsite@gmail.com</p>
               </div>
           </div>
       </body>
-      </html>
-
+      </html>     
+    
       """;
 
         public void EnviarCorreo(string emailDestino, string asunto, string mensaje)
