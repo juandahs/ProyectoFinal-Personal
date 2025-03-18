@@ -9,7 +9,7 @@ namespace ProyectoFinal.Servidor
     {
         private readonly Contexto _contexto = contexto;
 
-        public IEnumerable<Cita> ObtenerTodos() => _contexto.Citas.AsNoTracking();
+        public IEnumerable<Cita> ObtenerTodos() => _contexto.Citas.Include(x => x.Paciente).Include(x => x.Usuario).AsNoTracking();
 
         public Cita? ObtenerPorId(Guid citaId) => _contexto.Citas.AsNoTracking().FirstOrDefault(x => x.CitaId == citaId);
 
