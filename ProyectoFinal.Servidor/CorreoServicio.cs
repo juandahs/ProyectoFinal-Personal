@@ -10,6 +10,7 @@ namespace ProyectoFinal.Servidor
         private readonly string _emailOrigen = configuration["EmailSettings:EmailOrigen"]!;
         private readonly string _contrasena = configuration["EmailSettings:Contrasena"]!;
 
+        public string asunto = "Cita programada";
         public string plantilla = """ 
 
          <!DOCTYPE html>
@@ -126,11 +127,11 @@ namespace ProyectoFinal.Servidor
     
       """;
 
-        public void EnviarCorreo(string emailDestino, string asunto, string mensaje)
+        public void EnviarCorreo(string emailDestino)
         {
             try
             {
-                MailMessage mailMessage = new MailMessage(_emailOrigen, emailDestino, asunto, mensaje)
+                MailMessage mailMessage = new MailMessage(_emailOrigen, emailDestino, asunto, plantilla)
                 {
                     IsBodyHtml = true
                 };

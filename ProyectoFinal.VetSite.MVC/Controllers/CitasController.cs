@@ -5,11 +5,16 @@ using ProyectoFinal.Servidor;
 
 namespace ProyectoFinal.VetSite.MVC.Controllers
 {
-    public class CitasController(CitaServicio citaServicio, PacienteServicio pacienteServicio, CorreoServicio correoServicio) : Controller
+    public class CitasController(CitaServicio citaServicio, 
+                                 PacienteServicio pacienteServicio,
+                                 CorreoServicio correoServicio, 
+                                 UsuarioServicios usuarioServicios, 
+                                 IConfiguration configuration) : Controller
     {
         private readonly CitaServicio _citaServicio = citaServicio;
         private readonly PacienteServicio _pacienteServicio = pacienteServicio;
         private readonly CorreoServicio _correoServicio = correoServicio;
+        private readonly UsuarioServicios _usuarioServicios = usuarioServicios;
 
 
 
@@ -33,11 +38,21 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         [HttpGet]
         public IActionResult Crear() 
         {
+
+            IEnumerable<Paciente> pacientes = _pacienteServicio.ObtenerTodos();
+            if (!pacientes.Any())
+            {
+                TempData["MensajeError"] = "Para asignar un examen a un paciente debe existir por lo menos un paciente en el sistema.";
+                return RedirectToAction("Index");
+            }
+
             ViewData["Pacientes"] = _pacienteServicio.ObtenerTodos();
+            ViewData["Usuarios"] = _usuarioServicios.ObtenerTodos();
             return View();
         }
 
-        public IActionResult Crear(Cita cita, CorreoServicio correo)
+        [HttpPost]
+        public IActionResult Crear(Cita cita)
         {
             if (!ModelState.IsValid)
             {
@@ -58,7 +73,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
                 _citaServicio.Insertar(cita);
               //  var paciente = _pacienteServicio.ObtenerPorId(cita.PacienteId);
                 
-                _correoServicio.EnviarCorreo(_pacienteServicio.ObtenerPorId(cita.PacienteId).Propietario.CorreoElectronico, string.Empty, string.Empty);
+                _correoServicio.EnviarCorreo(_pacienteServicio.ObtenerPorId(cita.PacienteId).Propietario.CorreoElectronico);
                 TempData["MensajeExito"] = "Cita creada exitosamente.";
             }
             catch (Exception e)

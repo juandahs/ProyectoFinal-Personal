@@ -21,6 +21,18 @@
         <span asp-validation-for="PacienteId" class="text-danger"></span>
     </div>
 
+    <div class="col-md-6 mb-3">
+        <label asp-for="UsuarioId" class="form-label">Usuario quien atiende. *</label>
+        <select asp-for="UsuarioId" class="form-select select2" required>
+            <option value="" disabled selected>Seleccione el Usuario</option>
+            @foreach (var usuario in (ViewData["Usuarios"] as IEnumerable<Usuario>)!)
+            {
+                <option value="@usuario.UsuarioId">@($"{usuario.Nombre}")</option>
+            }
+        </select>
+        <span asp-validation-for="UsuarioId" class="text-danger"></span>
+    </div>
+
     <!-- Fecha de la cita -->
     <div class="col-md-6 mb-3">
         <label asp-for="Fecha" class="form-label">Fecha de Cita*</label>
