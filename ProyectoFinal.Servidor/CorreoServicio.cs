@@ -10,8 +10,7 @@ namespace ProyectoFinal.Servidor
         private readonly string _emailOrigen = configuration["EmailSettings:EmailOrigen"]!;
         private readonly string _contrasena = configuration["EmailSettings:Contrasena"]!;
 
-        public string _asunto = "Cita programada";
-        public string _plantilla = """ 
+        public string _plantillaPropietario = """ 
 
          <!DOCTYPE html>
       <html lang="en" xmlns="http://www.w3.org/1999/xhtml">

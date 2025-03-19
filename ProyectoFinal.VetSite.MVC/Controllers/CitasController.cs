@@ -9,8 +9,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
     public class CitasController(CitaServicio citaServicio, 
                                  PacienteServicio pacienteServicio,
                                  CorreoServicio correoServicio, 
-                                 UsuarioServicios usuarioServicios, 
-                                 IConfiguration configuration) : Controller
+                                 UsuarioServicios usuarioServicios) : Controller
     {
         private readonly CitaServicio _citaServicio = citaServicio;
         private readonly PacienteServicio _pacienteServicio = pacienteServicio;
@@ -72,7 +71,8 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
                 cita.UsuarioModificacionId = Guid.Parse(usuarioId!);
 
                 _citaServicio.Insertar(cita);
-                //  var paciente = _pacienteServicio.ObtenerPorId(cita.PacienteId);
+                
+                //Valores para enviar correo
                 var asunto = "Cita programada!";
                 var propietario = _pacienteServicio.ObtenerPorId(cita.PacienteId).Propietario.Nombre.ToString();
                 var paciente = _pacienteServicio.ObtenerPorId(cita.PacienteId).Nombre.ToString();
@@ -80,13 +80,12 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
                 var fecha = cita.Fecha.ToString("dd/MM/yyyy");
                 var hora = cita.Fecha.ToString("hh:mm tt");
 
-                var mensaje = _correoServicio._plantilla
+                var mensaje = _correoServicio._plantillaPropietario
                     .Replace("{0}", propietario)
                     .Replace("{1}", paciente)
                     .Replace("{2}", motivo)
                     .Replace("{3}", fecha)
                     .Replace("{4}", hora);
-
 
                 _correoServicio.EnviarCorreo(_pacienteServicio.ObtenerPorId(cita.PacienteId).Propietario.CorreoElectronico,asunto, mensaje);
                 TempData["MensajeExito"] = "Cita creada exitosamente.";
