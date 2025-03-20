@@ -2,7 +2,49 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-5 d-flex flex-column align-items-center">
+    <h1 class="mb-4 text-dark text-center fw-bold">Bienvenido a VetSite</h1>
+    <p class="lead text-muted text-center">Sistema de gestión veterinaria</p>
+
+    <div class="row justify-content-center mt-4" style="max-width: 900px;">
+        <div class="col-md-4 d-flex align-items-stretch">
+            <div class="card shadow-lg border-0 text-center w-100 p-3">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">Citas</h5>
+                    <p class="card-text text-muted">Administra y organiza las citas de los pacientes.</p>
+                    <a href="/Citas" class="btn btn-primary btn-lg w-100 fw-semibold">Ver Citas</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 d-flex align-items-stretch">
+            <div class="card shadow-lg border-0 text-center w-100 p-3">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">Pacientes</h5>
+                    <p class="card-text text-muted">Consulta y gestiona toda la información de los pacientes.</p>
+                    <a href="/Pacientes" class="btn btn-primary btn-lg w-100 fw-semibold">Ver Pacientes</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 d-flex align-items-stretch">
+            <div class="card shadow-lg border-0 text-center w-100 p-3">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">Propietarios</h5>
+                    <p class="card-text text-muted">Accede a los datos y contacto de los propietarios.</p>
+                    <a href="/Propietarios" class="btn btn-primary btn-lg w-100 fw-semibold">Ver Propietarios</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<style>
+    .btn-primary {
+        background-color: #0d6efd;
+        color: white;
+        border: none;
+    }
+
+        .btn-primary:hover {
+            background-color: #7fd9eb;
+        }
+</style>

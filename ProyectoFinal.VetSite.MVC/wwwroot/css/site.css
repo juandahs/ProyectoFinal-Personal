@@ -108,7 +108,7 @@ html, body {
 }
 
     .logout-button:hover {
-        color: #00AAFF;
+        color: #0d6efd;
     }
 
 /* ----- Estilos para Alertas ----- */
@@ -171,23 +171,26 @@ html, body {
 }
 
 .btn-primary {
-    background-color: #00AAFF;
+    background-color: #7fd9eb;
     color: white;
     border: none;
 }
 
     .btn-primary:hover {
-        background-color: #0056b3;
+        background-color: #0d6efd ;
+        box-shadow: 0px 4px 10px rgba(127, 217, 235, 0.5);
+        transform: scale(1.05);
     }
 
+
 .btn-danger {
-    background-color: #dc3545;
+    background-color: #fbc4c1;
     color: white;
     border: none;
 }
 
     .btn-danger:hover {
-        background-color: #b21f2d;
+        background-color: #f5483b;
     }
 
 h1 {
@@ -200,7 +203,7 @@ h1 {
 /* ----- Botón Agregar Usuario ----- */
 .btn-success {
     font-weight: bold;
-    background-color: #28a745;
+    background-color: #0d6efd;
     color: white;
     border: none;
     padding: 8px 12px;
@@ -208,5 +211,5 @@ h1 {
 }
 
     .btn-success:hover {
-        background-color: #218838;
+        background-color: #7fd9eb;
     }
