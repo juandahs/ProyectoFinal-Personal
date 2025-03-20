@@ -10,8 +10,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
     [Authorize]
     public class PropietariosController( PropietarioServicio propietarioServicio
             , TipoIdentificacionServicio tipoIdentificacionServicio
-            , UsuarioServicios usuarioServicios
-            , CorreoServicio correoServicio): Controller
+            , UsuarioServicios usuarioServicios): Controller
     {
         private readonly PropietarioServicio _propietarioServicio = propietarioServicio;
         private readonly TipoIdentificacionServicio _tipoIdentificacionServicio = tipoIdentificacionServicio;
@@ -124,12 +123,11 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             }
             catch (Exception e)
             {
-                TempData["MensajeError"] = $"Ocurrió un error eliminando el propietario: {e.Message}";
+                TempData["MensajeError"] = $"Ocurrió el siguiente error eliminando el propietario: {e.Message}";
             }
 
             return RedirectToAction("Index");
         }
-
 
     }
 }

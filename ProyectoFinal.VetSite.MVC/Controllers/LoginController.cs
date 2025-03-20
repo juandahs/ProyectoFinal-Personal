@@ -17,7 +17,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
 
         public async Task<IActionResult> Login(string correoElectronico, string clave)
         {
-            var usuario = _usuarioServicios.ObtenerPorCorreoElectronico(correoElectronico);
+            var usuario = _usuarioServicios.ObtenerPorCorreoElectronico(correoElectronico.ToLower());
 
             if (usuario == null)
             {

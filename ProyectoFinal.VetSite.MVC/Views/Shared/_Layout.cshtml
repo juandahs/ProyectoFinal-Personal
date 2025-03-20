@@ -51,14 +51,18 @@
                     <div class="d-flex align-items-center">
                         <!-- Botón que llama a toggleSidebar() -->
                         <button id="menu-button" class="menu-button" onclick="toggleSidebar()">☰</button>
-                        <a id="app-title" class="navbar-brand ms-2" asp-area="" asp-page="/Index">VetSite</a>
+                        <a id="app-title" class="navbar-brand ms-2" asp-area="" asp-page="/Home/Index">VetSite</a>
                     </div>
-                    <form asp-controller="Login" asp-action="Logout" method="post">
-                        <button class="logout-button" type="submit">
-                            <i class="fas fa-sign-out-alt"></i>
-                            <span>Salir</span>
-                        </button>
-                    </form>
+
+                    <div class="d-flex align-items-center">
+                        <span class="me-3">👤 @User.Identity.Name</span> 
+                        <form asp-controller="Login" asp-action="Logout" method="post">
+                            <button class="logout-button" type="submit">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span>Salir</span>
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </nav>
         </header>

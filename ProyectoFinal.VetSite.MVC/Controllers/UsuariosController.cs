@@ -40,6 +40,9 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
                 TempData["MensajeError"] = "La información del usuario no es válida. Valide toda la información y trate nuevamente.";
                 return RedirectToAction("Index");
             }
+            
+            //Se asegura que el correo electrónico se guarde con minusculas
+            usuario.CorreoElectronico = usuario.CorreoElectronico.ToLower();
 
             try
             {
@@ -47,7 +50,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
                 {
                     TempData["MensajeError"] = "Ya existe un usuario con el correo electrónico o el número de identificación indicado.";
                     return RedirectToAction("Index");
-                }
+                }                
 
                 var usuarioId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
                 _usuarioServicios.Agregar(usuario, Guid.Parse(usuarioId!));
