@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ProyectoFinal.Entidades;
 using ProyectoFinal.Repositorio;
+using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
 
 namespace ProyectoFinal.Servidor
 {
@@ -29,19 +30,13 @@ namespace ProyectoFinal.Servidor
 
         public void Actualizar(Cita cita)
         {
+            _ = _contexto.Citas.AsNoTracking().FirstOrDefault(u => u.CitaId == cita.CitaId) ?? throw new Exception("La cita no existe.");
 
-            if (Existe(cita.CitaId)) 
-            {
-                _contexto.Citas.Update(cita);
-                _contexto.SaveChanges();
-            }
+            _contexto.Citas.Update(cita);
+            _contexto.SaveChanges();
         }
 
-        public void Eliminar(Guid citaId)
-        {
-            if (Existe(citaId))
-                _contexto.Citas.Remove(_contexto.Citas.AsNoTracking().FirstOrDefault(u => u.CitaId == citaId)!);
-        }
+
 
         public bool Existe(Guid citaId) => _contexto.Citas.AsNoTracking().Any(x => x.CitaId == citaId);
 
