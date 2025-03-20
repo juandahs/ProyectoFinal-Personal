@@ -13,6 +13,7 @@
             <tr>
                 <th>Paciente</th>
                 <th>Fecha</th>
+                <th>Hora</th>
                 <th>Motivo</th>
                 <th>Estado</th>
 
@@ -32,7 +33,8 @@
                 {
                     <tr>
                         <td>@cita.Paciente!.Nombre</td>
-                        <td>@cita.Fecha.ToString("dd/MM/yyyy/hh:mm tt")</td>
+                        <td>@cita.Fecha.ToString("dd/MM/yyyy")</td>
+                        <td>@cita.Fecha.ToString("hh:mm tt")</td>
                         <td>@cita.Motivo</td>
                         <td>@cita.Estado</td>
                         <td class="text-center">
@@ -42,10 +44,10 @@
                                     <i class="fas fa-edit"></i> Editar
                                 </button>
                             </form>
-                            <form asp-action="Eliminar" method="post" class="d-inline">
+                            <form asp-action="Cancelar" method="get" class="d-inline">
                                 <input type="hidden" name="id" value="@cita.CitaId" />
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar esta cita?');">
-                                    <i class="fas fa-trash"></i> Eliminar
+                                <button type="submit" class="btn btn-danger me-2" onclick="return confirm('¿Está seguro de que desea eliminar este examen?');">
+                                    <i class="fas fa-window-close"></i> 
                                 </button>
                             </form>
                         </td>

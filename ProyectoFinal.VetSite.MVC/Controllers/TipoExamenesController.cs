@@ -82,6 +82,12 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
                 return RedirectToAction("Index");
             }
 
+            if (_tipoExamenServicio.Existe(tipoExamen.TipoExamenId))
+            {
+                TempData["MensajeError"] = "No existe un tipo de examen con el identificador dado.";
+                return RedirectToAction("Index");
+            }
+
             try
             {
                 var usuarioModificacionId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
@@ -104,6 +110,13 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         [HttpPost]
         public IActionResult Eliminar(Guid id)
         {
+
+            if (_tipoExamenServicio.Existe(id))
+            {
+                TempData["MensajeError"] = "No existe un tipo de examen con el identificador dado.";
+                return RedirectToAction("Index");
+            }
+
             try
             {
                 _tipoExamenServicio.Eliminar(id);
@@ -116,7 +129,6 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
 
             return RedirectToAction("Index");
         }
-
 
     }
 }

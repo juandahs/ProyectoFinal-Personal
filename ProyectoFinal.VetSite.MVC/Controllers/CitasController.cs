@@ -42,7 +42,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             IEnumerable<Paciente> pacientes = _pacienteServicio.ObtenerTodos();
             if (!pacientes.Any())
             {
-                TempData["MensajeError"] = "Para asignar un examen a un paciente debe existir por lo menos un paciente en el sistema.";
+                TempData["MensajeError"] = "Para asignar una cita a un paciente debe existir por lo menos un paciente en el sistema.";
                 return RedirectToAction("Index");
             }
 
@@ -54,6 +54,12 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         [HttpPost]
         public IActionResult Crear(Cita cita)
         {
+            if (cita.Fecha.Date < DateTime.Now.Date) //si la fecha es menor que la fecha y hora actual, muestre un menasje de rror
+            {
+                TempData["MensajeError"] = "No puedes agendar una cita en un día que ya pasó.";
+                return RedirectToAction("Crear");
+            }
+
             if (!ModelState.IsValid)
             {
                 TempData["MensajeError"] = "La información de la cita no es válida. Revísela y trate nuevamente.";
@@ -98,6 +104,56 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
 
             return RedirectToAction("Index");
         }
+        [HttpGet]
+        public IActionResult Editar(Guid id)
+        {
+            if (id == Guid.Empty)
+            {
+                TempData["MensajeError"] = "No se estableció un identificador de cita válido.";
+                return RedirectToAction("Index");
+            }
+            ViewData["Pacientes"] = _pacienteServicio.ObtenerTodos();
+            ViewData["Usuarios"] = _usuarioServicios.ObtenerTodos();
+            return View(_citaServicio.ObtenerPorId(id));
+        }
+
+        [HttpPost]
+        public IActionResult Editar(Cita cita)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                TempData["MensajeError"] = "No se estableció un modelo válido.";
+                return RedirectToAction("Index");
+            }
+
+            if (!_citaServicio.Existe(cita.CitaId))
+            {
+                TempData["MensajeError"] = "No se existe el tipo de cita indicado.";
+                return RedirectToAction("Index");
+            }
+
+            try
+            {
+                var usuarioModificacionId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+                cita.UsuarioModificacionId = Guid.Parse(usuarioModificacionId!);
+                cita.FechaModificacion = DateTime.Now;
+
+                _citaServicio.Actualizar(cita);
+                TempData["MensajeExito"] = "La cita ha sido actualizada exitosamente.";
+            }
+            catch (Exception ex)
+            {
+                TempData["MensajeError"] = $"Ocurrió el siguiente error: {ex.Message}";
+                return RedirectToAction("Index");
+            }
+
+            return RedirectToAction("Index");
+        }
+
+
+
 
     }
 }

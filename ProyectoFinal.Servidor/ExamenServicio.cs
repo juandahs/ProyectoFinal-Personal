@@ -20,20 +20,17 @@ namespace ProyectoFinal.Servidor
 
         public void Actualizar(Examen examen)
         {
-            _ = _contexto.Examenes.AsNoTracking().FirstOrDefault(u => u.ExamenId == examen.ExamenId) ?? throw new Exception("El examen no existe.");
-
             _contexto.Examenes.Update(examen);
             _contexto.SaveChanges();
         }
 
         public void Eliminar(Guid id)
-        {
-            var examen = _contexto.Examenes.AsNoTracking().FirstOrDefault(u => u.ExamenId == id);
-            if (examen != null)
-            {
-                _contexto.Examenes.Remove(examen);
-                _contexto.SaveChanges();
-            }
+        {           
+            _contexto.Examenes.Remove(_contexto.Examenes.AsNoTracking().FirstOrDefault(u => u.ExamenId == id)!);
+            _contexto.SaveChanges();           
         }
+
+        public bool Existe(Guid examenId) => _contexto.Examenes.AsNoTracking().Any(x => x.ExamenId == examenId);        
+
     }
 }
