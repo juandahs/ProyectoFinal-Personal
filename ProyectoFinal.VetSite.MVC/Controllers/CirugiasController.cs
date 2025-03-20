@@ -103,6 +103,12 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
                 TempData["MensajeError"] = "No se estableció un modelo válido.";
                 return RedirectToAction("Index");
             }
+            
+            if (!_cirugiaServicio.Existe(cirugia.CirugiaId))
+            {
+                TempData["MensajeError"] = "No se existe el tipo de cirugia indicado.";
+                return RedirectToAction("Index");
+            }
 
             try
             {
@@ -123,8 +129,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
-        
+        [HttpPost]        
         public IActionResult Eliminar(Guid id)
         {
             try

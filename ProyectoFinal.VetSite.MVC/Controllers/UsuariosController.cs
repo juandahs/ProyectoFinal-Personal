@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProyectoFinal.Entidades;
+using ProyectoFinal.Repositorio;
 using ProyectoFinal.Servidor;
 using System.Security.Claims;
 
@@ -31,8 +32,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             return View();
         }
 
-        [HttpPost]
-        
+        [HttpPost]        
         public IActionResult Crear(Usuario usuario)
         {
             if (!ModelState.IsValid)
@@ -109,6 +109,12 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
                 return RedirectToAction("Index");
             }
 
+            if (_usuarioServicios.Existe(usuario.UsuarioId))
+            {
+                TempData["MensajeError"] = "No existe el usuario con el identificador dado.";
+                return RedirectToAction("Index");
+            }
+
             try
             {
                 var usuarioModificacionId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
@@ -130,6 +136,12 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             if (_usuarioServicios.TotalUsuarios() == 1)
             {
                 TempData["MensajeError"] = "No se puede eliminar el usuario ya que debe existir mínimo un usuario en el sistema.";
+                return RedirectToAction("Index");
+            }
+
+            if (_usuarioServicios.Existe(id))
+            {
+                TempData["MensajeError"] = "No existe el usuario con el identificador dado.";
                 return RedirectToAction("Index");
             }
 

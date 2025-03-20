@@ -36,17 +36,26 @@ namespace ProyectoFinal.Servidor
 
         public void Eliminar(Guid id)
         {
-            var propietario = _contexto.Propietarios.Include(x => x.Pacientes).AsNoTracking().FirstOrDefault(u => u.PropietarioId == id)
-                              ?? throw new ArgumentNullException("No se encontro información del propietario.");
+            var propietario = _contexto.Propietarios.AsNoTracking().FirstOrDefault(u => u.PropietarioId == id);
 
-            if (propietario.Pacientes.Count != 0)
-                throw new Exception("No se puede eliminar el propietario ya que tiene pacientes asociados.");
-                        
-            _contexto.Propietarios.Remove(propietario);
-            _contexto.SaveChanges();
+            if (propietario != null) 
+            {
+                _contexto.Propietarios.Remove(propietario);
+                _contexto.SaveChanges();
+            }
         }
 
-
         public bool Existe(string identifcacion) => _contexto.Propietarios.AsNoTracking().Any(x => x.NumeroIdentificacion== identifcacion);
+
+        public bool PuedeEliminar(Guid id)
+        {
+            var propietario = _contexto.Propietarios
+                .Include(x => x.Pacientes)
+                .AsNoTracking()
+                .FirstOrDefault(u => u.PropietarioId == id);
+
+            return propietario != null && !propietario.Pacientes.Any();
+        }
+
     }
 }

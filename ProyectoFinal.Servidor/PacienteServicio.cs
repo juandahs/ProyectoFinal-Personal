@@ -14,16 +14,8 @@ namespace ProyectoFinal.Servidor
 
         public void Agregar(Paciente paciente)
         {
-
-            try
-            {
                 _contexto.Pacientes.Add(paciente);
                 _contexto.SaveChanges();
-            }
-            catch (Exception e)
-            {
-                throw new Exception(message: $"message: {e.Message} inner: {e.InnerException}");
-            }
         }
 
         public void Actualizar(Paciente paciente)

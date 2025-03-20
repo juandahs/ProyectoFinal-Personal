@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using ProyectoFinal.Entidades;
 using ProyectoFinal.Servidor;
 using System.Security.Claims;
@@ -83,8 +84,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             return View(_propietarioServicio.ObtenerPorId(id));
         }
 
-        [HttpPost]
-        
+        [HttpPost]        
         public IActionResult Editar(Propietario propietario)
         {
 
@@ -118,6 +118,12 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         {
             try
             {
+                if (!_propietarioServicio.PuedeEliminar(id)) 
+                {
+                    TempData["MensajeError"] = "No se puede eliminar el propietario ya que tiene registros asociados.";
+                    return RedirectToAction("Index");
+                }
+
                 _propietarioServicio.Eliminar(id);
                 TempData["MensajeExito"] = "El propietario ha sido eliminado exitosamente.";
             }

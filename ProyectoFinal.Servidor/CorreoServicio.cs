@@ -132,12 +132,12 @@ namespace ProyectoFinal.Servidor
         {
             try
             {
-                MailMessage mailMessage = new MailMessage(_emailOrigen, emailDestino, asunto, mensaje)
+                MailMessage mailMessage = new (_emailOrigen, emailDestino, asunto, mensaje)
                 {
                     IsBodyHtml = true
                 };
 
-                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com")
+                SmtpClient smtpClient = new("smtp.gmail.com")
                 {
                     EnableSsl = true,
                     UseDefaultCredentials = false,
@@ -148,7 +148,6 @@ namespace ProyectoFinal.Servidor
                 smtpClient.Send(mailMessage);
                 smtpClient.Dispose();
 
-              //  Console.WriteLine("Correo enviado correctamente."); //para comfirmar que si funciona
             }
             catch (Exception ex)
             {
