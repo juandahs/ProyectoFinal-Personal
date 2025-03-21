@@ -12,8 +12,8 @@ using ProyectoFinal.Repositorio;
 namespace ProyectoFinal.Repositorio.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20250313195026_Init")]
-    partial class Init
+    [Migration("20250321042748_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -102,6 +102,7 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .HasColumnType("datetime");
 
                     b.Property<string>("Motivo")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("varchar");
 

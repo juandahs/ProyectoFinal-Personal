@@ -99,6 +99,7 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .HasColumnType("datetime");
 
                     b.Property<string>("Motivo")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("varchar");
 

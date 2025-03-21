@@ -148,7 +148,8 @@ namespace ProyectoFinal.Repositorio
 
                 t.Property(b => b.Motivo)
                     .HasColumnType("varchar")
-                    .HasMaxLength(256);
+                    .HasMaxLength(256)
+                    .IsRequired();
 
                 t.Property(b => b.Estado)
                     .HasColumnType("varchar")

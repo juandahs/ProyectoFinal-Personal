@@ -8,7 +8,7 @@ namespace ProyectoFinal.Entidades
         public Guid PacienteId { get; set; }
         public Guid UsuarioId { get; set; }
         public DateTime Fecha { get; set; }
-        public string? Motivo { get; set; }
+        public string Motivo { get; set; } = string.Empty;
         public CitaEstado Estado{ get; set; }
         public DateTime FechaCreacion { get; set; }
         public DateTime FechaModificacion { get; set; }

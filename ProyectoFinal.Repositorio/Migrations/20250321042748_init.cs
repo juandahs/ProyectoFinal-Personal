@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ProyectoFinal.Repositorio.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -56,7 +56,7 @@ namespace ProyectoFinal.Repositorio.Migrations
                     PacienteId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UsuarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Fecha = table.Column<DateTime>(type: "datetime", nullable: false),
-                    Motivo = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
+                    Motivo = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false),
                     Estado = table.Column<string>(type: "varchar(32)", maxLength: 32, nullable: false),
                     FechaCreacion = table.Column<DateTime>(type: "datetime", nullable: false),
                     FechaModificacion = table.Column<DateTime>(type: "datetime", nullable: false),
