@@ -213,3 +213,25 @@ h1 {
     .btn-success:hover {
         background-color: #7fd9eb;
     }
+
+/* ----- Botón para cambiar clave ----- */
+
+.btn-warning {
+    background-color: #fcfc72;
+    color: #856404;
+    border: none;
+}
+
+    .btn-warning:hover {
+        background-color: #ffca2c;
+        color: #000;
+        transform: scale(1.05);
+    }
+
+/* Ícono dentro del botón de cambiar clave */
+.cambiar-clave-btn i {
+    color: #ffffff;
+}
+
+
+
