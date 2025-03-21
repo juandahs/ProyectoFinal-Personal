@@ -152,7 +152,32 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        public IActionResult CancelarEstado(Guid Id)
+        {
+            try
+            {
+                if (!_citaServicio.Existe(Id))
+                {
+                    TempData["MensajeError"] = "No existe el usuario con el identificador dado.";
+                    return RedirectToAction("Index");
+                }
 
+                var usuarioId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+
+
+                _citaServicio.EditarEstado(Id, CitaEstado.Cancelada, Guid.Parse(usuarioId!));
+
+                TempData["MensajeExito"] = "La cita ha sido cancelada exitosamente.";
+            }
+            catch (Exception e)
+            {
+                TempData["MensajeError"] = $"Ocurrió un error al cancelar la cita: {e.Message}";
+            }
+
+            return RedirectToAction("Index");
+        }
 
 
     }
