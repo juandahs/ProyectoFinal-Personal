@@ -284,8 +284,9 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
 
 
                 _citaServicio.EditarEstado(Id, CitaEstado.Cancelada, Guid.Parse(usuarioId!));
-               
-                if(CitaEstado.Cancelada == CitaEstado.Cancelada)
+
+                var _cita = _citaServicio.ObtenerPorId(Id);
+                if (_cita.Estado == CitaEstado.Cancelada)
                 {
                     TempData["MensajeError"] = "La cita ya esta cancelada.";
                     return RedirectToAction("Index");
@@ -305,7 +306,6 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
 
             return RedirectToAction("Index");
         }
-
 
     }
 }

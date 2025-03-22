@@ -15,7 +15,8 @@
             <option value="" disabled selected>Seleccione un paciente</option>
             @foreach (var paciente in (ViewData["Pacientes"] as IEnumerable<Paciente>)!)
             {
-                <option value="@paciente.PacienteId">@paciente.Nombre</option>
+                string propietario = "Propietario";
+                <option value="@paciente.PacienteId">@($"{paciente.Nombre} - Propietario: {paciente.Propietario.Nombre}, {paciente.Propietario.CorreoElectronico}") </option>
             }
         </select>
         <span asp-validation-for="PacienteId" class="text-danger"></span>
