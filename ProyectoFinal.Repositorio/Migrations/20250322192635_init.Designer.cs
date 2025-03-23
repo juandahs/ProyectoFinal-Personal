@@ -12,7 +12,7 @@ using ProyectoFinal.Repositorio;
 namespace ProyectoFinal.Repositorio.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20250321042748_init")]
+    [Migration("20250322192635_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -525,10 +525,12 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Apellido")
+                        .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("varchar");
 
                     b.Property<string>("CorreoElectronico")
+                        .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("varchar");
 
@@ -553,6 +555,7 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .HasColumnType("varchar");
 
                     b.Property<string>("Telefono")
+                        .IsRequired()
                         .HasMaxLength(16)
                         .HasColumnType("varchar");
 

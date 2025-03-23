@@ -522,10 +522,12 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Apellido")
+                        .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("varchar");
 
                     b.Property<string>("CorreoElectronico")
+                        .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("varchar");
 
@@ -550,6 +552,7 @@ namespace ProyectoFinal.Repositorio.Migrations
                         .HasColumnType("varchar");
 
                     b.Property<string>("Telefono")
+                        .IsRequired()
                         .HasMaxLength(16)
                         .HasColumnType("varchar");
 

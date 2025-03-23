@@ -37,12 +37,7 @@ namespace ProyectoFinal.Servidor
 
         public void EditarEstado(Guid citaId, CitaEstado nuevoEstado, Guid usuarioModificacionId)
         {
-            var cita = _contexto.Citas.FirstOrDefault(c => c.CitaId == citaId);
-
-            if (cita == null)
-            {
-                throw new Exception("La cita no existe.");
-            }
+            var cita = _contexto.Citas.AsNoTracking().FirstOrDefault(c => c.CitaId == citaId) ?? throw new Exception("La cita no existe.");
 
             cita.Estado = nuevoEstado;
             cita.UsuarioModificacionId = usuarioModificacionId;

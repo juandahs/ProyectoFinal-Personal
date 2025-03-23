@@ -171,7 +171,13 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         [HttpPost]
         public IActionResult Crear(Cita cita)
         {
-            if (cita.Fecha.Date < DateTime.Now.Date) //si la fecha es menor que la fecha actual, muestre un menasje de rror
+            IEnumerable<Paciente> pacientes = _pacienteServicio.ObtenerTodos();
+            if (!pacientes.Any())
+            {
+                TempData["MensajeError"] = "Para asignar una cita a un paciente debe existir por lo menos un paciente en el sistema.";
+                return RedirectToAction("Index");
+            }
+            if (cita.Fecha.Date < DateTime.Now.Date) 
             {
                 TempData["MensajeError"] = "No puedes agendar una cita en un día que ya pasó.";
                 return RedirectToAction("Crear");
@@ -250,6 +256,17 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
                 return RedirectToAction("Index");
             }
 
+            if (cita.Fecha.Date < DateTime.Now.Date)
+            {
+                TempData["MensajeError"] = "No puedes agendar una cita en un día que ya pasó.";
+                return RedirectToAction("Crear");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                TempData["MensajeError"] = "La información de la cita no es válida. Revísela y trate nuevamente.";
+                return RedirectToAction("Index");
+            }
             try
             {
                 var usuarioModificacionId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
@@ -270,32 +287,31 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult CancelarEstado(Guid Id, Cita cita)
+        public IActionResult CambiarEstado(Guid id)
         {
+            var cita = _citaServicio.ObtenerPorId(id);
+
+            if (cita == null)
+            {
+                TempData["MensajeError"] = "No existe la cita con el identificador dado.";
+                return RedirectToAction("Index");
+            }
+
+            if (cita.Estado == CitaEstado.Cancelada)
+            {
+                TempData["MensajeError"] = "La cita ya esta cancelada.";
+                return RedirectToAction("Index");
+            }
+
             try
             {
-                if (!_citaServicio.Existe(Id))
-                {
-                    TempData["MensajeError"] = "No existe el usuario con el identificador dado.";
-                    return RedirectToAction("Index");
-                }
-
                 var usuarioId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
+                cita.FechaModificacion = DateTime.Now;
 
-                _citaServicio.EditarEstado(Id, CitaEstado.Cancelada, Guid.Parse(usuarioId!));
+                _citaServicio.EditarEstado(id, CitaEstado.Cancelada, Guid.Parse(usuarioId!));
 
-                var _cita = _citaServicio.ObtenerPorId(Id);
-                if (_cita.Estado == CitaEstado.Cancelada)
-                {
-                    TempData["MensajeError"] = "La cita ya esta cancelada.";
-                    return RedirectToAction("Index");
-                }
-                else
-                {
-                    TempData["MensajeExito"] = "La cita ha sido cancelada exitosamente.";
-
-                }
+                TempData["MensajeExito"] = "La cita ha sido cancelada exitosamente.";
 
 
             }

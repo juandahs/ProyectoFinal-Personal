@@ -4,9 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Shared", "3. Shared", "{125F78C0-A117-4E43-8BCE-41A34759B691}"
-	ProjectSection(SolutionItems) = preProject
-		ProyectoFinal.Servidor\DesparasitacionServicio.cs = ProyectoFinal.Servidor\DesparasitacionServicio.cs
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Backend", "2. Backend", "{E1BD3C1B-D7F0-4BE5-BBCC-43C722C85EA5}"
 EndProject

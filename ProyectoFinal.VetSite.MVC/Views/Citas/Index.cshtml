@@ -1,4 +1,5 @@
-﻿@model IEnumerable<ProyectoFinal.Entidades.Cita>
+﻿@using ProyectoFinal.Entidades
+@model IEnumerable<ProyectoFinal.Entidades.Cita>
 
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -41,10 +42,10 @@
                             <form asp-action="Editar" method="get" class="d-inline">
                                 <input type="hidden" name="id" value="@cita.CitaId" />
                                 <button type="submit" class="btn btn-primary me-2">
-                                    <i class="fas fa-edit"></i> Editar
+                                    <i class="fas fa-edit"></i>
                                 </button>
                             </form>
-                            <form asp-action="CancelarEstado" method="post" class="d-inline">
+                            <form asp-action="CambiarEstado" method="post" class="d-inline">
                                 <input type="hidden" name="id" value="@cita.CitaId" />
                                 <button type="submit" class="btn btn-danger me-2" onclick="return confirm('¿Está seguro de que desea cancelar esta cita?');">
                                     <i class="fas fa-window-close"></i>

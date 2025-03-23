@@ -771,15 +771,17 @@ namespace ProyectoFinal.Repositorio
 
                 t.Property(b => b.Apellido)
                     .HasColumnType("varchar")
-                    .HasMaxLength(128);
+                    .HasMaxLength(128)
+                    .IsRequired();
 
                 t.Property(b => b.Telefono)
                     .HasColumnType("varchar")
-                    .HasMaxLength(16);
+                    .HasMaxLength(16).IsRequired();
 
                 t.Property(b => b.CorreoElectronico)
                     .HasColumnType("varchar")
-                    .HasMaxLength(128);
+                    .HasMaxLength(128)
+                    .IsRequired();
 
                 t.Property(b => b.Direccion)
                     .HasColumnType("varchar")
