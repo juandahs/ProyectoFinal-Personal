@@ -20,12 +20,8 @@ namespace ProyectoFinal.Servidor
 
         public Usuario? ObtenerPorId(Guid id) => _contexto.Usuarios.FirstOrDefault(u => u.UsuarioId == id);
 
-        public void Actualizar(Usuario usuario, Guid usuarioModificacionId)
-        {
-            var usuarioDb = _contexto.Usuarios.AsNoTracking().FirstOrDefault(u => u.UsuarioId == usuario.UsuarioId) ?? throw new Exception("El usuario no existe.");
-
+        public void Actualizar(Usuario usuario, Guid usuarioModificacionId) =>
             _contexto.UsuarioActualizar(usuario, usuarioModificacionId).GetAwaiter().GetResult() ;
-        }
 
         public void Eliminar(Guid usuarioId)
         {            

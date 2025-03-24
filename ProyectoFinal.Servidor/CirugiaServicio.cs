@@ -14,21 +14,12 @@ namespace ProyectoFinal.Servidor
 
         public void Agregar(Cirugia cirugia)
         {
-            try
-            {
-                _contexto.Cirugias.Add(cirugia);
-                _contexto.SaveChanges();
-            }
-            catch (Exception e)
-            {
-                throw new Exception(message: $"message: {e.Message} inner: {e.InnerException}");
-            }
+           _contexto.Cirugias.Add(cirugia);
+           _contexto.SaveChanges();         
         }
 
         public void Actualizar(Cirugia cirugia)
         {
-            _ = _contexto.Cirugias.AsNoTracking().FirstOrDefault(u => u.CirugiaId == cirugia.CirugiaId) ?? throw new Exception("La cirugía no existe.");
-
             _contexto.Cirugias.Update(cirugia);
             _contexto.SaveChanges();
         }

@@ -36,7 +36,7 @@
                         <td>@paciente.Edad</td>
                         <td>@(paciente.Sexo == 'M' ? "Macho" : "Hembra" )</td>
                         <td>@paciente.Especie</td>
-                        <td>@paciente.Propietario.Nombre</td>
+                        <td>@paciente.Propietario!.Nombre</td>
                         <td class="text-center">
                             <form asp-action="Editar" method="get" class="d-inline">
                                 <input type="hidden" name="id" value="@paciente.PacienteId" />

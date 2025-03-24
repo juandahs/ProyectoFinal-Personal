@@ -35,24 +35,7 @@ namespace ProyectoFinal.Servidor
             _contexto.SaveChanges();
         }
 
-        public void EditarEstado(Guid citaId, CitaEstado nuevoEstado, Guid usuarioModificacionId)
-        {
-            var cita = _contexto.Citas.AsNoTracking().FirstOrDefault(c => c.CitaId == citaId) ?? throw new Exception("La cita no existe.");
-
-            cita.Estado = nuevoEstado;
-            cita.UsuarioModificacionId = usuarioModificacionId;
-            cita.FechaModificacion = DateTime.Now;
-
-            _contexto.Entry(cita).Property(x => x.Estado).IsModified = true;
-            _contexto.Entry(cita).Property(x => x.UsuarioModificacionId).IsModified = true;
-            _contexto.Entry(cita).Property(x => x.FechaModificacion).IsModified = true;
-
-            _contexto.SaveChanges();
-        }
-
         public bool Existe(Guid citaId) => _contexto.Citas.AsNoTracking().Any(x => x.CitaId == citaId);
-
-
 
     }
 }

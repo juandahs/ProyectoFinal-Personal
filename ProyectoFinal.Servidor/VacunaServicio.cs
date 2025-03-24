@@ -39,6 +39,5 @@ namespace ProyectoFinal.Servidor
 
         public bool Existe(Guid vacunaId) => _contexto.Vacunas.AsNoTracking().Any(x => x.VacunaId == vacunaId);
 
-
     }
 }

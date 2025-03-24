@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Builder; 
-using Microsoft.Extensions.DependencyInjection;
+﻿using ProyectoFinal.Repositorio;
+using Microsoft.AspNetCore.Builder; 
 using Microsoft.EntityFrameworkCore; 
-using ProyectoFinal.Repositorio;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration; 
 
 namespace ProyectoFinal.Servidor

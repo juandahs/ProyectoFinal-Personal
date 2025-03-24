@@ -37,8 +37,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             return View();
         }
 
-        [HttpPost]
-        
+        [HttpPost]        
         public IActionResult Crear(Paciente paciente)
         {
             if (!ModelState.IsValid)
@@ -48,8 +47,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             }
 
             try
-            {
-                
+            {                
                 var usuarioId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
                 paciente.FechaCreacion = DateTime.Now;
@@ -92,14 +90,19 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         }
 
 
-        [HttpPost]
-        
+        [HttpPost]        
         public IActionResult Editar(Paciente paciente)
         {
 
             if (!ModelState.IsValid)
             {
                 TempData["MensajeError"] = "No se estableció un modelo válido.";
+                return RedirectToAction("Index");
+            }
+
+            if (_pacienteServicio.Existe(paciente.PacienteId))
+            {
+                TempData["MensajeError"] = "La información del paciente no existe.";
                 return RedirectToAction("Index");
             }
 
@@ -123,10 +126,14 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         }
 
 
-        [HttpPost]
-        
+        [HttpPost]        
         public IActionResult Eliminar(Guid id)
-        {   
+        {
+            if (_pacienteServicio.Existe(id)) 
+            {
+                TempData["MensajeError"] = "La información del paciente no existe.";
+                return RedirectToAction("Index");
+            }
 
             try
             {

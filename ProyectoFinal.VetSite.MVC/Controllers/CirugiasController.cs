@@ -106,7 +106,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             
             if (!_cirugiaServicio.Existe(cirugia.CirugiaId))
             {
-                TempData["MensajeError"] = "No se existe el tipo de cirugia indicado.";
+                TempData["MensajeError"] = "No se existe la cirugía indicad1.";
                 return RedirectToAction("Index");
             }
 
@@ -118,7 +118,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
                 cirugia.FechaModificacion = DateTime.Now;
 
                 _cirugiaServicio.Actualizar(cirugia);
-                TempData["MensajeExito"] = "La cirugia ha sido actualizada exitosamente.";
+                TempData["MensajeExito"] = "La cirugía ha sido actualizada exitosamente.";
             }
             catch (Exception ex)
             {
@@ -132,14 +132,20 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         [HttpPost]        
         public IActionResult Eliminar(Guid id)
         {
+            if (!_cirugiaServicio.Existe(id))
+            {
+                TempData["MensajeError"] = "No se existe la cirugía indicada.";
+                return RedirectToAction("Index");
+            }
+
             try
             {
                 _cirugiaServicio.Eliminar(id);
-                TempData["MensajeExito"] = "La cirugia ha sido eliminada exitosamente.";
+                TempData["MensajeExito"] = "La cirugía ha sido eliminada exitosamente.";
             }
             catch (Exception e)
             {
-                TempData["MensajeError"] = $"Ocurrió un error eliminando la cirugia: {e.Message}";
+                TempData["MensajeError"] = $"Ocurrió un error eliminando la cirugía: {e.Message}";
             }
 
             return RedirectToAction("Index");

@@ -163,7 +163,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewData["Pacientes"] = _pacienteServicio.ObtenerTodos();
+            ViewData["Pacientes"] = pacientes;
             ViewData["Usuarios"] = _usuarioServicios.ObtenerTodos();
             return View();
         }
@@ -171,23 +171,28 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         [HttpPost]
         public IActionResult Crear(Cita cita)
         {
-            IEnumerable<Paciente> pacientes = _pacienteServicio.ObtenerTodos();
-            if (!pacientes.Any())
+            if (!ModelState.IsValid)
             {
-                TempData["MensajeError"] = "Para asignar una cita a un paciente debe existir por lo menos un paciente en el sistema.";
+                TempData["MensajeError"] = "La información de la cita no es válida. Revísela y trate nuevamente.";
                 return RedirectToAction("Index");
             }
+
             if (cita.Fecha.Date < DateTime.Now.Date) 
             {
                 TempData["MensajeError"] = "No puedes agendar una cita en un día que ya pasó.";
                 return RedirectToAction("Crear");
             }
 
-            if (!ModelState.IsValid)
+            Paciente paciente = _pacienteServicio.ObtenerPorId(cita.PacienteId)!;
+            if (paciente == null)
             {
-                TempData["MensajeError"] = "La información de la cita no es válida. Revísela y trate nuevamente.";
+                TempData["MensajeError"] = "La información del paciente de la cita no es valida.";
                 return RedirectToAction("Index");
             }
+
+            Propietario propietario = paciente.Propietario!;
+            
+
             try
             {
 
@@ -201,23 +206,22 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
 
                 _citaServicio.Insertar(cita);
                 
-                //Valores para enviar correo
+                
                 var asunto = "Cita programada!";
-                var propietario = _pacienteServicio.ObtenerPorId(cita.PacienteId).Propietario.Nombre.ToString();
-                var paciente = _pacienteServicio.ObtenerPorId(cita.PacienteId).Nombre.ToString();
                 var motivo = cita.Motivo;
                 var fecha = cita.Fecha.ToString("dd/MM/yyyy");
                 var hora = cita.Fecha.ToString("hh:mm tt");
 
                 var mensaje = _plantillaPropietario
-                    .Replace("{0}", propietario)
-                    .Replace("{1}", paciente)
+                    .Replace("{0}", propietario.Nombre)
+                    .Replace("{1}", paciente.Nombre)
                     .Replace("{2}", motivo)
                     .Replace("{3}", fecha)
                     .Replace("{4}", hora);
 
-                _correoServicio.EnviarCorreo(_pacienteServicio.ObtenerPorId(cita.PacienteId).Propietario.CorreoElectronico,asunto, mensaje);
-                TempData["MensajeExito"] = "Cita creada exitosamente.";
+                //Se valida que exista un correo electrónico para enviar el correo electrónico.
+                if (!string.IsNullOrWhiteSpace(propietario.CorreoElectronico))
+                    _correoServicio.EnviarCorreo(propietario.CorreoElectronico, asunto, mensaje);
             }
             catch (Exception e)
             {
@@ -227,6 +231,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
 
             return RedirectToAction("Index");
         }
+        
         [HttpGet]
         public IActionResult Editar(Guid id)
         {
@@ -261,12 +266,18 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
                 TempData["MensajeError"] = "No puedes agendar una cita en un día que ya pasó.";
                 return RedirectToAction("Crear");
             }
+        
 
-            if (!ModelState.IsValid)
+            Paciente paciente = _pacienteServicio.ObtenerPorId(cita.PacienteId)!;
+            if (paciente == null)
             {
-                TempData["MensajeError"] = "La información de la cita no es válida. Revísela y trate nuevamente.";
+                TempData["MensajeError"] = "La información del paciente de la cita no es valida.";
                 return RedirectToAction("Index");
             }
+
+            Propietario propietario = paciente.Propietario!;
+
+
             try
             {
                 var usuarioModificacionId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
@@ -276,6 +287,24 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
 
                 _citaServicio.Actualizar(cita);
                 TempData["MensajeExito"] = "La cita ha sido actualizada exitosamente.";
+
+
+                var asunto = "Su ha sido cita reprogramada.";
+                var motivo = cita.Motivo;
+                var fecha = cita.Fecha.ToString("dd/MM/yyyy");
+                var hora = cita.Fecha.ToString("hh:mm tt");
+
+                var mensaje = _plantillaPropietario
+                    .Replace("{0}", propietario.Nombre)
+                    .Replace("{1}", paciente.Nombre)
+                    .Replace("{2}", motivo)
+                    .Replace("{3}", fecha)
+                    .Replace("{4}", hora);
+
+                //Se valida que exista un correo electrónico para enviar el correo electrónico.
+                if (!string.IsNullOrWhiteSpace(propietario.CorreoElectronico))
+                    _correoServicio.EnviarCorreo(propietario.CorreoElectronico, asunto, mensaje);
+
             }
             catch (Exception ex)
             {
@@ -287,7 +316,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult CambiarEstado(Guid id)
+        public IActionResult Cancelar(Guid id)
         {
             var cita = _citaServicio.ObtenerPorId(id);
 
@@ -303,16 +332,49 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
                 return RedirectToAction("Index");
             }
 
+           
+            if (cita.Fecha.Date < DateTime.Now.Date)
+            {
+                TempData["MensajeError"] = "No puedes agendar una cita en un día que ya pasó.";
+                return RedirectToAction("Crear");
+            }
+
+
+            Paciente paciente = _pacienteServicio.ObtenerPorId(cita.PacienteId)!;
+            if (paciente == null)
+            {
+                TempData["MensajeError"] = "La información del paciente de la cita no es valida.";
+                return RedirectToAction("Index");
+            }
+
+            Propietario propietario = paciente.Propietario!;
+
             try
             {
                 var usuarioId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
                 cita.FechaModificacion = DateTime.Now;
 
-                _citaServicio.EditarEstado(id, CitaEstado.Cancelada, Guid.Parse(usuarioId!));
+                _citaServicio.Actualizar(cita);
 
                 TempData["MensajeExito"] = "La cita ha sido cancelada exitosamente.";
 
+
+                var asunto = "Su cita programada ha sido cancelada.";
+                var motivo = cita.Motivo;
+                var fecha = cita.Fecha.ToString("dd/MM/yyyy");
+                var hora = cita.Fecha.ToString("hh:mm tt");
+
+                var mensaje = _plantillaPropietario
+                    .Replace("{0}", propietario.Nombre)
+                    .Replace("{1}", paciente.Nombre)
+                    .Replace("{2}", motivo)
+                    .Replace("{3}", fecha)
+                    .Replace("{4}", hora);
+
+                //Se valida que exista un correo electrónico para enviar el correo electrónico.
+                if (!string.IsNullOrWhiteSpace(propietario.CorreoElectronico))
+                    _correoServicio.EnviarCorreo(propietario.CorreoElectronico, asunto, mensaje);                    
 
             }
             catch (Exception e)

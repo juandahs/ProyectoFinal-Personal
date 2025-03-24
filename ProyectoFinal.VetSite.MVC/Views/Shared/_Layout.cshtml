@@ -30,6 +30,7 @@
 
     <!-- Sidebar fijo (oculto por defecto) -->
     <div id="sidebar" class="sidebar">
+        <a href="/Home">Página principal</a>
         <a href="/Citas">Citas</a>
         <a href="/Propietarios">Propietarios</a>
         <a href="/Pacientes">Pacientes</a>
@@ -51,7 +52,7 @@
                     <div class="d-flex align-items-center">
                         <!-- Botón que llama a toggleSidebar() -->
                         <button id="menu-button" class="menu-button" onclick="toggleSidebar()">☰</button>
-                        <a id="app-title" class="navbar-brand ms-2" asp-area="" asp-page="/Home/Index">VetSite</a>
+                        <a id="app-title" class="navbar-brand ms-2" asp-controller="Home" asp-action="Index">VetSite</a>
                     </div>
 
                     <div class="d-flex align-items-center">
