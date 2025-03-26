@@ -6,16 +6,16 @@ using ProyectoFinal.Servidor;
 
 namespace ProyectoFinal.VetSite.MVC.Controllers
 {
-    public class CitasController(CitaServicio citaServicio, 
+    public class CitasController(CitaServicio citaServicio,
                                  PacienteServicio pacienteServicio,
-                                 CorreoServicio correoServicio, 
+                                 CorreoServicio correoServicio,
                                  UsuarioServicios usuarioServicios) : Controller
     {
         private readonly CitaServicio _citaServicio = citaServicio;
         private readonly PacienteServicio _pacienteServicio = pacienteServicio;
         private readonly CorreoServicio _correoServicio = correoServicio;
         private readonly UsuarioServicios _usuarioServicios = usuarioServicios;
-        public string _plantillaPropietario = """ 
+        public string _plantilla = """ 
 
          <!DOCTYPE html>
       <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
@@ -97,27 +97,27 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
                   <img src="LOGO_URL" alt="Clínica Veterinaria">
               </div>
               <div class="content">
-                  <h2>¡Tu cita está programada!</h2>
+                  <h2>{0}</h2>
                   <table class="details-table">
                       <tr>
                           <td>Propietario:</td>
-                          <td>{0}</td>
-                      </tr>
-                      <tr>
-                          <td>Mascota:</td>
                           <td>{1}</td>
                       </tr>
                       <tr>
-                          <td>Motivo:</td>
+                          <td>Mascota:</td>
                           <td>{2}</td>
                       </tr>
                       <tr>
-                          <td>Fecha:</td>
+                          <td>Motivo:</td>
                           <td>{3}</td>
                       </tr>
                       <tr>
-                          <td>Hora:</td>
+                          <td>Fecha:</td>
                           <td>{4}</td>
+                      </tr>
+                      <tr>
+                          <td>Hora:</td>
+                          <td>{5}</td>
                       </tr>
                   </table>
               </div>
@@ -127,8 +127,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
               </div>
           </div>
       </body>
-      </html>     
-    
+      </html>    
       """;
 
 
@@ -153,7 +152,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult Crear() 
+        public IActionResult Crear()
         {
 
             IEnumerable<Paciente> pacientes = _pacienteServicio.ObtenerTodos();
@@ -177,7 +176,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
                 return RedirectToAction("Index");
             }
 
-            if (cita.Fecha.Date < DateTime.Now.Date) 
+            if (cita.Fecha.Date < DateTime.Now.Date)
             {
                 TempData["MensajeError"] = "No puedes agendar una cita en un día que ya pasó.";
                 return RedirectToAction("Crear");
@@ -191,7 +190,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             }
 
             Propietario propietario = paciente.Propietario!;
-            
+
 
             try
             {
@@ -205,19 +204,21 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
                 cita.UsuarioModificacionId = Guid.Parse(usuarioId!);
 
                 _citaServicio.Insertar(cita);
-                
-                
+
+
                 var asunto = "Cita programada!";
                 var motivo = cita.Motivo;
                 var fecha = cita.Fecha.ToString("dd/MM/yyyy");
                 var hora = cita.Fecha.ToString("hh:mm tt");
 
-                var mensaje = _plantillaPropietario
-                    .Replace("{0}", propietario.Nombre)
-                    .Replace("{1}", paciente.Nombre)
-                    .Replace("{2}", motivo)
-                    .Replace("{3}", fecha)
-                    .Replace("{4}", hora);
+                var mensaje = _plantilla
+                        .Replace("{0}", asunto)
+                        .Replace("{1}", propietario.Nombre + " " + propietario.Apellido)
+                        .Replace("{2}", paciente.Nombre)
+                        .Replace("{3}", motivo)
+                        .Replace("{4}", fecha)
+                        .Replace("{5}", hora);
+
 
                 //Se valida que exista un correo electrónico para enviar el correo electrónico.
                 if (!string.IsNullOrWhiteSpace(propietario.CorreoElectronico))
@@ -231,7 +232,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
 
             return RedirectToAction("Index");
         }
-        
+
         [HttpGet]
         public IActionResult Editar(Guid id)
         {
@@ -266,7 +267,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
                 TempData["MensajeError"] = "No puedes agendar una cita en un día que ya pasó.";
                 return RedirectToAction("Crear");
             }
-        
+
 
             Paciente paciente = _pacienteServicio.ObtenerPorId(cita.PacienteId)!;
             if (paciente == null)
@@ -294,12 +295,13 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
                 var fecha = cita.Fecha.ToString("dd/MM/yyyy");
                 var hora = cita.Fecha.ToString("hh:mm tt");
 
-                var mensaje = _plantillaPropietario
-                    .Replace("{0}", propietario.Nombre)
-                    .Replace("{1}", paciente.Nombre)
-                    .Replace("{2}", motivo)
-                    .Replace("{3}", fecha)
-                    .Replace("{4}", hora);
+                var mensaje = _plantilla
+                    .Replace("{0}", asunto)
+                    .Replace("{1}", propietario.Nombre + " " + propietario.Apellido)
+                    .Replace("{2}", paciente.Nombre)
+                    .Replace("{3}", motivo)
+                    .Replace("{4}", fecha)
+                    .Replace("{5}", hora);
 
                 //Se valida que exista un correo electrónico para enviar el correo electrónico.
                 if (!string.IsNullOrWhiteSpace(propietario.CorreoElectronico))
@@ -332,7 +334,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
                 return RedirectToAction("Index");
             }
 
-           
+
             if (cita.Fecha.Date < DateTime.Now.Date)
             {
                 TempData["MensajeError"] = "No puedes agendar una cita en un día que ya pasó.";
@@ -365,16 +367,17 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
                 var fecha = cita.Fecha.ToString("dd/MM/yyyy");
                 var hora = cita.Fecha.ToString("hh:mm tt");
 
-                var mensaje = _plantillaPropietario
-                    .Replace("{0}", propietario.Nombre)
-                    .Replace("{1}", paciente.Nombre)
-                    .Replace("{2}", motivo)
-                    .Replace("{3}", fecha)
-                    .Replace("{4}", hora);
+                var mensaje = _plantilla
+                      .Replace("{0}", asunto)
+                      .Replace("{1}", propietario.Nombre + " " + propietario.Apellido)
+                      .Replace("{2}", paciente.Nombre)
+                      .Replace("{3}", motivo)
+                      .Replace("{4}", fecha)
+                      .Replace("{5}", hora);
 
                 //Se valida que exista un correo electrónico para enviar el correo electrónico.
                 if (!string.IsNullOrWhiteSpace(propietario.CorreoElectronico))
-                    _correoServicio.EnviarCorreo(propietario.CorreoElectronico, asunto, mensaje);                    
+                    _correoServicio.EnviarCorreo(propietario.CorreoElectronico, asunto, mensaje);
 
             }
             catch (Exception e)
