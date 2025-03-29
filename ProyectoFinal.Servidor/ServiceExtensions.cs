@@ -45,7 +45,7 @@ namespace ProyectoFinal.Servidor
 
             if (!await context.TipoIdentificaciones.AnyAsync())
             {
-                var sqlDatosPath = Path.Combine(AppContext.BaseDirectory, "AppData\\Datos.sql");
+                var sqlDatosPath = Path.Combine(AppContext.BaseDirectory, "AppData", "Datos.sql");
                 var sqlDatos = await File.ReadAllTextAsync(sqlDatosPath);
 
                 await context.Database.ExecuteSqlRawAsync(sqlDatos);
