@@ -25,8 +25,13 @@ namespace ProyectoFinal.Servidor
 
         public void Eliminar(Guid usuarioId)
         {            
-            _contexto.Usuarios.Remove(_contexto.Usuarios.AsNoTracking().FirstOrDefault(u => u.UsuarioId == usuarioId)!);
-            _contexto.SaveChanges();
+            var usuario = _contexto.Usuarios.AsNoTracking().FirstOrDefault(u => u.UsuarioId == usuarioId);
+
+            if (usuario != null)
+            {
+                _contexto.Usuarios.Remove(usuario);
+                _contexto.SaveChanges();
+            }
         }
 
         public bool Existe(string correoElectronico, string numeroIdentificacion)  => _contexto.Usuarios.AsNoTracking().Any(x => x.CorreoElectronico == correoElectronico || x.NumeroIdentificacion == numeroIdentificacion);

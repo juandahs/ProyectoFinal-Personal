@@ -27,14 +27,21 @@ namespace ProyectoFinal.Servidor
 
         public void Actualizar(Vacuna vacuna)
         {
+            _ = _contexto.Vacunas.AsNoTracking().FirstOrDefault(u => u.VacunaId == vacuna.VacunaId) ?? throw new Exception("La vacuna no existe.");
+
             _contexto.Vacunas.Update(vacuna);
             _contexto.SaveChanges();
         }
 
         public void Eliminar(Guid id)
         {
-            _contexto.Vacunas.Remove(_contexto.Vacunas.AsNoTracking().FirstOrDefault(u => u.VacunaId == id)!);
-            _contexto.SaveChanges();
+           var vacuna = _contexto.Vacunas.AsNoTracking().FirstOrDefault(u => u.VacunaId == id);
+
+            if (vacuna != null)
+            {
+                _contexto.Vacunas.Remove(vacuna);
+                _contexto.SaveChanges();
+            }
         }
 
         public bool Existe(Guid vacunaId) => _contexto.Vacunas.AsNoTracking().Any(x => x.VacunaId == vacunaId);

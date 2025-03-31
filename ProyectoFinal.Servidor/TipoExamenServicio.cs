@@ -25,7 +25,9 @@ namespace ProyectoFinal.Servidor
         }
 
         public void Actualizar(TipoExamen tipoExamen)
-        {            
+        {
+            _ = _contexto.TipoExamenes.AsNoTracking().FirstOrDefault(u => u.TipoExamenId == tipoExamen.TipoExamenId) ?? throw new Exception("El tipo de examen no existe.");
+
             _contexto.TipoExamenes.Update(tipoExamen);
             _contexto.SaveChanges();
         }
@@ -33,10 +35,16 @@ namespace ProyectoFinal.Servidor
 
         public void Eliminar(Guid id)
         {
-            _contexto.TipoExamenes.Remove(_contexto.TipoExamenes.AsNoTracking().FirstOrDefault(u => u.TipoExamenId == id)!);
-            _contexto.SaveChanges();
+            var tipoExamen = _contexto.TipoExamenes.AsNoTracking().FirstOrDefault(u => u.TipoExamenId == id);
+
+            if (tipoExamen != null) 
+            {
+                _contexto.TipoExamenes.Remove(tipoExamen);
+                _contexto.SaveChanges();
+            }
         }
 
         public bool Existe(Guid tipoExamenId) => _contexto.TipoExamenes.AsNoTracking().Any(x => x.TipoExamenId == tipoExamenId);
+        
     }
 }

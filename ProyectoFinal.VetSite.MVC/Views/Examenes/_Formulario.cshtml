@@ -2,8 +2,6 @@
 @model ProyectoFinal.Entidades.Examen
 
 <div class="row">
-
-    <!-- Campo oculto para el UsuarioId -->
     @if (Model != null)
     {
         <input type="hidden" asp-for="ExamenId" />
@@ -27,7 +25,7 @@
     <div class="col-md-6 mb-3">
         <label asp-for="UsuarioId" class="form-label">Usuario quien aplica. *</label>
         <select asp-for="UsuarioId" class="form-select select2" required>
-            <option value="" disabled selected>Seleccione el paciente</option>
+            <option value="" disabled selected>Seleccione el usuario</option>
             @foreach (var usuario in (ViewData["Usuarios"] as IEnumerable<Usuario>)!)
             {
                 <option value="@usuario.UsuarioId">@($"{usuario.Nombre}")</option>
@@ -38,9 +36,9 @@
 
     <!-- TipoExamen -->
     <div class="col-md-6 mb-3">
-        <label asp-for="TipoExamenId" class="form-label">Tipo de Vacuna *</label>
+        <label asp-for="TipoExamenId" class="form-label">Tipo de Examen *</label>
         <select asp-for="TipoExamenId" class="form-select select2" required>
-            <option value="" disabled selected>Seleccione el tipo de vacuna</option>
+            <option value="" disabled selected>Seleccione el tipo de Examen</option>
             @foreach (var tipo in (ViewData["TipoExamenes"] as IEnumerable<TipoExamen>)!)
             {
                 <option value="@tipo.TipoExamenId">@($"{tipo.Descripcion}")</option>

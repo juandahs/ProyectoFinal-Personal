@@ -139,12 +139,6 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
                 return RedirectToAction("Index");
             }
 
-            if (_usuarioServicios.Existe(id))
-            {
-                TempData["MensajeError"] = "No existe el usuario con el identificador dado.";
-                return RedirectToAction("Index");
-            }
-
             try
             {
                 _usuarioServicios.Eliminar(id);

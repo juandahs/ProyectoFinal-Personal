@@ -100,12 +100,6 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
                 return RedirectToAction("Index");
             }
 
-            if (_pacienteServicio.Existe(paciente.PacienteId))
-            {
-                TempData["MensajeError"] = "La información del paciente no existe.";
-                return RedirectToAction("Index");
-            }
-
             try
             {
                 var usuarioModificacionId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
@@ -129,14 +123,15 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         [HttpPost]        
         public IActionResult Eliminar(Guid id)
         {
-            if (_pacienteServicio.Existe(id)) 
+            if (!_pacienteServicio.PuedeEliminar(id))
             {
-                TempData["MensajeError"] = "La información del paciente no existe.";
+                TempData["MensajeError"] = "No se puede eliminar el paciente ya que tiene registros asociados.";
                 return RedirectToAction("Index");
             }
 
             try
             {
+                
                 _pacienteServicio.Eliminar(id);
                 TempData["MensajeExito"] = "El paciente ha sido eliminado exitosamente.";
             }
