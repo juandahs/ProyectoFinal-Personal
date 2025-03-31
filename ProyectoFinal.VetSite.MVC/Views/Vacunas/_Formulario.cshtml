@@ -14,7 +14,7 @@
     <!-- Paciente  -->
     <div class="col-md-6 mb-3">
         <label asp-for="PacienteId" class="form-label">Paciente *</label>
-        <select asp-for="PacienteId" class="form-select select2" required>
+        <select asp-for="PacienteId" id="paciente" class="form-select select2" required>
             <option value="" disabled selected>Seleccione el paciente</option>
             @foreach (var paciente in (ViewData["Pacientes"] as IEnumerable<Paciente>)!)
             {
@@ -26,7 +26,7 @@
 
     <div class="col-md-6 mb-3">
     <label asp-for="UsuarioId" class="form-label">Usuario *</label>
-    <select asp-for="UsuarioId" class="form-select select2" required>
+    <select asp-for="UsuarioId" id="usuario" class="form-select select2" required>
         <option value="" disabled selected>Seleccione el paciente</option>
         @foreach (var usuario in (ViewData["Usuarios"] as IEnumerable<Usuario>)!)
         {
@@ -89,18 +89,19 @@
 
 </div>
 
-
-
 <!-- Scripts -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 <script>
     $(document).ready(function () {
-        $('.select2').select2({
+        $('#paciente, #usuario').select2({
             theme: "bootstrap-5",
-            placeholder: "Seleccione un paciente",
-            allowClear: true
+            allowClear: true,
+            language: {
+                noResults: function () {
+                    return "No se encontraron resultados";
+                }
+            }
         });
     });
 </script>
