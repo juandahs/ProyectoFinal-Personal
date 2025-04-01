@@ -78,7 +78,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
                 return RedirectToAction("Index");
             }
 
-            if (_tipoCirugiaServicio.Existe(tipoCirugia.TipoCirugiaId))
+            if (!_tipoCirugiaServicio.Existe(tipoCirugia.TipoCirugiaId))
             {
                 TempData["MensajeError"] = "No existe un tipo de cirugía con el identificador dado.";
                 return RedirectToAction("Index");
@@ -108,7 +108,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         public IActionResult Eliminar(Guid id)
         {
 
-            if (_tipoCirugiaServicio.Existe(id))
+            if (!_tipoCirugiaServicio.Existe(id))
             {
                 TempData["MensajeError"] = "No existe un tipo de cirugía con el identificador dado.";
                 return RedirectToAction("Index");

@@ -100,7 +100,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
                 return RedirectToAction("Index");
             }
 
-            if (_pacienteServicio.Existe(paciente.PacienteId))
+            if (!_pacienteServicio.Existe(paciente.PacienteId))
             {
                 TempData["MensajeError"] = "La información del paciente no existe.";
                 return RedirectToAction("Index");
@@ -129,7 +129,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         [HttpPost]        
         public IActionResult Eliminar(Guid id)
         {
-            if (_pacienteServicio.Existe(id)) 
+            if (!_pacienteServicio.Existe(id)) 
             {
                 TempData["MensajeError"] = "La información del paciente no existe.";
                 return RedirectToAction("Index");

@@ -109,7 +109,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
                 return RedirectToAction("Index");
             }
 
-            if (_usuarioServicios.Existe(usuario.UsuarioId))
+            if (!_usuarioServicios.Existe(usuario.UsuarioId))
             {
                 TempData["MensajeError"] = "No existe el usuario con el identificador dado.";
                 return RedirectToAction("Index");
@@ -139,7 +139,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
                 return RedirectToAction("Index");
             }
 
-            if (_usuarioServicios.Existe(id))
+            if (!_usuarioServicios.Existe(id))
             {
                 TempData["MensajeError"] = "No existe el usuario con el identificador dado.";
                 return RedirectToAction("Index");
