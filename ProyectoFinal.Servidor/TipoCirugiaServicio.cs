@@ -27,23 +27,17 @@ namespace ProyectoFinal.Servidor
 
         public void Actualizar(TipoCirugia tipoCirugia)
         {
-            _ = _contexto.TipoCirugias.AsNoTracking().FirstOrDefault(u => u.TipoCirugiaId == tipoCirugia.TipoCirugiaId) ?? throw new Exception("El tipo de cirugía no existe.");
-
             _contexto.TipoCirugias.Update(tipoCirugia);
             _contexto.SaveChanges();
         }
 
         public void Eliminar(Guid id)
         {   
-             var tipoCirugia = _contexto.TipoCirugias.AsNoTracking().FirstOrDefault(u => u.TipoCirugiaId == id);
-
-            if (tipoCirugia != null)
-            {
-                _contexto.TipoCirugias.Remove(tipoCirugia);
-                _contexto.SaveChanges();
-            }
-
+            _contexto.TipoCirugias.Remove(_contexto.TipoCirugias.AsNoTracking().FirstOrDefault(u => u.TipoCirugiaId == id)!);
+            _contexto.SaveChanges();
         }
+
+
         public bool Existe(Guid tipoCirugiaId) => _contexto.TipoCirugias.AsNoTracking().Any(x => x.TipoCirugiaId == tipoCirugiaId);
 
     }

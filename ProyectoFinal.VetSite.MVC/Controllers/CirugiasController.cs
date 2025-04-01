@@ -104,6 +104,12 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
                 return RedirectToAction("Index");
             }
             
+            if (!_cirugiaServicio.Existe(cirugia.CirugiaId))
+            {
+                TempData["MensajeError"] = "No se existe la cirugía indicad1.";
+                return RedirectToAction("Index");
+            }
+
             try
             {
                 var usuarioModificacionId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
@@ -126,6 +132,11 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         [HttpPost]        
         public IActionResult Eliminar(Guid id)
         {
+            if (!_cirugiaServicio.Existe(id))
+            {
+                TempData["MensajeError"] = "No se existe la cirugía indicada.";
+                return RedirectToAction("Index");
+            }
 
             try
             {

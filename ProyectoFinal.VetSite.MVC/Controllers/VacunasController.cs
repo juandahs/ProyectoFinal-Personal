@@ -90,6 +90,12 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
                 return RedirectToAction("Index");
             }
 
+            if (_vacunaServicio.Existe(vacuna.VacunaId))
+            {
+                TempData["MensajeError"] = "No existe la vacuna con el identificador dado.";
+                return RedirectToAction("Index");
+            }
+
             try
             {
                 var usuarioModificacionId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
@@ -113,6 +119,13 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         
         public IActionResult Eliminar(Guid id)
         {
+
+            if (_vacunaServicio.Existe(id))
+            {
+                TempData["MensajeError"] = "No existe la vacuna con el identificador dado.";
+                return RedirectToAction("Index");
+            }
+
             try
             {
                 _vacunaServicio.Eliminar(id);

@@ -20,8 +20,6 @@ namespace ProyectoFinal.Servidor
 
         public void Actualizar(Cirugia cirugia)
         {
-            _ = _contexto.Cirugias.AsNoTracking().FirstOrDefault(u => u.CirugiaId == cirugia.CirugiaId) ?? throw new Exception("La cirugía no existe.");
-
             _contexto.Cirugias.Update(cirugia);
             _contexto.SaveChanges();
         }
