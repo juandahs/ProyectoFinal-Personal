@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ProyectoFinal.Entidades.Cirugia">
+    <Position X="5.25" Y="0.5" Width="2" />
+    <AssociationLine Name="UsuarioCreacion" Type="ProyectoFinal.Entidades.Usuario">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.332" Y="0.06" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="UsuarioModificacion" Type="ProyectoFinal.Entidades.Usuario">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.563" Y="0.254" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AgAAARAAIBAAAAAQARABAAAFAIAAAAIAAAAMAACAAAA=</HashCode>
+      <FileName>Cirugia.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="UsuarioCreacion" />
+      <Property Name="Paciente" />
+      <Property Name="TipoCirugia" />
+      <Property Name="Usuario" />
+      <Property Name="UsuarioModificacion" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="ProyectoFinal.Entidades.Cita">
+    <Position X="8.25" Y="10.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAIBABAAEQASABAAAAAIAAAAAAAAAMAACAAAg=</HashCode>
+      <FileName>Cita.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Usuario" />
+      <Property Name="Paciente" />
+      <Property Name="UsuarioCreacion" />
+      <Property Name="UsuarioModificacion" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="ProyectoFinal.Entidades.Consulta" Collapsed="true">
+    <Position X="14.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAIAAAAIBAgAAEQASABAAAAAIAAAAAAAAAIAACAAAA=</HashCode>
+      <FileName>Consulta.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProyectoFinal.Entidades.Credenciales" Collapsed="true">
+    <Position X="16.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>Credenciales.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProyectoFinal.Entidades.Desparasitacion" Collapsed="true">
+    <Position X="18.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AwAAAAAAIJAAAAAQAQABAAAEBBAAAAAAAQAIAACAAAA=</HashCode>
+      <FileName>Desparasitacion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProyectoFinal.Entidades.Examen">
+    <Position X="8.25" Y="0.5" Width="2" />
+    <AssociationLine Name="UsuarioCreacion" Type="ProyectoFinal.Entidades.Usuario">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.032" Y="0.646" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="UsuarioModificacion" Type="ProyectoFinal.Entidades.Usuario">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.023" Y="0.452" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="Usuario" Type="ProyectoFinal.Entidades.Usuario">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.051" Y="0.822" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AkAAAAAAIBAAAAEQAQABAAAFAIAAAAAAAAAMCACIAAA=</HashCode>
+      <FileName>Examen.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Paciente" />
+      <Property Name="TipoExamen" />
+      <Property Name="UsuarioCreacion" />
+      <Property Name="UsuarioModificacion" />
+      <Property Name="Usuario" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="ProyectoFinal.Entidades.FormulaMedica" Collapsed="true">
+    <Position X="14.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAEAAAARAAAAEQAQABAAAEAIAAAAAAAAAMAAAAAAA=</HashCode>
+      <FileName>FormulaMedica.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProyectoFinal.Entidades.FormulaMedicaMedicamento" Collapsed="true">
+    <Position X="16.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAACAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAg=</HashCode>
+      <FileName>FormulaMedicaMedicamento.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProyectoFinal.Entidades.ImagenDiagnostica" Collapsed="true">
+    <Position X="18.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAIBAAAAEQAQABAAAUAIAIABAAAAAsAACAgAE=</HashCode>
+      <FileName>ImagenDiagnostica.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProyectoFinal.Entidades.Medicamento" Collapsed="true">
+    <Position X="14.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAACIQAAAAAQAAABAAAEAIAAABAAAAAMCACBAAA=</HashCode>
+      <FileName>Medicamento.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProyectoFinal.Entidades.Paciente">
+    <Position X="8.5" Y="5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AgCAAQAAJABAACBQgQABgAAQAAAAAgAAACAIAgCAAAA=</HashCode>
+      <FileName>Paciente.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="UsuarioCreacion" />
+      <Property Name="UsuarioModificacion" />
+      <Property Name="Propietario" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Vacunas" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="ProyectoFinal.Entidades.Propietario">
+    <Position X="5" Y="10.5" Width="2" />
+    <AssociationLine Name="UsuarioCreacion" Type="ProyectoFinal.Entidades.Usuario">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-0.046" Y="0.588" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="UsuarioModificacion" Type="ProyectoFinal.Entidades.Usuario">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.273" Y="0.096" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AoAAAAAAIBAAAAAUADABgAAQAAAAAAAAABAIAgCAAAI=</HashCode>
+      <FileName>Propietario.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="TipoIdentificacion" />
+      <Property Name="UsuarioCreacion" />
+      <Property Name="UsuarioModificacion" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Pacientes" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="ProyectoFinal.Entidades.Rol" Collapsed="true">
+    <Position X="16.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAQAAAAAAABAAAAAAAAAAAIAACAAhA=</HashCode>
+      <FileName>Rol.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProyectoFinal.Entidades.TipoCirugia">
+    <Position X="0.5" Y="2.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AgAAAQAAIAAAAAAQAAABAAABAAAAAAAAAAAIAACAAAA=</HashCode>
+      <FileName>TipoCirugia.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="UsuarioCreacion" />
+      <Property Name="UsuarioModificacion" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="ProyectoFinal.Entidades.TipoExamen">
+    <Position X="11.75" Y="0.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AkAAAAAAIAAAAAAQAAABgAABAAAAAAAAAAAIAACAAAA=</HashCode>
+      <FileName>TipoExamen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProyectoFinal.Entidades.TipoIdentificacion">
+    <Position X="1.5" Y="6" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAIAAAAAAQABABAAABAAAAAAAAAAQIAACAAgA=</HashCode>
+      <FileName>TipoIdentificacion.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="UsuarioCreacion" />
+      <Property Name="UsuarioModificacion" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="ProyectoFinal.Entidades.TipoImagenDiagnostica" Collapsed="true">
+    <Position X="18.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAJAAAAAAQAAABAAABAAAAAAAAAAAIAACAAAE=</HashCode>
+      <FileName>TipoImagenDiagnostica.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProyectoFinal.Entidades.Usuario">
+    <Position X="5" Y="5.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AIBAAAAAIAAAAAAQABAAgAgAAIAAAgAAABAIAgCAEBI=</HashCode>
+      <FileName>Usuario.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="TipoIdentificacion" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="ProyectoFinal.Entidades.Vacuna" Collapsed="true">
+    <Position X="11.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAQAAAIBAAAAAQAQABAAAEhIAAAAAAAQgMIACAAAA=</HashCode>
+      <FileName>Vacuna.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="ProyectoFinal.Entidades.CitaEstado" Collapsed="true">
+    <Position X="14.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAEBAA=</HashCode>
+      <FileName>CitaEstado.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ProyectoFinal.Entidades.DesparasitacionForma" Collapsed="true">
+    <Position X="16.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAABAAAAAAAAAAAAgAAAAACAEAAAACAAAAA=</HashCode>
+      <FileName>DesparacitacionForma.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ProyectoFinal.Entidades.DesparasitacionTipo" Collapsed="true">
+    <Position X="18.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DesparasitacionTipo.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
