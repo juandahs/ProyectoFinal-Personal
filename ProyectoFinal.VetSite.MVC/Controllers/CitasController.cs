@@ -258,14 +258,14 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
 
             if (!_citaServicio.Existe(cita.CitaId))
             {
-                TempData["MensajeError"] = "No se existe el tipo de cita indicado.";
+                TempData["MensajeError"] = "No se existe la cita con el identificador indicado.";
                 return RedirectToAction("Index");
             }
 
             if (cita.Fecha.Date < DateTime.Now.Date)
             {
                 TempData["MensajeError"] = "No puedes agendar una cita en un día que ya pasó.";
-                return RedirectToAction("Crear");
+                return RedirectToAction("Editar", cita);
             }
 
 
@@ -320,6 +320,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         [HttpPost]
         public IActionResult Cancelar(Guid id)
         {
+           
             var cita = _citaServicio.ObtenerPorId(id);
 
             if (cita == null)
@@ -335,14 +336,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             }
 
 
-            if (cita.Fecha.Date < DateTime.Now.Date)
-            {
-                TempData["MensajeError"] = "No puedes agendar una cita en un día que ya pasó.";
-                return RedirectToAction("Crear");
-            }
-
-
-            Paciente paciente = _pacienteServicio.ObtenerPorId(cita.PacienteId)!;
+            Paciente paciente = cita.Paciente!;
             if (paciente == null)
             {
                 TempData["MensajeError"] = "La información del paciente de la cita no es valida.";
@@ -356,6 +350,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
                 var usuarioId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
                 cita.FechaModificacion = DateTime.Now;
+                cita.Estado = CitaEstado.Cancelada;
 
                 _citaServicio.Actualizar(cita);
 

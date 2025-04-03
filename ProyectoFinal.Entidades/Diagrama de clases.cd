@@ -208,12 +208,18 @@
       <Property Name="TipoIdentificacion" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="ProyectoFinal.Entidades.Vacuna" Collapsed="true">
-    <Position X="11.25" Y="6.75" Width="1.5" />
+  <Class Name="ProyectoFinal.Entidades.Vacuna">
+    <Position X="11.5" Y="6.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AgAAQAAAIBAAAAAQAQABAAAEhIAAAAAAAQgMIACAAAA=</HashCode>
       <FileName>Vacuna.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Paciente" />
+      <Property Name="Usuario" />
+      <Property Name="UsuarioCreacion" />
+      <Property Name="UsuarioModificacion" />
+    </ShowAsAssociation>
   </Class>
   <Enum Name="ProyectoFinal.Entidades.CitaEstado" Collapsed="true">
     <Position X="14.75" Y="3.75" Width="1.5" />

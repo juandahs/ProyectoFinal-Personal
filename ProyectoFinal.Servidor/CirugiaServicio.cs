@@ -24,7 +24,6 @@ namespace ProyectoFinal.Servidor
             _contexto.SaveChanges();
         }
 
-
         public void Eliminar(Guid id)
         {
             var cirugia = _contexto.Cirugias.AsNoTracking().FirstOrDefault(u => u.CirugiaId == id);

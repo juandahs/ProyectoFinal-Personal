@@ -8,7 +8,7 @@ namespace ProyectoFinal.Servidor
     {
         private readonly Contexto _contexto = contexto;
 
-        public IEnumerable<Paciente> ObtenerTodos() => _contexto.Pacientes.Include(x => x.Propietario).AsNoTracking();
+        public IEnumerable<Paciente> ObtenerTodos() => _contexto.Pacientes.Include(x => x.Propietario).AsNoTracking().OrderBy(x => x.Nombre).ThenBy(x => x.PropietarioId).ThenBy(x => x.Edad);
 
         public Paciente? ObtenerPorId(Guid id) => _contexto.Pacientes.Include(x => x.Propietario).AsNoTracking().FirstOrDefault(p => p.PacienteId == id);
 

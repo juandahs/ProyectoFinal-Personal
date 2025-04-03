@@ -26,36 +26,36 @@
     <!-- Número de Identificación -->
     <div class="col-md-6 mb-3">
         <label asp-for="NumeroIdentificacion" class="form-label">Número de Identificación*</label>
-        <input asp-for="NumeroIdentificacion" class="form-control" required />
+        <input asp-for="NumeroIdentificacion" class="form-control" required maxlength="16" />
         <span asp-validation-for="NumeroIdentificacion" class="text-danger"></span>
     </div>
 
     <!-- Nombre -->
     <div class="col-md-6 mb-3">
         <label asp-for="Nombre" class="form-label">Nombre*</label>
-        <input asp-for="Nombre" class="form-control" required />
+        <input asp-for="Nombre" class="form-control" required maxlength="128"/>
         <span asp-validation-for="Nombre" class="text-danger"></span>
     </div>
 
     <!-- Apellido -->
     <div class="col-md-6 mb-3">
-        <label asp-for="Apellido" class="form-label">Apellido</label>
-        <input asp-for="Apellido" class="form-control" required />
+        <label asp-for="Apellido" class="form-label">Apellido*</label>
+        <input asp-for="Apellido" class="form-control" required maxlength="128"/>
         <span asp-validation-for="Apellido" class="text-danger"></span>
     </div>
 
     <!-- Correo Electrónico -->
     <div class="col-md-6 mb-3">
-        <label asp-for="CorreoElectronico" class="form-label">Correo Electrónico</label>
-        <input asp-for="CorreoElectronico" class="form-control" type="email" required />
+        <label asp-for="CorreoElectronico" class="form-label">Correo Electrónico*</label>
+        <input asp-for="CorreoElectronico" class="form-control" type="email" required maxlength="128"/>
         <span asp-validation-for="CorreoElectronico" class="text-danger"></span>
     </div>
 
 
     <!-- Teléfono -->
     <div class="col-md-6 mb-3">
-        <label asp-for="Telefono" class="form-label">Teléfono</label>
-        <input asp-for="Telefono" id="telefonoInput" class="form-control" required />
+        <label asp-for="Telefono" class="form-label">Teléfono*</label>
+        <input asp-for="Telefono" id="telefonoInput" class="form-control" required maxlength="16"/>
         <span asp-validation-for="Telefono" class="text-danger"></span>
     </div>
 
@@ -63,7 +63,7 @@
     <!-- Dirección -->
     <div class="col-md-12 mb-3">
         <label asp-for="Direccion" class="form-label">Dirección</label>
-        <input asp-for="Direccion" class="form-control" required />
+        <input asp-for="Direccion" class="form-control" maxlength="128" />
         <span asp-validation-for="Direccion" class="text-danger"></span>
     </div>
 </div>

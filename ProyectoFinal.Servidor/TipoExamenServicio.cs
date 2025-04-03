@@ -30,7 +30,6 @@ namespace ProyectoFinal.Servidor
             _contexto.SaveChanges();
         }
 
-
         public void Eliminar(Guid id)
         {
             _contexto.TipoExamenes.Remove(_contexto.TipoExamenes.AsNoTracking().FirstOrDefault(u => u.TipoExamenId == id)!);
