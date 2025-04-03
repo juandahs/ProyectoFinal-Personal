@@ -15,3 +15,6 @@ Para cambiar la contraseña, iniciamos sesión en Gmail, le damos click en admin
 luego en Seguridad y Buscamos Contraseñas de aplicacion y le damos un nombre a nuestra contraseña.
 https://youtu.be/TvOfrZnaunQ?si=1k50qUvxdgfK5sZI
 
+Formulario para pruebas UX: https://forms.gle/H1FASAEDWEDojtQf8
+
+
