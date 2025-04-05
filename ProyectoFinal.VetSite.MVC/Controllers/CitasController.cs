@@ -336,7 +336,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             }
 
 
-            Paciente paciente = cita.Paciente!;
+            Paciente paciente = _pacienteServicio.ObtenerPorId(cita.PacienteId)!;
             if (paciente == null)
             {
                 TempData["MensajeError"] = "La información del paciente de la cita no es valida.";
