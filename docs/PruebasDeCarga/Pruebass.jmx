@@ -23,9 +23,41 @@
         </elementProp>
       </ThreadGroup>
       <hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Login" enabled="true">
-          <stringProp name="HTTPSampler.domain">localhost</stringProp>
-          <stringProp name="HTTPSampler.port">7006</stringProp>
+        <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+          <collectionProp name="Arguments.arguments">
+            <elementProp name="url_base" elementType="Argument">
+              <stringProp name="Argument.name">url_base</stringProp>
+              <stringProp name="Argument.value">demovetsite.azurewebsites.net</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="default_user_id" elementType="Argument">
+              <stringProp name="Argument.name">default_user_id</stringProp>
+              <stringProp name="Argument.value">343F0B67-445E-48D6-8305-50AD1D76A154</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="propietario_id" elementType="Argument">
+              <stringProp name="Argument.name">propietario_id</stringProp>
+              <stringProp name="Argument.value">8BFF392D-9B52-4114-C696-08DD715EF341</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="tipo_identificacion_id" elementType="Argument">
+              <stringProp name="Argument.name">tipo_identificacion_id</stringProp>
+              <stringProp name="Argument.value">EF938A1F-4395-4DD2-96FE-350471E6CAB2</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+          </collectionProp>
+        </Arguments>
+        <hashTree/>
+        <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager">
+          <collectionProp name="CookieManager.cookies"/>
+          <boolProp name="CookieManager.clearEachIteration">true</boolProp>
+          <boolProp name="CookieManager.controlledByThreadGroup">true</boolProp>
+        </CookieManager>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Login">
+          <stringProp name="HTTPSampler.proxyHost">127.0.0.1</stringProp>
+          <intProp name="HTTPSampler.proxyPort">8888</intProp>
+          <stringProp name="HTTPSampler.domain">${url_base}</stringProp>
           <stringProp name="HTTPSampler.protocol">https</stringProp>
           <stringProp name="HTTPSampler.path">/Login/Index?ReturnUrl=%2F</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -36,48 +68,11 @@
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
         </HTTPSamplerProxy>
-        <hashTree>
-          <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
-            <boolProp name="ResultCollector.error_logging">false</boolProp>
-            <objProp>
-              <name>saveConfig</name>
-              <value class="SampleSaveConfiguration">
-                <time>true</time>
-                <latency>true</latency>
-                <timestamp>true</timestamp>
-                <success>true</success>
-                <label>true</label>
-                <code>true</code>
-                <message>true</message>
-                <threadName>true</threadName>
-                <dataType>true</dataType>
-                <encoding>false</encoding>
-                <assertions>true</assertions>
-                <subresults>true</subresults>
-                <responseData>false</responseData>
-                <samplerData>false</samplerData>
-                <xml>false</xml>
-                <fieldNames>true</fieldNames>
-                <responseHeaders>false</responseHeaders>
-                <requestHeaders>false</requestHeaders>
-                <responseDataOnError>false</responseDataOnError>
-                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
-                <assertionsResultsToSave>0</assertionsResultsToSave>
-                <bytes>true</bytes>
-                <sentBytes>true</sentBytes>
-                <url>true</url>
-                <threadCounts>true</threadCounts>
-                <idleTime>true</idleTime>
-                <connectTime>true</connectTime>
-              </value>
-            </objProp>
-            <stringProp name="filename"></stringProp>
-          </ResultCollector>
-          <hashTree/>
-        </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Autenticacion" enabled="true">
-          <stringProp name="HTTPSampler.domain">localhost</stringProp>
-          <stringProp name="HTTPSampler.port">7006</stringProp>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Autenticacion">
+          <stringProp name="HTTPSampler.proxyHost">127.0.0.1</stringProp>
+          <intProp name="HTTPSampler.proxyPort">8888</intProp>
+          <stringProp name="HTTPSampler.domain">${url_base}</stringProp>
           <stringProp name="HTTPSampler.protocol">https</stringProp>
           <stringProp name="HTTPSampler.path">/Login/Login</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -111,9 +106,10 @@
           </elementProp>
         </HTTPSamplerProxy>
         <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Home" enabled="true">
-          <stringProp name="HTTPSampler.domain">localhost</stringProp>
-          <stringProp name="HTTPSampler.port">7006</stringProp>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Home">
+          <stringProp name="HTTPSampler.proxyHost">127.0.0.1</stringProp>
+          <intProp name="HTTPSampler.proxyPort">8888</intProp>
+          <stringProp name="HTTPSampler.domain">${url_base}</stringProp>
           <stringProp name="HTTPSampler.protocol">https</stringProp>
           <stringProp name="HTTPSampler.path">/</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -126,8 +122,9 @@
         </HTTPSamplerProxy>
         <hashTree/>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Propietarios">
-          <stringProp name="HTTPSampler.domain">localhost</stringProp>
-          <stringProp name="HTTPSampler.port">7006</stringProp>
+          <stringProp name="HTTPSampler.proxyHost">127.0.0.1</stringProp>
+          <intProp name="HTTPSampler.proxyPort">8888</intProp>
+          <stringProp name="HTTPSampler.domain">${url_base}</stringProp>
           <stringProp name="HTTPSampler.protocol">https</stringProp>
           <stringProp name="HTTPSampler.path">/Propietarios</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -140,8 +137,9 @@
         </HTTPSamplerProxy>
         <hashTree/>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="PropietariosCrear">
-          <stringProp name="HTTPSampler.domain">localhost</stringProp>
-          <stringProp name="HTTPSampler.port">7006</stringProp>
+          <stringProp name="HTTPSampler.proxyHost">127.0.0.1</stringProp>
+          <intProp name="HTTPSampler.proxyPort">8888</intProp>
+          <stringProp name="HTTPSampler.domain">${url_base}</stringProp>
           <stringProp name="HTTPSampler.protocol">https</stringProp>
           <stringProp name="HTTPSampler.path">/Propietarios/Crear</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -152,7 +150,7 @@
             <collectionProp name="Arguments.arguments">
               <elementProp name="TipoIdentificacionId" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">F5AD7987-4D2B-4E34-9AB7-6800F8B3890D</stringProp>
+                <stringProp name="Argument.value">${tipo_identificacion_id}</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">TipoIdentificacionId</stringProp>
@@ -199,20 +197,14 @@
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">Direccion</stringProp>
               </elementProp>
-              <elementProp name="__RequestVerificationToken" elementType="HTTPArgument">
-                <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">CfDJ8MSx3J2lku1OuKDndVfmFedRBWjIb82a9NuUdwMiBskGRDA2MzrWzbuKday3TTDsDpI6oejKq-3RO2pdjbnzkuumz3Ksn3q105MgYb8qis8vatt4D5fhfavgF8XPvZG99tMLrg5aUpLVWWBFtS99sB3E7wXA82obRU9q3TWPW-LRC4VpCM798WdDPeG8M6m-SQ</stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-                <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                <stringProp name="Argument.name">__RequestVerificationToken</stringProp>
-              </elementProp>
             </collectionProp>
           </elementProp>
         </HTTPSamplerProxy>
         <hashTree/>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="PropietariosEditar">
-          <stringProp name="HTTPSampler.domain">localhost</stringProp>
-          <stringProp name="HTTPSampler.port">7006</stringProp>
+          <stringProp name="HTTPSampler.proxyHost">127.0.0.1</stringProp>
+          <intProp name="HTTPSampler.proxyPort">8888</intProp>
+          <stringProp name="HTTPSampler.domain">${url_base}</stringProp>
           <stringProp name="HTTPSampler.protocol">https</stringProp>
           <stringProp name="HTTPSampler.path">/Propietarios/Editar</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -237,7 +229,7 @@
               </elementProp>
               <elementProp name="TipoIdentificacionId" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">047711df-0e8d-418f-89c1-f566944c7e25</stringProp>
+                <stringProp name="Argument.value">${tipo_identifiacion_id}</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">TipoIdentificacionId</stringProp>
@@ -284,13 +276,6 @@
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">Direccion</stringProp>
               </elementProp>
-              <elementProp name="__RequestVerificationToken" elementType="HTTPArgument">
-                <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">CfDJ8MSx3J2lku1OuKDndVfmFef2zjpoRSo5TuVXkOfpEYn9QCUR1CYijTLcNCAPyBl5Gm-CwbmbUF2E2wnq8i_a8Rk97zWE8HCKIn_f7wZDnBL5LGp1t_olMRRSl8_BBHsj4MMjZ8d87pzriS84dqA3cJF2WNZ7xa1TSqyhITlmADiCh9VT1mG_BSMgtbsZveus2Q</stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-                <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                <stringProp name="Argument.name">__RequestVerificationToken</stringProp>
-              </elementProp>
               <elementProp name="PropietarioId" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">75847C56-E955-4F2D-B458-08DD6FF7FE42</stringProp>
@@ -303,8 +288,9 @@
         </HTTPSamplerProxy>
         <hashTree/>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="PropietariosEliminar">
-          <stringProp name="HTTPSampler.domain">localhost</stringProp>
-          <stringProp name="HTTPSampler.port">7006</stringProp>
+          <stringProp name="HTTPSampler.proxyHost">127.0.0.1</stringProp>
+          <intProp name="HTTPSampler.proxyPort">8888</intProp>
+          <stringProp name="HTTPSampler.domain">${url_base}</stringProp>
           <stringProp name="HTTPSampler.protocol">https</stringProp>
           <stringProp name="HTTPSampler.path">/Propietarios/Eliminar</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -320,20 +306,14 @@
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">id</stringProp>
               </elementProp>
-              <elementProp name="__RequestVerificationToken" elementType="HTTPArgument">
-                <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">CfDJ8MSx3J2lku1OuKDndVfmFef2zjpoRSo5TuVXkOfpEYn9QCUR1CYijTLcNCAPyBl5Gm-CwbmbUF2E2wnq8i_a8Rk97zWE8HCKIn_f7wZDnBL5LGp1t_olMRRSl8_BBHsj4MMjZ8d87pzriS84dqA3cJF2WNZ7xa1TSqyhITlmADiCh9VT1mG_BSMgtbsZveus2Q</stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-                <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                <stringProp name="Argument.name">__RequestVerificationToken</stringProp>
-              </elementProp>
             </collectionProp>
           </elementProp>
         </HTTPSamplerProxy>
         <hashTree/>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Pacientes">
-          <stringProp name="HTTPSampler.domain">localhost</stringProp>
-          <stringProp name="HTTPSampler.port">7006</stringProp>
+          <stringProp name="HTTPSampler.proxyHost">127.0.0.1</stringProp>
+          <intProp name="HTTPSampler.proxyPort">8888</intProp>
+          <stringProp name="HTTPSampler.domain">${url_base}</stringProp>
           <stringProp name="HTTPSampler.protocol">https</stringProp>
           <stringProp name="HTTPSampler.path">/Pacientes</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -346,8 +326,9 @@
         </HTTPSamplerProxy>
         <hashTree/>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="PacientesCrear">
-          <stringProp name="HTTPSampler.domain">localhost</stringProp>
-          <stringProp name="HTTPSampler.port">7006</stringProp>
+          <stringProp name="HTTPSampler.proxyHost">127.0.0.1</stringProp>
+          <intProp name="HTTPSampler.proxyPort">8888</intProp>
+          <stringProp name="HTTPSampler.domain">${url_base}</stringProp>
           <stringProp name="HTTPSampler.protocol">https</stringProp>
           <stringProp name="HTTPSampler.path">/Pacientes/Crear</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -412,20 +393,14 @@
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">Esterilizado</stringProp>
               </elementProp>
-              <elementProp name="__RequestVerificationToken" elementType="HTTPArgument">
-                <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">CfDJ8MSx3J2lku1OuKDndVfmFefrbulXvmFhGcKRnXYbISFzDHqlncgBawseBUlErpRbwPclPb6XoQLBAda6Ae2Kl0L8fiNVDuhSbOBJStpmbKtJRgnGsN9qSab55sBE-ML0qUba_AL10CdI6Q3PVoafsTQQXKTlZgOkRwF6s1ov5tV45th7Ec2zcOOMMxjkaHArSw</stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-                <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                <stringProp name="Argument.name">__RequestVerificationToken</stringProp>
-              </elementProp>
             </collectionProp>
           </elementProp>
         </HTTPSamplerProxy>
         <hashTree/>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="PacientesEditar">
-          <stringProp name="HTTPSampler.domain">localhost</stringProp>
-          <stringProp name="HTTPSampler.port">7006</stringProp>
+          <stringProp name="HTTPSampler.proxyHost">127.0.0.1</stringProp>
+          <intProp name="HTTPSampler.proxyPort">8888</intProp>
+          <stringProp name="HTTPSampler.domain">${url_base}</stringProp>
           <stringProp name="HTTPSampler.protocol">https</stringProp>
           <stringProp name="HTTPSampler.path">/Pacientes/Editar</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -490,13 +465,6 @@
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">Esterilizado</stringProp>
               </elementProp>
-              <elementProp name="__RequestVerificationToken" elementType="HTTPArgument">
-                <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">CfDJ8MSx3J2lku1OuKDndVfmFefrbulXvmFhGcKRnXYbISFzDHqlncgBawseBUlErpRbwPclPb6XoQLBAda6Ae2Kl0L8fiNVDuhSbOBJStpmbKtJRgnGsN9qSab55sBE-ML0qUba_AL10CdI6Q3PVoafsTQQXKTlZgOkRwF6s1ov5tV45th7Ec2zcOOMMxjkaHArSw</stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-                <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                <stringProp name="Argument.name">__RequestVerificationToken</stringProp>
-              </elementProp>
               <elementProp name="PacienteId" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">B5EA56F1-AD2C-4F42-F79B-08DD6FF87468</stringProp>
@@ -523,8 +491,9 @@
         </HTTPSamplerProxy>
         <hashTree/>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="PacientesEliminar">
-          <stringProp name="HTTPSampler.domain">localhost</stringProp>
-          <stringProp name="HTTPSampler.port">7006</stringProp>
+          <stringProp name="HTTPSampler.proxyHost">127.0.0.1</stringProp>
+          <intProp name="HTTPSampler.proxyPort">8888</intProp>
+          <stringProp name="HTTPSampler.domain">${url_base}</stringProp>
           <stringProp name="HTTPSampler.protocol">https</stringProp>
           <stringProp name="HTTPSampler.path">/Pacientes/Eliminar</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -540,44 +509,16 @@
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">id</stringProp>
               </elementProp>
-              <elementProp name="__RequestVerificationToken" elementType="HTTPArgument">
-                <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">CfDJ8MSx3J2lku1OuKDndVfmFee9ea44u4JwPS4wdi4vpzuvEV7Lgw9wGbGHYACvq0FF5q0xX51Ji4v2rjBlbXannMARNXphJi3lkRQHddbB7XZdcMVQ386wNuKQVCgfJLVuVYflXJmRfJB9g8XLs8X9ol9-JDzc-AohWjWNgsS3Syyhdv0p53bnWtDdGJ9cS6UExw</stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-                <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                <stringProp name="Argument.name">__RequestVerificationToken</stringProp>
-              </elementProp>
             </collectionProp>
           </elementProp>
         </HTTPSamplerProxy>
         <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Logout" enabled="true">
-          <stringProp name="HTTPSampler.domain">localhost</stringProp>
-          <stringProp name="HTTPSampler.port">7006</stringProp>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Logout">
+          <stringProp name="HTTPSampler.proxyHost">127.0.0.1</stringProp>
+          <intProp name="HTTPSampler.proxyPort">8888</intProp>
+          <stringProp name="HTTPSampler.domain">${url_base}</stringProp>
           <stringProp name="HTTPSampler.protocol">https</stringProp>
           <stringProp name="HTTPSampler.path">/Login/Logout</stringProp>
-          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-          <stringProp name="HTTPSampler.method">GET</stringProp>
-          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-          <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
-          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
-            <collectionProp name="Arguments.arguments">
-              <elementProp name="__RequestVerificationToken" elementType="HTTPArgument">
-                <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">CfDJ8MSx3J2lku1OuKDndVfmFecnnB9uuJbF3OWSDgTayCLu_kEeAHmXya4ZruVM95c1N4boVq6NmGthMg-h6_ZbHbP7AbAmWaigJQmlvAPhsJl6dNxpH6Kg9GbpQklM0xWnEIPx1iDgt7wkA6ilh-h3WYdEvDJXKG6v33rcrkxs8AME0-kyUjltVUvcSTW4zBWY2g</stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-                <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                <stringProp name="Argument.name">__RequestVerificationToken</stringProp>
-              </elementProp>
-            </collectionProp>
-          </elementProp>
-        </HTTPSamplerProxy>
-        <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Login" enabled="true">
-          <stringProp name="HTTPSampler.domain">localhost</stringProp>
-          <stringProp name="HTTPSampler.port">7006</stringProp>
-          <stringProp name="HTTPSampler.protocol">https</stringProp>
-          <stringProp name="HTTPSampler.path">/Login/Index?ReturnUrl=%2F</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
@@ -660,12 +601,6 @@
           </objProp>
           <stringProp name="filename">C:\Users\evely\Documents\apache-jmeter-5.6.3\bin\ResultadosCarga.csv</stringProp>
         </ResultCollector>
-        <hashTree/>
-        <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager">
-          <collectionProp name="CookieManager.cookies"/>
-          <boolProp name="CookieManager.clearEachIteration">true</boolProp>
-          <boolProp name="CookieManager.controlledByThreadGroup">false</boolProp>
-        </CookieManager>
         <hashTree/>
       </hashTree>
     </hashTree>

@@ -26,8 +26,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             return View();
         }
 
-        [HttpPost]
-        
+        [HttpPost]        
         public IActionResult Crear(TipoCirugia tipoCirugia)
         {
             if (!ModelState.IsValid)
@@ -68,8 +67,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             return View(tipoCirugia);
         }
 
-        [HttpPost]
-        
+        [HttpPost]        
         public IActionResult Editar(TipoCirugia tipoCirugia)
         {
             if (!ModelState.IsValid)
@@ -103,8 +101,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
-        
+        [HttpPost]        
         public IActionResult Eliminar(Guid id)
         {
 

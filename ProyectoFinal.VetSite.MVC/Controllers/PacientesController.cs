@@ -13,7 +13,6 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         private readonly PacienteServicio _pacienteServicio = pacienteServicio;
         private readonly PropietarioServicio _propietarioServicio = propietarioServicio;
 
-
         [HttpGet]
         public IActionResult Index() 
         {
@@ -89,7 +88,6 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             return View(paciente);
         }
 
-
         [HttpPost]        
         public IActionResult Editar(Paciente paciente)
         {
@@ -125,7 +123,6 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             return RedirectToAction("Index");
         }
 
-
         [HttpPost]        
         public IActionResult Eliminar(Guid id)
         {
@@ -147,8 +144,6 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
 
             return RedirectToAction("Index");
         }
-
-
 
     }
 }

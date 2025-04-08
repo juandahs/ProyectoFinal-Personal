@@ -10,11 +10,11 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
     public class LoginController(UsuarioServicios usuarioServicios) : Controller
     {
         private readonly UsuarioServicios _usuarioServicios = usuarioServicios;        
+        
         [HttpGet]
         public IActionResult Index() => View();
 
         [HttpPost]
-
         public async Task<IActionResult> Login(string correoElectronico, string clave)
         {
             var usuario = _usuarioServicios.ObtenerPorCorreoElectronico(correoElectronico.ToLower());
@@ -47,6 +47,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpPost]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

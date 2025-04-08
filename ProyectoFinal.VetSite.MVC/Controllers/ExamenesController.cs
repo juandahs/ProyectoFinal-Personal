@@ -54,8 +54,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             return View();
         }
 
-        [HttpPost]
-        
+        [HttpPost]        
         public IActionResult Crear(Examen examen)
         {
             if (!ModelState.IsValid)
@@ -102,8 +101,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             return View(_examenServicio.ObtenerPorId(id));
         }
 
-        [HttpPost]
-        
+        [HttpPost]        
         public IActionResult Editar(Examen examen)
         {
 
@@ -138,8 +136,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
-        
+        [HttpPost]        
         public IActionResult Eliminar(Guid id)
         {
 

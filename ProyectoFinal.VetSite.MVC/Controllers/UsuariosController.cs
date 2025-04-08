@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProyectoFinal.Entidades;
-using ProyectoFinal.Repositorio;
 using ProyectoFinal.Servidor;
 using System.Security.Claims;
 

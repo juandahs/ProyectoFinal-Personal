@@ -9,7 +9,7 @@ Encuesta proyecto de investigación => https://docs.google.com/forms/d/1JfxX-jQG
 Planear de tareas => https://vetsite.atlassian.net/jira/core/projects/VET/list
 
 Correo Gmail Usuario: notificacionesvetsite@gmail.com Contrasena: Notificaciones.VetSite2025
-Contraseña para usar en el proyecto: rsym dlmk fafz gthz
+Contraseña para usar en el proyecto
 
 Para cambiar la contraseña, iniciamos sesión en Gmail, le damos click en administrar tuc uenta de google,
 luego en Seguridad y Buscamos Contraseñas de aplicacion y le damos un nombre a nuestra contraseña.

@@ -2,7 +2,6 @@
 using ProyectoFinal.Entidades;
 using ProyectoFinal.Repositorio;
 
-
 namespace ProyectoFinal.Servidor
 {
     public class PropietarioServicio(Contexto contexto)

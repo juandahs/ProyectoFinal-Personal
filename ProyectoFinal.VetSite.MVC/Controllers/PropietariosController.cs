@@ -32,8 +32,7 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             return View();
         }
 
-        [HttpPost]
-        
+        [HttpPost]        
         public IActionResult Crear(Propietario propietario)
         {
             if (!ModelState.IsValid)

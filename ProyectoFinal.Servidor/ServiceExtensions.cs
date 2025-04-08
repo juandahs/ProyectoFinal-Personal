@@ -34,7 +34,6 @@ namespace ProyectoFinal.Servidor
             services.AddScoped<TipoImagenDiagnosticaServicio>();
             services.AddScoped<CorreoServicio>();
 
-
         }
 
         public static async Task InitializeDatabaseAsync(this IApplicationBuilder app)
