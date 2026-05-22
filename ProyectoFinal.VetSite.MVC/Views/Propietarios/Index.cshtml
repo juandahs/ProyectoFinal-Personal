@@ -1,69 +1,90 @@
-﻿@model IEnumerable<ProyectoFinal.Entidades.Propietario>
+@model IEnumerable<ProyectoFinal.Entidades.Propietario>
 
-<div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1>@ViewBag.Title</h1>
-        <a href="/Propietarios/Crear" class="btn btn-success">
-            <i class="fas fa-plus me-2"></i>Agregar un propietario
-        </a>
+<section class="page-section">
+    <div class="page-section-header">
+        <div>
+            <p class="page-section-kicker">Propietarios</p>
+            <h2 class="page-section-title">@ViewBag.Title</h2>
+            <p class="page-section-copy">La información de contacto y referencia queda más visible para dar soporte rápido a cada paciente.</p>
+        </div>
+
+        <div class="page-actions">
+            <a href="/Propietarios/Crear" class="btn btn-success">
+                <i class="fas fa-plus me-2"></i>Nuevo propietario
+            </a>
+        </div>
     </div>
 
-    <table id="propietariosTable" class="table">
-        <thead>
-            <tr>
-                <th>Identificación</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Correo electrónico</th>
-                <th>Teléfono</th>
-                <th class="text-center">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Model == null || !Model.Any())
-            {
-                <tr>
-                    <td colspan="5" class="text-center">No hay propietarios registrados.</td>
-                </tr>
-            }
-            else
-            {
-                @foreach (var propietario in Model)
-                {
+    <div class="table-shell">
+        <div class="table-meta">
+            <span class="table-tag"><i class="fas fa-address-card"></i>Directorio</span>
+            <span>Busca por nombre, correo o identificación desde la misma tabla.</span>
+        </div>
+
+        <div class="table-responsive">
+            <table id="propietariosTable" class="table align-middle">
+                <thead>
                     <tr>
-                        <td>@propietario.NumeroIdentificacion</td>
-                        <td>@propietario.Nombre</td>
-                        <td>@propietario.Apellido</td>
-                        <td>@propietario.CorreoElectronico</td>
-                        <td>@propietario.Telefono</td>
-                        <td class="text-center">
-                            <form asp-action="Editar" method="get" class="d-inline">
-                                <input type="hidden" name="id" value="@propietario.PropietarioId" />
-                                <button type="submit" class="btn btn-primary me-2">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </form>
-                            <form asp-action="Eliminar" method="post" class="d-inline">
-                                <input type="hidden" name="id" value="@propietario.PropietarioId" />
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar este propietario?');">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </form>
-                        </td>
+                        <th>Identificación</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Correo electrónico</th>
+                        <th>Teléfono</th>
+                        <th class="text-center actions-cell">Acciones</th>
                     </tr>
-                }
-            }
-        </tbody>
-    </table>
-</div>
+                </thead>
+                <tbody>
+                    @if (Model == null || !Model.Any())
+                    {
+                        <tr>
+                            <td colspan="6">
+                                <div class="empty-state">
+                                    <p class="empty-state-title">No hay propietarios registrados.</p>
+                                    <p class="empty-state-copy">Crea un propietario para relacionarlo con sus pacientes y citas.</p>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var propietario in Model)
+                        {
+                            <tr>
+                                <td><strong>@propietario.NumeroIdentificacion</strong></td>
+                                <td>@propietario.Nombre</td>
+                                <td>@propietario.Apellido</td>
+                                <td>@propietario.CorreoElectronico</td>
+                                <td>@propietario.Telefono</td>
+                                <td class="text-center actions-cell">
+                                    <div class="action-stack">
+                                        <form asp-action="Editar" method="get">
+                                            <input type="hidden" name="id" value="@propietario.PropietarioId" />
+                                            <button type="submit" class="btn btn-primary action-btn" title="Editar propietario" aria-label="Editar propietario">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                        </form>
+                                        <form asp-action="Eliminar" method="post">
+                                            <input type="hidden" name="id" value="@propietario.PropietarioId" />
+                                            <button type="submit" class="btn btn-danger action-btn" title="Eliminar propietario" aria-label="Eliminar propietario" onclick="return confirm('¿Está seguro de que desea eliminar este propietario?');">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
 
 @section Scripts {
-    
-    <!-- DataTables JS para Bootstrap 5 -->
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
     <script>
-              $(document).ready(function () {
+        $(document).ready(function () {
             $('#propietariosTable').DataTable({
                 language: {
                     search: "Buscar:",
@@ -79,6 +100,5 @@
                 }
             });
         });
-
     </script>
 }

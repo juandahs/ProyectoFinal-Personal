@@ -1,13 +1,17 @@
-﻿@{
+@{
     ViewBag.Title = "Crear un paciente";
 }
 
-<h1>@ViewBag.Title</h1>
-
-<form asp-action="Crear" method="post">
-    <div class="card">
-        <div class="card-body">
-            <partial name="_Formulario" model="Model" />
+<section class="page-section">
+    <div class="page-section-header">
+        <div>
+            <p class="page-section-kicker">Nuevo registro</p>
+            <h2 class="page-section-title">@ViewBag.Title</h2>
+            <p class="page-section-copy">Completa los datos básicos del paciente para habilitar sus futuras citas y procedimientos.</p>
         </div>
     </div>
-</form>
+
+    <form asp-action="Crear" method="post" class="form-shell">
+        <partial name="_Formulario" model="Model" />
+    </form>
+</section>

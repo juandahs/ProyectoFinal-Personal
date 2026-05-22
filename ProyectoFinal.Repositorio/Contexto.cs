@@ -1045,6 +1045,22 @@ namespace ProyectoFinal.Repositorio
             return resultado.FirstOrDefault() > 0;
         }
 
+        public async Task<bool> ColumnaExisteAsync(string tabla, string columna)
+        {
+            var tablaParameter = new SqlParameter("@Tabla", tabla);
+            var columnaParameter = new SqlParameter("@Columna", columna);
+
+            var resultado = await Database
+                .SqlQueryRaw<int>(@"
+                    SELECT COUNT(*)
+                    FROM INFORMATION_SCHEMA.COLUMNS
+                    WHERE TABLE_NAME = @Tabla
+                      AND COLUMN_NAME = @Columna", tablaParameter, columnaParameter)
+                .ToListAsync();
+
+            return resultado.FirstOrDefault() > 0;
+        }
+
         public async Task UsuarioActualizar(Usuario usuario, Guid usuarioActualizacionId)
         {
 

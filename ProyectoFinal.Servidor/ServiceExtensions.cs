@@ -1,6 +1,7 @@
 ﻿using ProyectoFinal.Repositorio;
 using Microsoft.AspNetCore.Builder; 
 using Microsoft.EntityFrameworkCore; 
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration; 
 
@@ -12,7 +13,10 @@ namespace ProyectoFinal.Servidor
         {
             // Registrar el DbContext
             services.AddDbContext<Contexto>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+                options
+                    .UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
+                    .ConfigureWarnings(warnings =>
+                        warnings.Ignore(RelationalEventId.PendingModelChangesWarning)));
 
             // Registrar el servicio que usa el repositorio
             services.AddScoped<CitaServicio>();
@@ -41,6 +45,15 @@ namespace ProyectoFinal.Servidor
             using var scope = app.ApplicationServices.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<Contexto>();
             await context.Database.MigrateAsync();
+
+            if (!await context.ColumnaExisteAsync("Usuario", "FailedLoginAttempts") ||
+                !await context.ColumnaExisteAsync("Usuario", "LockoutEnd"))
+            {
+                var sqlLockoutPath = Path.Combine(AppContext.BaseDirectory, "AppData", "AlterUsuarioAddLockout.sql");
+                var sqlLockout = await File.ReadAllTextAsync(sqlLockoutPath);
+
+                await context.Database.ExecuteSqlRawAsync(sqlLockout);
+            }
 
             if (!await context.TipoIdentificaciones.AnyAsync())
             {

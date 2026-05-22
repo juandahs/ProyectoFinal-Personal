@@ -1,66 +1,86 @@
-﻿@model IEnumerable<ProyectoFinal.Entidades.Paciente>
+@model IEnumerable<ProyectoFinal.Entidades.Paciente>
 
+<section class="page-section">
+    <div class="page-section-header">
+        <div>
+            <p class="page-section-kicker">Pacientes</p>
+            <h2 class="page-section-title">@ViewBag.Title</h2>
+            <p class="page-section-copy">Consulta pacientes por propietario, especie o sexo sin perder visibilidad de las acciones disponibles.</p>
+        </div>
 
-<div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1>@ViewBag.Title</h1>
-        <a href="/Pacientes/Crear" class="btn btn-success">
-            <i class="fas fa-plus me-2"></i>Agregar un paciente
-        </a>
+        <div class="page-actions">
+            <a href="/Pacientes/Crear" class="btn btn-success">
+                <i class="fas fa-plus me-2"></i>Nuevo paciente
+            </a>
+        </div>
     </div>
 
-    <table id="pacientesTable" class="table">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Edad</th>
-                <th>Sexo</th>
-                <th>Especie</th>
-                <th>Propietario</th>
-                <th class="text-center">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Model == null || !Model.Any())
-            {
-                <tr>
-                    <td colspan="5" class="text-center">No hay pacientes registrados.</td>
-                </tr>
-            }
-            else
-            {
-                @foreach (var paciente in Model)
-                {
+    <div class="table-shell">
+        <div class="table-meta">
+            <span class="table-tag"><i class="fas fa-list"></i>Registro clínico</span>
+            <span>Filtra y ordena la tabla para encontrar pacientes con mayor rapidez.</span>
+        </div>
+
+        <div class="table-responsive">
+            <table id="pacientesTable" class="table align-middle">
+                <thead>
                     <tr>
-                        <td>@paciente.Nombre</td>
-                        <td>@paciente.Edad</td>
-                        <td>@(paciente.Sexo == 'M' ? "Macho" : "Hembra" )</td>
-                        <td>@paciente.Especie</td>
-                        <td>@paciente.Propietario!.Nombre</td>
-                        <td class="text-center">
-                            <form asp-action="Editar" method="get" class="d-inline">
-                                <input type="hidden" name="id" value="@paciente.PacienteId" />
-                                <button type="submit" class="btn btn-primary me-2">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </form>
-                            <form asp-action="Eliminar" method="post" class="d-inline">
-                                <input type="hidden" name="id" value="@paciente.PacienteId" />
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar este paciente?');">
-                                    <i class="fas fa-trash"></i> 
-                                </button>
-                            </form>
-                        </td>
+                        <th>Nombre</th>
+                        <th>Edad</th>
+                        <th>Sexo</th>
+                        <th>Especie</th>
+                        <th>Propietario</th>
+                        <th class="text-center actions-cell">Acciones</th>
                     </tr>
-                }
-            }
-        </tbody>
-    </table>
-</div>
+                </thead>
+                <tbody>
+                    @if (Model == null || !Model.Any())
+                    {
+                        <tr>
+                            <td colspan="6">
+                                <div class="empty-state">
+                                    <p class="empty-state-title">No hay pacientes registrados.</p>
+                                    <p class="empty-state-copy">Empieza creando el primer paciente para habilitar sus flujos clínicos.</p>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var paciente in Model)
+                        {
+                            <tr>
+                                <td><strong>@paciente.Nombre</strong></td>
+                                <td>@paciente.Edad años</td>
+                                <td>@(paciente.Sexo == 'M' ? "Macho" : "Hembra")</td>
+                                <td>@paciente.Especie</td>
+                                <td>@paciente.Propietario!.Nombre</td>
+                                <td class="text-center actions-cell">
+                                    <div class="action-stack">
+                                        <form asp-action="Editar" method="get">
+                                            <input type="hidden" name="id" value="@paciente.PacienteId" />
+                                            <button type="submit" class="btn btn-primary action-btn" title="Editar paciente" aria-label="Editar paciente">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                        </form>
+                                        <form asp-action="Eliminar" method="post">
+                                            <input type="hidden" name="id" value="@paciente.PacienteId" />
+                                            <button type="submit" class="btn btn-danger action-btn" title="Eliminar paciente" aria-label="Eliminar paciente" onclick="return confirm('¿Está seguro de que desea eliminar este paciente?');">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
 
 @section Scripts {
-   
-    <!-- DataTables JS para Bootstrap 5 -->
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
     <script>
@@ -78,7 +98,7 @@
                         next: ">"
                     }
                 },
-                order: [[4, "asc"], [0, "asc"], [1, "asc"]] 
+                order: [[4, "asc"], [0, "asc"], [1, "asc"]]
             });
         });
     </script>

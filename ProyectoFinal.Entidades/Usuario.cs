@@ -1,7 +1,9 @@
 ﻿namespace ProyectoFinal.Entidades
 {
-    public class Usuario
-    {
+public class Usuario
+{
+    public int FailedLoginAttempts { get; set; } = 0;
+    public DateTime? LockoutEnd { get; set; } = null;
         public Guid UsuarioId { get; set; }
         public Guid TipoIdentificacionId { get; set; }
         public Guid RolId { get; set; }

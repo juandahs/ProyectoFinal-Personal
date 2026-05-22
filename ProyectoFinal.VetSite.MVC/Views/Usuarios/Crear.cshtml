@@ -1,19 +1,19 @@
-﻿@model ProyectoFinal.Entidades.Usuario
+@model ProyectoFinal.Entidades.Usuario
 
 @{
     ViewBag.Title = "Crear un usuario";
 }
-<head>
-    <link rel="stylesheet" href="~/css/users.css" asp-append-version="true" />
-</head>
 
-<h1>@ViewBag.Title</h1>
-
-
-<form asp-action="Crear" method="post">
-    <div class="card">
-        <div class="card-body">
-            <partial name="_Formulario" model="Model" />
+<section class="page-section">
+    <div class="page-section-header">
+        <div>
+            <p class="page-section-kicker">Nuevo acceso</p>
+            <h2 class="page-section-title">@ViewBag.Title</h2>
+            <p class="page-section-copy">Crea una cuenta operativa para el equipo con sus datos de identificación y contacto.</p>
         </div>
     </div>
-</form>
+
+    <form asp-action="Crear" method="post" class="form-shell">
+        <partial name="_Formulario" model="Model" />
+    </form>
+</section>

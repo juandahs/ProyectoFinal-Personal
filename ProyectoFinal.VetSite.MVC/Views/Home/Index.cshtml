@@ -1,50 +1,93 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+@{
+    ViewData["Title"] = "Inicio";
 }
 
-<div class="container mt-5 d-flex flex-column align-items-center">
-    <h1 class="mb-4 text-dark text-center fw-bold">Bienvenido a VetSite</h1>
-    <p class="lead text-muted text-center">Sistema de gestión veterinaria</p>
+<section class="dashboard-hero">
+    <article class="dashboard-hero-main">
+        <span class="dashboard-badge">
+            <i class="fas fa-heartbeat"></i>
+            Operación central
+        </span>
+        <h2 class="dashboard-hero-title mt-3">Una vista más clara para la atención diaria de la clínica.</h2>
+        <p class="dashboard-hero-copy">
+            Entra rápido a los módulos con más uso, reduce el tiempo de búsqueda y mantén visible la información más relevante del día.
+        </p>
 
-    <div class="row justify-content-center mt-4" style="max-width: 900px;">
-        <div class="col-md-4 d-flex align-items-stretch">
-            <div class="card shadow-lg border-0 text-center w-100 p-3">
-                <div class="card-body">
-                    <h5 class="card-title fw-bold">Citas</h5>
-                    <p class="card-text text-muted">Administra y organiza las citas de los pacientes.</p>
-                    <a href="/Citas" class="btn btn-primary btn-lg w-100 fw-semibold">Ver Citas</a>
-                </div>
-            </div>
+        <div class="dashboard-hero-actions">
+            <a asp-controller="Citas" asp-action="Index" class="btn btn-primary">
+                <i class="far fa-calendar-check me-2"></i>Ver citas
+            </a>
+            <a asp-controller="Pacientes" asp-action="Index" class="btn btn-secondary">
+                <i class="fas fa-paw me-2"></i>Consultar pacientes
+            </a>
         </div>
-        <div class="col-md-4 d-flex align-items-stretch">
-            <div class="card shadow-lg border-0 text-center w-100 p-3">
-                <div class="card-body">
-                    <h5 class="card-title fw-bold">Pacientes</h5>
-                    <p class="card-text text-muted">Consulta y gestiona toda la información de los pacientes.</p>
-                    <a href="/Pacientes" class="btn btn-primary btn-lg w-100 fw-semibold">Ver Pacientes</a>
-                </div>
-            </div>
+    </article>
+
+    <aside class="dashboard-hero-side">
+        <p class="page-section-kicker">Enfoque</p>
+        <h3 class="page-section-title">Prioridades del turno</h3>
+        <div class="dashboard-note-list">
+            <div class="dashboard-note">Agenda y estado de citas a un clic.</div>
+            <div class="dashboard-note">Acceso directo a pacientes y propietarios.</div>
+            <div class="dashboard-note">Módulos clínicos ordenados por frecuencia de uso.</div>
         </div>
-        <div class="col-md-4 d-flex align-items-stretch">
-            <div class="card shadow-lg border-0 text-center w-100 p-3">
-                <div class="card-body">
-                    <h5 class="card-title fw-bold">Propietarios</h5>
-                    <p class="card-text text-muted">Accede a los datos y contacto de los propietarios.</p>
-                    <a href="/Propietarios" class="btn btn-primary btn-lg w-100 fw-semibold">Ver Propietarios</a>
-                </div>
-            </div>
+    </aside>
+</section>
+
+<section class="dashboard-quick-grid mb-4">
+    <article class="stat-card">
+        <p class="stat-card-label">Citas</p>
+        <p class="stat-card-value">01</p>
+        <p class="stat-card-copy">Agenda, asignación y seguimiento clínico.</p>
+    </article>
+    <article class="stat-card">
+        <p class="stat-card-label">Pacientes</p>
+        <p class="stat-card-value">02</p>
+        <p class="stat-card-copy">Datos de especie, estado y antecedentes básicos.</p>
+    </article>
+    <article class="stat-card">
+        <p class="stat-card-label">Propietarios</p>
+        <p class="stat-card-value">03</p>
+        <p class="stat-card-copy">Contacto, identificación y relación con cada caso.</p>
+    </article>
+</section>
+
+<section class="page-section">
+    <div class="page-section-header">
+        <div>
+            <p class="page-section-kicker">Accesos rápidos</p>
+            <h2 class="page-section-title">Módulos principales</h2>
+            <p class="page-section-copy">La navegación prioriza las tareas más frecuentes para que el equipo entre más rápido al flujo correcto.</p>
         </div>
     </div>
-</div>
 
-<style>
-    .btn-primary {
-        background-color: #0d6efd;
-        color: white;
-        border: none;
-    }
+    <div class="module-grid">
+        <a asp-controller="Citas" asp-action="Index" class="module-card">
+            <span class="module-card-icon"><i class="far fa-calendar-check"></i></span>
+            <h3 class="module-card-title">Citas</h3>
+            <p class="module-card-copy">Programa y revisa la atención del día con menos pasos.</p>
+            <span class="module-card-link">Abrir módulo</span>
+        </a>
 
-        .btn-primary:hover {
-            background-color: #7fd9eb;
-        }
-</style>
+        <a asp-controller="Pacientes" asp-action="Index" class="module-card">
+            <span class="module-card-icon"><i class="fas fa-paw"></i></span>
+            <h3 class="module-card-title">Pacientes</h3>
+            <p class="module-card-copy">Consulta perfiles clínicos y actualiza sus datos básicos.</p>
+            <span class="module-card-link">Abrir módulo</span>
+        </a>
+
+        <a asp-controller="Propietarios" asp-action="Index" class="module-card">
+            <span class="module-card-icon"><i class="fas fa-address-card"></i></span>
+            <h3 class="module-card-title">Propietarios</h3>
+            <p class="module-card-copy">Mantén visible la información de contacto y soporte administrativo.</p>
+            <span class="module-card-link">Abrir módulo</span>
+        </a>
+
+        <a asp-controller="Usuarios" asp-action="Index" class="module-card">
+            <span class="module-card-icon"><i class="fas fa-user-shield"></i></span>
+            <h3 class="module-card-title">Usuarios</h3>
+            <p class="module-card-copy">Gestiona accesos del equipo y tareas operativas internas.</p>
+            <span class="module-card-link">Abrir módulo</span>
+        </a>
+    </div>
+</section>

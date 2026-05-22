@@ -15,21 +15,30 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         public IActionResult Index() => View();
 
         [HttpPost]
-        public async Task<IActionResult> Login(string correoElectronico, string clave)
+        public async Task<IActionResult> Login(string correoElectronico, string clave, bool rememberMe = false)
         {
             var usuario = _usuarioServicios.ObtenerPorCorreoElectronico(correoElectronico.ToLower());
 
             if (usuario == null)
             {
-                ModelState.AddModelError(string.Empty, "usuario no encontrado");
+                ModelState.AddModelError(string.Empty, "Usuario no encontrado");
+                return View("Index");
+            }
+
+            if (_usuarioServicios.IsLockedOut(usuario.UsuarioId))
+            {
+                ModelState.AddModelError(string.Empty, "Su cuenta está bloqueada temporalmente. Inténtelo más tarde.");
                 return View("Index");
             }
 
             if (!_usuarioServicios.EsValido(usuario.UsuarioId, clave))
             {
-                ModelState.AddModelError(string.Empty, "La información del usuario no es valida.");
+                _usuarioServicios.IncrementFailedLogin(usuario.UsuarioId);
+                ModelState.AddModelError(string.Empty, "La información del usuario no es válida.");
                 return View("Index");
             }
+
+            _usuarioServicios.ResetFailedLogin(usuario.UsuarioId);
 
             // Set authentication cookie
             var claims = new List<Claim>
@@ -42,7 +51,12 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
             var identity = new ClaimsIdentity(claims, "Cookies");
             var principal = new ClaimsPrincipal(identity);
 
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+            var authProperties = new AuthenticationProperties
+{
+    IsPersistent = rememberMe,
+    ExpiresUtc = rememberMe ? DateTimeOffset.UtcNow.AddDays(7) : (DateTimeOffset?)null
+};
+await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authProperties);
 
             return RedirectToAction("Index", "Home");
         }

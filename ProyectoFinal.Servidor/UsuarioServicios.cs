@@ -6,8 +6,58 @@ using ProyectoFinal.Repositorio;
 
 namespace ProyectoFinal.Servidor
 {
-    public class UsuarioServicios (Contexto contexto)
+public class UsuarioServicios (Contexto contexto)
+{
+    private const int MaxFailedAttempts = 5;
+    private static readonly TimeSpan LockoutTimeSpan = TimeSpan.FromMinutes(15);
+
+    public void IncrementFailedLogin(Guid usuarioId)
     {
+        var usuario = _contexto.Usuarios.FirstOrDefault(u => u.UsuarioId == usuarioId);
+        if (usuario == null) return;
+
+        usuario.FailedLoginAttempts++;
+        if (usuario.FailedLoginAttempts >= MaxFailedAttempts)
+        {
+            usuario.LockoutEnd = DateTime.Now.Add(LockoutTimeSpan);
+            usuario.FailedLoginAttempts = 0; // reset after locking out
+        }
+
+        _contexto.SaveChanges();
+    }
+
+    public bool IsLockedOut(Guid usuarioId)
+    {
+        var usuario = _contexto.Usuarios.FirstOrDefault(u => u.UsuarioId == usuarioId);
+        if (usuario == null) return false;
+
+        if (usuario.LockoutEnd.HasValue && usuario.LockoutEnd > DateTime.Now)
+        {
+            return true;
+        }
+
+        if (usuario.LockoutEnd.HasValue && usuario.LockoutEnd <= DateTime.Now)
+        {
+            // Lockout expired
+            usuario.LockoutEnd = null;
+            usuario.FailedLoginAttempts = 0;
+            _contexto.SaveChanges();
+            return false;
+        }
+
+        return false;
+    }
+
+    public void ResetFailedLogin(Guid usuarioId)
+    {
+        var usuario = _contexto.Usuarios.FirstOrDefault(u => u.UsuarioId == usuarioId);
+        if (usuario == null) return;
+
+        usuario.FailedLoginAttempts = 0;
+        usuario.LockoutEnd = null;
+        _contexto.SaveChanges();
+    }
+
         private readonly Contexto _contexto = contexto;
 
         public Usuario? ObtenerPorId(Guid id) => _contexto.Usuarios.FirstOrDefault(u => u.UsuarioId == id);

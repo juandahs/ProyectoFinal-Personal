@@ -1,13 +1,17 @@
-﻿@{
+@{
     ViewBag.Title = "Editar un propietario";
 }
 
-<h1>@ViewBag.Title</h1>
-
-<form asp-action="Editar" method="post">
-    <div class="card">
-        <div class="card-body">
-            <partial name="_Formulario" model="Model" />
+<section class="page-section">
+    <div class="page-section-header">
+        <div>
+            <p class="page-section-kicker">Actualización</p>
+            <h2 class="page-section-title">@ViewBag.Title</h2>
+            <p class="page-section-copy">Mantén al día los canales de contacto y los datos de referencia del propietario.</p>
         </div>
     </div>
-</form>
+
+    <form asp-action="Editar" method="post" class="form-shell">
+        <partial name="_Formulario" model="Model" />
+    </form>
+</section>

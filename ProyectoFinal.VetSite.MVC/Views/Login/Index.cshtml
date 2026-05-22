@@ -1,59 +1,95 @@
-﻿@{
+@{
     Layout = null;
 }
 
-<!-- Bootstrap y Bootstrap Icons -->
-<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-<link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ingreso - VetSite</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site-modern.css" asp-append-version="true" />
+</head>
+<body class="login-page">
+    <div class="login-shell">
+        <section class="login-panel-brand">
+            <p class="login-kicker">Plataforma clínica</p>
+            <h1 class="login-title">Coordina pacientes, citas y equipo sin fricción.</h1>
+            <p class="dashboard-hero-copy mt-3 text-white-50">
+                VetSite concentra la operación diaria en una interfaz más clara para consulta, programación y seguimiento.
+            </p>
 
-<div class="container">
-    @if (ViewData.ModelState.ErrorCount > 0)
-    {
-        <div class="alert alert-danger text-center" role="alert">
-            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            <div class="login-feature-list">
+                <div class="login-feature">
+                    <strong>Agenda visible</strong>
+                    <span>Consulta citas y cambios de estado desde un mismo flujo.</span>
+                </div>
+                <div class="login-feature">
+                    <strong>Historial ordenado</strong>
+                    <span>Pacientes, propietarios y procedimientos con acceso rápido.</span>
+                </div>
+                <div class="login-feature">
+                    <strong>Operación diaria</strong>
+                    <span>Diseñado para tareas recurrentes, no solo para almacenar datos.</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="login-panel-form">
+            <p class="login-kicker">Acceso seguro</p>
+            <h2 class="login-title">Inicia sesión</h2>
+            <p class="auth-feedback mb-4">
+                Usa tu cuenta institucional para entrar al panel administrativo.
+            </p>
+
+            @if (ViewData.ModelState.ErrorCount > 0)
             {
-                <p>@error.ErrorMessage</p>
+                <div class="alert alert-danger" role="alert">
+                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        <p class="mb-1">@error.ErrorMessage</p>
+                    }
+                </div>
             }
-        </div>
-    }
 
-    <div class="d-flex justify-content-center align-items-center flex-grow-1">
-        <div class="card shadow-lg">
-            <div class="card-body p-5">
-                <div class="text-center mb-4">
-                    <h3 class="fw-bold" style="color: #056afa;">Vet-Site</h3>
+            <form asp-action="Login" method="post" class="login-form">
+                <div class="input-shell">
+                    <label for="correoElectronico">Correo electrónico</label>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="bi bi-person-fill"></i>
+                        </span>
+                        <input type="text" class="form-control" id="correoElectronico" name="correoElectronico" placeholder="admin@vetsite.com" required>
+                    </div>
                 </div>
 
-                <form asp-action="Login" method="post">
-                    <div class="mb-3">
-                        <label for="correoElectronico" class="form-label">Correo electrónico</label>
-                        <div class="input-group">
-                            <span class="input-group-text bg-light">
-                                <i class="bi bi-person-fill"></i>
-                            </span>
-                            <input type="text" class="form-control" id="correoElectronico" name="correoElectronico" placeholder="Correo electrónico" required>
-                        </div>
+                <div class="input-shell">
+                    <label for="clave">Clave</label>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="bi bi-shield-lock-fill"></i>
+                        </span>
+                        <input type="password" class="form-control" id="clave" name="clave" placeholder="Ingresa tu clave" required>
                     </div>
+                </div>
 
-                    <div class="mb-3">
-                        <label for="clave" class="form-label">Clave</label>
-                        <div class="input-group">
-                            <span class="input-group-text bg-light">
-                                <i class="bi bi-lock-fill"></i>
-                            </span>
-                            <input type="password" class="form-control" id="clave" name="clave" placeholder="Clave" required>
-                        </div>
+                <div class="remember-row">
+                    <div class="form-check mb-0">
+                        <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberMe">
+                        <label class="form-check-label" for="rememberMe">Mantener sesión iniciada</label>
                     </div>
+                    <span>Uso interno del equipo veterinario</span>
+                </div>
 
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-primary btn-lg btn-block" style="background-color: #056afa; border: none;">Sign in</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+                <button type="submit" class="btn btn-primary w-100">Entrar al sistema</button>
+            </form>
+        </section>
     </div>
-
-    <partial name="_Footer"></partial>
-
-</div>
+</body>
+</html>

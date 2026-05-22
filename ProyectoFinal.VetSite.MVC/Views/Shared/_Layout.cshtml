@@ -1,5 +1,8 @@
-﻿@{
+@{
     Layout = null;
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? string.Empty;
+    var currentAction = ViewContext.RouteData.Values["action"]?.ToString() ?? string.Empty;
+    var pageTitle = ViewBag.Title as string ?? ViewData["Title"]?.ToString() ?? "Panel";
 }
 
 <!DOCTYPE html>
@@ -8,103 +11,137 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - VetSite</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-
-    <!-- Select2 Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
-
-    <!-- DataTables Bootstrap -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" />
-
-    <!-- Font Awesome (iconos) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
-    <!-- CSS Global -->
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/footer.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site-modern.css" asp-append-version="true" />
 </head>
-<body>
+<body class="app-body">
+    <aside id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <div>
+                <p class="sidebar-eyebrow">VetSite</p>
+                <h2 class="sidebar-title">Centro de control clínico</h2>
+            </div>
+            <button type="button" class="sidebar-close d-lg-none" data-sidebar-close aria-label="Cerrar menú">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
 
-    <!-- Sidebar fijo (oculto por defecto) -->
-    <div id="sidebar" class="sidebar">
-        <a href="/Home">Página principal</a>
-        <a href="/Citas">Citas</a>
-        <a href="/Propietarios">Propietarios</a>
-        <a href="/Pacientes">Pacientes</a>
-        <a href="/Cirugias">Cirugías</a>
-        <a href="/Vacunas">Vacunas</a>
-        <a href="/Examenes">Exámenes</a>
-        <a href="/TipoExamenes">Tipo de examenes</a>
-        <a href="/TipoCirugias">Tipo de cirugías</a>
-        <a href="/Usuarios">Usuarios</a>
-    </div>
+        <nav class="sidebar-nav" aria-label="Principal">
+            <a asp-controller="Home" asp-action="Index" class="sidebar-link @(currentController == "Home" ? "active" : string.Empty)">
+                <i class="fas fa-house-user"></i>
+                <span>Inicio</span>
+            </a>
+            <a asp-controller="Citas" asp-action="Index" class="sidebar-link @(currentController == "Citas" ? "active" : string.Empty)">
+                <i class="far fa-calendar-check"></i>
+                <span>Citas</span>
+            </a>
+            <a asp-controller="Pacientes" asp-action="Index" class="sidebar-link @(currentController == "Pacientes" ? "active" : string.Empty)">
+                <i class="fas fa-paw"></i>
+                <span>Pacientes</span>
+            </a>
+            <a asp-controller="Propietarios" asp-action="Index" class="sidebar-link @(currentController == "Propietarios" ? "active" : string.Empty)">
+                <i class="fas fa-address-card"></i>
+                <span>Propietarios</span>
+            </a>
+            <a asp-controller="Cirugias" asp-action="Index" class="sidebar-link @(currentController == "Cirugias" ? "active" : string.Empty)">
+                <i class="fas fa-user-md"></i>
+                <span>Cirugías</span>
+            </a>
+            <a asp-controller="Vacunas" asp-action="Index" class="sidebar-link @(currentController == "Vacunas" ? "active" : string.Empty)">
+                <i class="fas fa-syringe"></i>
+                <span>Vacunas</span>
+            </a>
+            <a asp-controller="Examenes" asp-action="Index" class="sidebar-link @(currentController == "Examenes" ? "active" : string.Empty)">
+                <i class="fas fa-flask"></i>
+                <span>Exámenes</span>
+            </a>
+            <a asp-controller="TipoExamenes" asp-action="Index" class="sidebar-link @(currentController == "TipoExamenes" ? "active" : string.Empty)">
+                <i class="fas fa-notes-medical"></i>
+                <span>Tipos de examen</span>
+            </a>
+            <a asp-controller="TipoCirugias" asp-action="Index" class="sidebar-link @(currentController == "TipoCirugias" ? "active" : string.Empty)">
+                <i class="fas fa-procedures"></i>
+                <span>Tipos de cirugía</span>
+            </a>
+            <a asp-controller="Usuarios" asp-action="Index" class="sidebar-link @(currentController == "Usuarios" ? "active" : string.Empty)">
+                <i class="fas fa-user-shield"></i>
+                <span>Usuarios</span>
+            </a>
+        </nav>
+    </aside>
 
-    <!-- Contenedor principal -->
-    <div class="page-container">
+    <div id="sidebar-overlay" class="sidebar-overlay" data-sidebar-close></div>
 
-        <!-- Navbar -->
+    <div class="app-shell">
         <header>
-            <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
-                <div id="nav-container" class="container-fluid d-flex align-items-center justify-content-between">
-                    <div class="d-flex align-items-center">
-                        <!-- Botón que llama a toggleSidebar() -->
-                        <button id="menu-button" class="menu-button" onclick="toggleSidebar()">☰</button>
-                        <a id="app-title" class="navbar-brand ms-2" asp-controller="Home" asp-action="Index">VetSite</a>
+            <nav class="topbar">
+                <div class="topbar-start">
+                    <button type="button" id="menu-button" class="menu-button" data-sidebar-toggle aria-label="Abrir menú">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div>
+                        <p class="topbar-kicker">Gestión veterinaria</p>
+                        <a id="app-title" class="navbar-brand" asp-controller="Home" asp-action="Index">VetSite</a>
                     </div>
+                </div>
 
-                    <div class="d-flex align-items-center">
-                        <span class="me-3">👤 @User.Identity.Name</span> 
-                        <form asp-controller="Login" asp-action="Logout" method="post">
-                            <button class="logout-button" type="submit">
-                                <i class="fas fa-sign-out-alt"></i>
-                                <span>Salir</span>
-                            </button>
-                        </form>
+                <div class="topbar-end">
+                    <div class="user-chip">
+                        <span class="user-chip-label">Sesión activa</span>
+                        <strong>@(User.Identity?.Name ?? "Usuario")</strong>
                     </div>
+                    <form asp-controller="Login" asp-action="Logout" method="post">
+                        <button class="logout-button" type="submit">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Salir</span>
+                        </button>
+                    </form>
                 </div>
             </nav>
         </header>
 
-        <!-- Contenido principal -->
-        <div class="main-content">
-            <div class="container">
-                <partial name="_BannerError" />
-                <main role="main" class="pb-3">
-                    @RenderBody()
-                </main>
+        <main class="app-main">
+            <div class="page-intro">
+                <div>
+                    <p class="page-intro-kicker">Operación diaria</p>
+                    <h1 class="page-intro-title">@pageTitle</h1>
+                    <p class="page-intro-subtitle">
+                        @(currentController == "Home" && currentAction == "Index"
+                            ? "Consulta los módulos clave y entra rápido a las tareas más frecuentes."
+                            : "Mantén la información clínica ordenada, legible y fácil de operar.")
+                    </p>
+                </div>
+                <div class="page-intro-badge">
+                    <span class="page-intro-badge-label">Módulo</span>
+                    <strong>@currentController</strong>
+                </div>
             </div>
-        </div>
 
-        <!-- Footer -->
+            <div class="content-surface">
+                <partial name="_BannerError" />
+                @RenderBody()
+            </div>
+        </main>
+
         <partial name="_Footer" />
-
     </div>
 
-    <!-- Script para el Sidebar -->
-    <script>
-        window.toggleSidebar = function() {
-            const sidebar = document.getElementById("sidebar");
-            sidebar.classList.toggle("open");
-        }
-    </script>
-
-
-    <!-- JQUERY -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Select2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
-
-    <!-- Script global -->
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
-
 </body>
 </html>

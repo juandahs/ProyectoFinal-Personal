@@ -1,67 +1,96 @@
-﻿@using ProyectoFinal.Entidades
+@using ProyectoFinal.Entidades
 @model IEnumerable<ProyectoFinal.Entidades.Cita>
 
-<div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1>@ViewBag.Title</h1>
-        <a href="/Citas/Crear" class="btn btn-success">
-            <i class="fas fa-plus me-2"></i>Agregar una cita
-        </a>
+<section class="page-section">
+    <div class="page-section-header">
+        <div>
+            <p class="page-section-kicker">Agenda</p>
+            <h2 class="page-section-title">@ViewBag.Title</h2>
+            <p class="page-section-copy">Revisa la programación por paciente, estado y horario con una tabla más legible para el equipo.</p>
+        </div>
+
+        <div class="page-actions">
+            <a href="/Citas/Crear" class="btn btn-success">
+                <i class="fas fa-plus me-2"></i>Nueva cita
+            </a>
+        </div>
     </div>
 
-    <table id="citasTable" class="table">
-        <thead>
-            <tr>
-                <th>Paciente</th>
-                <th>Fecha</th>
-                <th>Hora</th>
-                <th>Motivo</th>
-                <th>Estado</th>
+    <div class="table-shell">
+        <div class="table-meta">
+            <span class="table-tag"><i class="far fa-calendar-check"></i>Agenda clínica</span>
+            <span>Usa la búsqueda para filtrar por paciente, motivo o estado.</span>
+        </div>
 
-                <th class="text-center">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Model == null || !Model.Any())
-            {
-                <tr>
-                    <td colspan="5" class="text-center">No hay citas registradas.</td>
-                </tr>
-            }
-            else
-            {
-                @foreach (var cita in Model)
-                {
+        <div class="table-responsive">
+            <table id="citasTable" class="table align-middle">
+                <thead>
                     <tr>
-                        <td>@cita.Paciente!.Nombre</td>
-                        <td>@cita.Fecha.ToString("dd/MM/yyyy")</td>
-                        <td>@cita.Fecha.ToString("hh:mm tt")</td>
-                        <td>@cita.Motivo</td>
-                        <td>@cita.Estado</td>
-                        <td class="text-center">
-                            <form asp-action="Editar" method="get" class="d-inline">
-                                <input type="hidden" name="id" value="@cita.CitaId" />
-                                <button type="submit" class="btn btn-primary me-2">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </form>
-                            <form asp-action="Cancelar" method="post" class="d-inline">
-                                <input type="hidden" name="id" value="@cita.CitaId" />
-                                <button type="submit" class="btn btn-danger me-2" onclick="return confirm('¿Está seguro de que desea cancelar esta cita?');">
-                                    <i class="fas fa-window-close"></i>
-                                </button>
-                            </form>
-                        </td>
+                        <th>Paciente</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Motivo</th>
+                        <th>Estado</th>
+                        <th class="text-center actions-cell">Acciones</th>
                     </tr>
-                }
-            }
-        </tbody>
-    </table>
-</div>
+                </thead>
+                <tbody>
+                    @if (Model == null || !Model.Any())
+                    {
+                        <tr>
+                            <td colspan="6">
+                                <div class="empty-state">
+                                    <p class="empty-state-title">No hay citas registradas.</p>
+                                    <p class="empty-state-copy">Agenda la primera atención para empezar a organizar el calendario clínico.</p>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var cita in Model)
+                        {
+                            var estadoClass = cita.Estado.ToString().ToLowerInvariant() switch
+                            {
+                                "completada" => "status-done",
+                                "cancelada" => "status-pending",
+                                _ => string.Empty
+                            };
+
+                            <tr>
+                                <td><strong>@cita.Paciente!.Nombre</strong></td>
+                                <td>@cita.Fecha.ToString("dd/MM/yyyy")</td>
+                                <td>@cita.Fecha.ToString("hh:mm tt")</td>
+                                <td>@cita.Motivo</td>
+                                <td>
+                                    <span class="status-pill @estadoClass">@cita.Estado</span>
+                                </td>
+                                <td class="text-center actions-cell">
+                                    <div class="action-stack">
+                                        <form asp-action="Editar" method="get">
+                                            <input type="hidden" name="id" value="@cita.CitaId" />
+                                            <button type="submit" class="btn btn-primary action-btn" title="Editar cita" aria-label="Editar cita">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                        </form>
+                                        <form asp-action="Cancelar" method="post">
+                                            <input type="hidden" name="id" value="@cita.CitaId" />
+                                            <button type="submit" class="btn btn-danger action-btn" title="Cancelar cita" aria-label="Cancelar cita" onclick="return confirm('¿Está seguro de que desea cancelar esta cita?');">
+                                                <i class="fas fa-window-close"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
 
 @section Scripts {
-
-    <!-- DataTables JS para Bootstrap 5 -->
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
     <script>
@@ -78,7 +107,6 @@
                         previous: "<",
                         next: ">"
                     }
-
                 }
             });
         });

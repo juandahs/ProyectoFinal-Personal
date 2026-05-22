@@ -4,7 +4,7 @@
 SET ORIGEN=AppData\
 
 :: Directorio destino (la carpeta a la cual quieres copiar el contenido)
-SET DESTINO=bin\Debug\net8.0\AppData
+SET DESTINO=bin\Debug\net10.0\AppData
 
 :: Comando para copiar todo el contenido de la carpeta origen al destino
 xcopy "%ORIGEN%" "%DESTINO%" /E /I /Y

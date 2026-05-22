@@ -1,18 +1,19 @@
-﻿@model ProyectoFinal.Entidades.Usuario
+@model ProyectoFinal.Entidades.Usuario
 
 @{
     ViewBag.Title = "Editar un usuario";
 }
 
-<h1>@ViewBag.Title</h1>
-
-<form asp-action="Editar" method="post">
-    <div class="card">
-        <div class="card-body">
-            <partial name="_Formulario" model="Model" />
+<section class="page-section">
+    <div class="page-section-header">
+        <div>
+            <p class="page-section-kicker">Actualización</p>
+            <h2 class="page-section-title">@ViewBag.Title</h2>
+            <p class="page-section-copy">Ajusta los datos internos del usuario sin cambiar su flujo de trabajo.</p>
         </div>
     </div>
-</form>
 
-
-
+    <form asp-action="Editar" method="post" class="form-shell">
+        <partial name="_Formulario" model="Model" />
+    </form>
+</section>
