@@ -34,18 +34,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if (Model == null || !Model.Any())
-                    {
-                        <tr>
-                            <td colspan="6">
-                                <div class="empty-state">
-                                    <p class="empty-state-title">No hay propietarios registrados.</p>
-                                    <p class="empty-state-copy">Crea un propietario para relacionarlo con sus pacientes y citas.</p>
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                    else
+                    @if (Model != null && Model.Any())
                     {
                         @foreach (var propietario in Model)
                         {

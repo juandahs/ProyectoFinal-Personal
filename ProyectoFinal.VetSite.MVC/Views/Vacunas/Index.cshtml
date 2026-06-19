@@ -1,59 +1,71 @@
 ﻿@model IEnumerable<ProyectoFinal.Entidades.Vacuna>
 
-<div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1>@ViewBag.Title</h1>
-        <a href="/Vacunas/Crear" class="btn btn-success">
-            <i class="fas fa-plus me-2"></i>Agregar una vacuna
-        </a>
+<section class="page-section">
+    <div class="page-section-header">
+        <div>
+            <p class="page-section-kicker">Prevención</p>
+            <h2 class="page-section-title">@ViewBag.Title</h2>
+            <p class="page-section-copy">Controla aplicaciones y próximas fechas de vacunación por paciente.</p>
+        </div>
+
+        <div class="page-actions">
+            <a href="/Vacunas/Crear" class="btn btn-success">
+                <i class="fas fa-plus me-2"></i>Nueva vacuna
+            </a>
+        </div>
     </div>
 
-    <table id="vacunasTable" class="table">
-        <thead>
-            <tr>
-                <th>Paciente</th>
-				<th>Nombre</th>
-                <th>Fecha aplicación</th>
-                <th>Próxima aplicación</th>
-                <th class="text-center">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Model == null || !Model.Any())
-            {
-                <tr>
-                    <td colspan="5" class="text-center">No hay vacunas registradas.</td>
-                </tr>
-            }
-            else
-            {
-                @foreach (var vacuna in Model)
-                {
+    <div class="table-shell">
+        <div class="table-meta">
+            <span class="table-tag"><i class="fas fa-syringe"></i>Esquema preventivo</span>
+            <span>Ordena por próxima aplicación para priorizar seguimientos.</span>
+        </div>
+
+        <div class="table-responsive">
+            <table id="vacunasTable" class="table align-middle">
+                <thead>
                     <tr>
-                        <td>@vacuna.Paciente!.Nombre</td>
-						<td>@vacuna.NombreVacuna</td>
-                        <td>@vacuna.FechaAplicacion.ToShortDateString()</td>
-                        <td>@vacuna.FechaProximaAplicacion.ToShortDateString()</td>
-                        <td class="text-center">
-                            <form asp-action="Editar" method="get" class="d-inline">
-                                <input type="hidden" name="id" value="@vacuna.VacunaId" />
-                                <button type="submit" class="btn btn-primary me-2">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </form>
-                            <form asp-action="Eliminar" method="post" class="d-inline">
-                                <input type="hidden" name="id" value="@vacuna.VacunaId" />
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar este usuario?');">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </form>
-                        </td>
+                        <th>Paciente</th>
+                        <th>Nombre</th>
+                        <th>Fecha aplicación</th>
+                        <th>Próxima aplicación</th>
+                        <th class="text-center actions-cell">Acciones</th>
                     </tr>
-                }
-            }
-        </tbody>
-    </table>
-</div>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        @foreach (var vacuna in Model)
+                        {
+                            <tr>
+                                <td><strong>@vacuna.Paciente!.Nombre</strong></td>
+                                <td>@vacuna.NombreVacuna</td>
+                                <td>@vacuna.FechaAplicacion.ToString("dd/MM/yyyy")</td>
+                                <td>@vacuna.FechaProximaAplicacion.ToString("dd/MM/yyyy")</td>
+                                <td class="text-center actions-cell">
+                                    <div class="action-stack">
+                                        <form asp-action="Editar" method="get">
+                                            <input type="hidden" name="id" value="@vacuna.VacunaId" />
+                                            <button type="submit" class="btn btn-primary action-btn" title="Editar vacuna" aria-label="Editar vacuna">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                        </form>
+                                        <form asp-action="Eliminar" method="post">
+                                            <input type="hidden" name="id" value="@vacuna.VacunaId" />
+                                            <button type="submit" class="btn btn-danger action-btn" title="Eliminar vacuna" aria-label="Eliminar vacuna" onclick="return confirm('¿Está seguro de que desea eliminar esta vacuna?');">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
 
 @section Scripts {
 

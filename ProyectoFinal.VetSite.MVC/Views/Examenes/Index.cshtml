@@ -1,60 +1,71 @@
 ﻿@model IEnumerable<ProyectoFinal.Entidades.Examen>
 
-<div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1>@ViewBag.Title</h1>
-        <a href="/Examenes/Crear" class="btn btn-success">
-            <i class="fas fa-plus me-2"></i>Agregar un examen
-        </a>
+<section class="page-section">
+    <div class="page-section-header">
+        <div>
+            <p class="page-section-kicker">Diagnóstico</p>
+            <h2 class="page-section-title">@ViewBag.Title</h2>
+            <p class="page-section-copy">Revisa exámenes por tipo, fecha y profesional responsable desde una tabla consistente.</p>
+        </div>
+
+        <div class="page-actions">
+            <a href="/Examenes/Crear" class="btn btn-success">
+                <i class="fas fa-plus me-2"></i>Nuevo examen
+            </a>
+        </div>
     </div>
 
-    <table id="examenessTable" class="table">
-        <thead>
-            <tr>
-				<th>Tipo</th>
-                <th>Descripción</th>
-                <th>Fecha de realización</th>
-                <th>Usuario quien aplíca</th>
+    <div class="table-shell">
+        <div class="table-meta">
+            <span class="table-tag"><i class="fas fa-flask"></i>Resultados y solicitudes</span>
+            <span>Busca por tipo, descripción o usuario que aplica el examen.</span>
+        </div>
 
-                <th class="text-center">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Model == null || !Model.Any())
-            {
-                <tr>
-                    <td colspan="5" class="text-center">No hay examenes registradas.</td>
-                </tr>
-            }
-            else
-            {
-                @foreach (var Examen in Model)
-                {
+        <div class="table-responsive">
+            <table id="examenesTable" class="table align-middle">
+                <thead>
                     <tr>
-						<td>@Examen.TipoExamen!.Descripcion</td>
-                        <td>@Examen.Descripcion</td>
-                        <td>@Examen.Fecha.ToString("dd/MM/yyyy")</td>
-                        <td>@Examen.Usuario!.Nombre</td>
-                        <td class="text-center">
-                            <form asp-action="Editar" method="get" class="d-inline">
-                                <input type="hidden" name="id" value="@Examen.ExamenId" />
-                                <button type="submit" class="btn btn-primary me-2">
-                                    <i class="fas fa-edit"></i> Editar
-                                </button>
-                            </form>
-                            <form asp-action="Eliminar" method="post" class="d-inline">
-                                <input type="hidden" name="id" value="@Examen.ExamenId" />
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar este examen?');">
-                                    <i class="fas fa-trash"></i> Eliminar
-                                </button>
-                            </form>
-                        </td>
+                        <th>Tipo</th>
+                        <th>Descripción</th>
+                        <th>Fecha</th>
+                        <th>Usuario que aplica</th>
+                        <th class="text-center actions-cell">Acciones</th>
                     </tr>
-                }
-            }
-        </tbody>
-    </table>
-</div>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        @foreach (var examen in Model)
+                        {
+                            <tr>
+                                <td><strong>@examen.TipoExamen!.Descripcion</strong></td>
+                                <td>@examen.Descripcion</td>
+                                <td>@examen.Fecha.ToString("dd/MM/yyyy")</td>
+                                <td>@examen.Usuario!.Nombre</td>
+                                <td class="text-center actions-cell">
+                                    <div class="action-stack">
+                                        <form asp-action="Editar" method="get">
+                                            <input type="hidden" name="id" value="@examen.ExamenId" />
+                                            <button type="submit" class="btn btn-primary action-btn" title="Editar examen" aria-label="Editar examen">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                        </form>
+                                        <form asp-action="Eliminar" method="post">
+                                            <input type="hidden" name="id" value="@examen.ExamenId" />
+                                            <button type="submit" class="btn btn-danger action-btn" title="Eliminar examen" aria-label="Eliminar examen" onclick="return confirm('¿Está seguro de que desea eliminar este examen?');">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
 
 @section Scripts {
 

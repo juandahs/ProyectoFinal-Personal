@@ -34,18 +34,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if (Model == null || !Model.Any())
-                    {
-                        <tr>
-                            <td colspan="6">
-                                <div class="empty-state">
-                                    <p class="empty-state-title">No hay pacientes registrados.</p>
-                                    <p class="empty-state-copy">Empieza creando el primer paciente para habilitar sus flujos clínicos.</p>
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                    else
+                    @if (Model != null && Model.Any())
                     {
                         @foreach (var paciente in Model)
                         {

@@ -35,18 +35,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if (Model == null || !Model.Any())
-                    {
-                        <tr>
-                            <td colspan="6">
-                                <div class="empty-state">
-                                    <p class="empty-state-title">No hay citas registradas.</p>
-                                    <p class="empty-state-copy">Agenda la primera atención para empezar a organizar el calendario clínico.</p>
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                    else
+                    @if (Model != null && Model.Any())
                     {
                         @foreach (var cita in Model)
                         {

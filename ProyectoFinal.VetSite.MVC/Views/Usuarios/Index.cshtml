@@ -34,18 +34,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if (Model == null || !Model.Any())
-                    {
-                        <tr>
-                            <td colspan="6">
-                                <div class="empty-state">
-                                    <p class="empty-state-title">No hay usuarios registrados.</p>
-                                    <p class="empty-state-copy">Agrega una cuenta para dar acceso operativo al equipo.</p>
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                    else
+                    @if (Model != null && Model.Any())
                     {
                         @foreach (var usuario in Model)
                         {
@@ -96,20 +85,30 @@
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+            const cambiarClaveModal = document.getElementById('cambiarClaveModal');
+            const usuarioIdModal = document.getElementById('usuarioIdModal');
+            const cerrarModalBtn = document.getElementById("cerrarModalBtn");
+
             document.querySelectorAll(".cambiar-clave-btn").forEach(button => {
                 button.addEventListener("click", function () {
-                    const usuarioId = this.getAttribute("data-usuario-id");
-                    document.getElementById('usuarioIdModal').value = usuarioId;
+                    if (!cambiarClaveModal || !usuarioIdModal) {
+                        return;
+                    }
 
-                    const modal = new bootstrap.Modal(document.getElementById('cambiarClaveModal'));
+                    const usuarioId = this.getAttribute("data-usuario-id");
+                    usuarioIdModal.value = usuarioId;
+
+                    const modal = new bootstrap.Modal(cambiarClaveModal);
                     modal.show();
                 });
             });
 
-            document.getElementById("cerrarModalBtn").addEventListener("click", function () {
-                const modal = bootstrap.Modal.getInstance(document.getElementById('cambiarClaveModal'));
-                modal.hide();
-            });
+            if (cerrarModalBtn && cambiarClaveModal) {
+                cerrarModalBtn.addEventListener("click", function () {
+                    const modal = bootstrap.Modal.getInstance(cambiarClaveModal);
+                    modal?.hide();
+                });
+            }
 
             $('#usuariosTable').DataTable({
                 language: {

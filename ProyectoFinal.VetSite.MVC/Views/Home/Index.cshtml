@@ -36,19 +36,19 @@
 
 <section class="dashboard-quick-grid mb-4">
     <article class="stat-card">
-        <p class="stat-card-label">Citas</p>
+        <p class="stat-card-label">Agenda</p>
         <p class="stat-card-value">01</p>
         <p class="stat-card-copy">Agenda, asignación y seguimiento clínico.</p>
     </article>
     <article class="stat-card">
-        <p class="stat-card-label">Pacientes</p>
+        <p class="stat-card-label">Pacientes y propietarios</p>
         <p class="stat-card-value">02</p>
         <p class="stat-card-copy">Datos de especie, estado y antecedentes básicos.</p>
     </article>
     <article class="stat-card">
-        <p class="stat-card-label">Propietarios</p>
+        <p class="stat-card-label">Clínica</p>
         <p class="stat-card-value">03</p>
-        <p class="stat-card-copy">Contacto, identificación y relación con cada caso.</p>
+        <p class="stat-card-copy">Exámenes, vacunas y procedimientos desde accesos directos.</p>
     </article>
 </section>
 
@@ -83,11 +83,39 @@
             <span class="module-card-link">Abrir módulo</span>
         </a>
 
+        <a asp-controller="Vacunas" asp-action="Index" class="module-card">
+            <span class="module-card-icon"><i class="fas fa-syringe"></i></span>
+            <h3 class="module-card-title">Vacunas</h3>
+            <p class="module-card-copy">Controla aplicaciones, próximas fechas y seguimiento preventivo.</p>
+            <span class="module-card-link">Abrir módulo</span>
+        </a>
+
+        <a asp-controller="Examenes" asp-action="Index" class="module-card">
+            <span class="module-card-icon"><i class="fas fa-flask"></i></span>
+            <h3 class="module-card-title">Exámenes</h3>
+            <p class="module-card-copy">Registra resultados y solicitudes de diagnóstico clínico.</p>
+            <span class="module-card-link">Abrir módulo</span>
+        </a>
+
+        <a asp-controller="Cirugias" asp-action="Index" class="module-card">
+            <span class="module-card-icon"><i class="fas fa-user-md"></i></span>
+            <h3 class="module-card-title">Cirugías</h3>
+            <p class="module-card-copy">Consulta procedimientos y tipos quirúrgicos asociados.</p>
+            <span class="module-card-link">Abrir módulo</span>
+        </a>
+
         <a asp-controller="Usuarios" asp-action="Index" class="module-card">
             <span class="module-card-icon"><i class="fas fa-user-shield"></i></span>
             <h3 class="module-card-title">Usuarios</h3>
             <p class="module-card-copy">Gestiona accesos del equipo y tareas operativas internas.</p>
             <span class="module-card-link">Abrir módulo</span>
+        </a>
+
+        <a asp-controller="Configuracion" asp-action="Index" class="module-card">
+            <span class="module-card-icon"><i class="fas fa-cog"></i></span>
+            <h3 class="module-card-title">Configuración</h3>
+            <p class="module-card-copy">Administra catálogos de tipos usados por los módulos clínicos.</p>
+            <span class="module-card-link">Abrir configuración</span>
         </a>
     </div>
 </section>

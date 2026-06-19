@@ -1,0 +1,29 @@
+@{
+    ViewData["Title"] = "Configuración";
+}
+
+<section class="page-section">
+    <div class="page-section-header">
+        <div>
+            <p class="page-section-kicker">Catálogos</p>
+            <h2 class="page-section-title">Configuración del sistema</h2>
+            <p class="page-section-copy">Centraliza los parámetros que se reutilizan en la operación clínica para que el menú principal quede más claro.</p>
+        </div>
+    </div>
+
+    <div class="module-grid">
+        <a asp-controller="TipoExamenes" asp-action="Index" class="module-card module-card-compact">
+            <span class="module-card-icon"><i class="fas fa-notes-medical"></i></span>
+            <h3 class="module-card-title">Tipos de examen</h3>
+            <p class="module-card-copy">Define las categorías usadas al registrar resultados y solicitudes de exámenes.</p>
+            <span class="module-card-link">Administrar catálogo</span>
+        </a>
+
+        <a asp-controller="TipoCirugias" asp-action="Index" class="module-card module-card-compact">
+            <span class="module-card-icon"><i class="fas fa-procedures"></i></span>
+            <h3 class="module-card-title">Tipos de cirugía</h3>
+            <p class="module-card-copy">Mantén ordenadas las clasificaciones que se asignan en procedimientos quirúrgicos.</p>
+            <span class="module-card-link">Administrar catálogo</span>
+        </a>
+    </div>
+</section>

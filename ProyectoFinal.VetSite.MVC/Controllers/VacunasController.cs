@@ -28,8 +28,14 @@ namespace ProyectoFinal.VetSite.MVC.Controllers
         [HttpGet]
         public IActionResult Crear()
         {
+            IEnumerable<Paciente> pacientes = _pacienteServicio.ObtenerTodos();
+            if (!pacientes.Any())
+            {
+                TempData["MensajeError"] = "Para asignar una vacuna a un paciente debe existir por lo menos un paciente en el sistema.";
+                return RedirectToAction("Index");
+            }
 
-            ViewData["Pacientes"] = _pacienteServicio.ObtenerTodos();
+            ViewData["Pacientes"] = pacientes;
             ViewData["Usuarios"] = _usuarioServicios.ObtenerTodos();
             return View();
         }

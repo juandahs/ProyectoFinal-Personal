@@ -3,6 +3,7 @@
     var currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? string.Empty;
     var currentAction = ViewContext.RouteData.Values["action"]?.ToString() ?? string.Empty;
     var pageTitle = ViewBag.Title as string ?? ViewData["Title"]?.ToString() ?? "Panel";
+    var isConfiguracion = currentController == "Configuracion" || currentController == "TipoExamenes" || currentController == "TipoCirugias";
 }
 
 <!DOCTYPE html>
@@ -32,52 +33,74 @@
                 <p class="sidebar-eyebrow">VetSite</p>
                 <h2 class="sidebar-title">Centro de control clínico</h2>
             </div>
-            <button type="button" class="sidebar-close d-lg-none" data-sidebar-close aria-label="Cerrar menú">
+            <button type="button" class="sidebar-close" data-sidebar-close aria-label="Cerrar menú">
                 <i class="fas fa-times"></i>
             </button>
         </div>
 
         <nav class="sidebar-nav" aria-label="Principal">
-            <a asp-controller="Home" asp-action="Index" class="sidebar-link @(currentController == "Home" ? "active" : string.Empty)">
-                <i class="fas fa-house-user"></i>
-                <span>Inicio</span>
-            </a>
-            <a asp-controller="Citas" asp-action="Index" class="sidebar-link @(currentController == "Citas" ? "active" : string.Empty)">
-                <i class="far fa-calendar-check"></i>
-                <span>Citas</span>
-            </a>
-            <a asp-controller="Pacientes" asp-action="Index" class="sidebar-link @(currentController == "Pacientes" ? "active" : string.Empty)">
-                <i class="fas fa-paw"></i>
-                <span>Pacientes</span>
-            </a>
-            <a asp-controller="Propietarios" asp-action="Index" class="sidebar-link @(currentController == "Propietarios" ? "active" : string.Empty)">
-                <i class="fas fa-address-card"></i>
-                <span>Propietarios</span>
-            </a>
-            <a asp-controller="Cirugias" asp-action="Index" class="sidebar-link @(currentController == "Cirugias" ? "active" : string.Empty)">
-                <i class="fas fa-user-md"></i>
-                <span>Cirugías</span>
-            </a>
-            <a asp-controller="Vacunas" asp-action="Index" class="sidebar-link @(currentController == "Vacunas" ? "active" : string.Empty)">
-                <i class="fas fa-syringe"></i>
-                <span>Vacunas</span>
-            </a>
-            <a asp-controller="Examenes" asp-action="Index" class="sidebar-link @(currentController == "Examenes" ? "active" : string.Empty)">
-                <i class="fas fa-flask"></i>
-                <span>Exámenes</span>
-            </a>
-            <a asp-controller="TipoExamenes" asp-action="Index" class="sidebar-link @(currentController == "TipoExamenes" ? "active" : string.Empty)">
-                <i class="fas fa-notes-medical"></i>
-                <span>Tipos de examen</span>
-            </a>
-            <a asp-controller="TipoCirugias" asp-action="Index" class="sidebar-link @(currentController == "TipoCirugias" ? "active" : string.Empty)">
-                <i class="fas fa-procedures"></i>
-                <span>Tipos de cirugía</span>
-            </a>
-            <a asp-controller="Usuarios" asp-action="Index" class="sidebar-link @(currentController == "Usuarios" ? "active" : string.Empty)">
-                <i class="fas fa-user-shield"></i>
-                <span>Usuarios</span>
-            </a>
+            <div class="sidebar-group" data-sidebar-group="operacion">
+                <button type="button" class="sidebar-group-toggle" data-sidebar-group-toggle aria-expanded="true">
+                    <span>Operación</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="sidebar-group-content">
+                    <a asp-controller="Home" asp-action="Index" class="sidebar-link @(currentController == "Home" ? "active" : string.Empty)">
+                        <i class="fas fa-house-user"></i>
+                        <span>Inicio</span>
+                    </a>
+                    <a asp-controller="Citas" asp-action="Index" class="sidebar-link @(currentController == "Citas" ? "active" : string.Empty)">
+                        <i class="far fa-calendar-check"></i>
+                        <span>Citas</span>
+                    </a>
+                    <a asp-controller="Pacientes" asp-action="Index" class="sidebar-link @(currentController == "Pacientes" ? "active" : string.Empty)">
+                        <i class="fas fa-paw"></i>
+                        <span>Pacientes</span>
+                    </a>
+                    <a asp-controller="Propietarios" asp-action="Index" class="sidebar-link @(currentController == "Propietarios" ? "active" : string.Empty)">
+                        <i class="fas fa-address-card"></i>
+                        <span>Propietarios</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="sidebar-group" data-sidebar-group="clinica">
+                <button type="button" class="sidebar-group-toggle" data-sidebar-group-toggle aria-expanded="true">
+                    <span>Clínica</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="sidebar-group-content">
+                    <a asp-controller="Cirugias" asp-action="Index" class="sidebar-link @(currentController == "Cirugias" ? "active" : string.Empty)">
+                        <i class="fas fa-user-md"></i>
+                        <span>Cirugías</span>
+                    </a>
+                    <a asp-controller="Vacunas" asp-action="Index" class="sidebar-link @(currentController == "Vacunas" ? "active" : string.Empty)">
+                        <i class="fas fa-syringe"></i>
+                        <span>Vacunas</span>
+                    </a>
+                    <a asp-controller="Examenes" asp-action="Index" class="sidebar-link @(currentController == "Examenes" ? "active" : string.Empty)">
+                        <i class="fas fa-flask"></i>
+                        <span>Exámenes</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="sidebar-group" data-sidebar-group="administracion">
+                <button type="button" class="sidebar-group-toggle" data-sidebar-group-toggle aria-expanded="true">
+                    <span>Administración</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="sidebar-group-content">
+                    <a asp-controller="Usuarios" asp-action="Index" class="sidebar-link @(currentController == "Usuarios" ? "active" : string.Empty)">
+                        <i class="fas fa-user-shield"></i>
+                        <span>Usuarios</span>
+                    </a>
+                    <a asp-controller="Configuracion" asp-action="Index" class="sidebar-link @(isConfiguracion ? "active" : string.Empty)">
+                        <i class="fas fa-cog"></i>
+                        <span>Configuración</span>
+                    </a>
+                </div>
+            </div>
         </nav>
     </aside>
 
@@ -91,8 +114,9 @@
                         <i class="fas fa-bars"></i>
                     </button>
                     <div>
-                        <p class="topbar-kicker">Gestión veterinaria</p>
-                        <a id="app-title" class="navbar-brand" asp-controller="Home" asp-action="Index">VetSite</a>
+                        <p class="topbar-kicker">Gestión veterinaria Vetsite </p>
+                        <p class="page-intro-kicker">Operación diaria</p>
+
                     </div>
                 </div>
 
@@ -112,22 +136,6 @@
         </header>
 
         <main class="app-main">
-            <div class="page-intro">
-                <div>
-                    <p class="page-intro-kicker">Operación diaria</p>
-                    <h1 class="page-intro-title">@pageTitle</h1>
-                    <p class="page-intro-subtitle">
-                        @(currentController == "Home" && currentAction == "Index"
-                            ? "Consulta los módulos clave y entra rápido a las tareas más frecuentes."
-                            : "Mantén la información clínica ordenada, legible y fácil de operar.")
-                    </p>
-                </div>
-                <div class="page-intro-badge">
-                    <span class="page-intro-badge-label">Módulo</span>
-                    <strong>@currentController</strong>
-                </div>
-            </div>
-
             <div class="content-surface">
                 <partial name="_BannerError" />
                 @RenderBody()
